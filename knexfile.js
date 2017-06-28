@@ -10,6 +10,7 @@ module.exports = {
     password: process.env.DATABASE_PASS,
     host: process.env.DATABASE_HOST,
     port: process.env.DATABASE_PORT,
+    ssl: true,
   },
   migrations: {
     tableName: 'knex_migrations',
