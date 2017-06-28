@@ -1,12 +1,14 @@
-// Update with your config settings.
-require('dotenv').config('./.env');
-
+require('dotenv').load();
 
 module.exports = {
-  client: 'postgresql',
-  connection: process.env.DATABASE_URL,
-  migrations: {
-    tableName: 'knex_migrations',
-    directory: 'postgres_db/migrations',
+
+  development: {
+    client: 'postgres',
+    connection: 'postgres://localhost/deep_subs',
+  },
+
+  production: {
+    client: 'postgres',
+    connection: `${process.env.DATABASE_URL}?ssl=true`,
   },
 };

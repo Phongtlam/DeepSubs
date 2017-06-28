@@ -32,9 +32,8 @@ if (process.env.NODE_ENV !== 'production') {
 }
 
 // WORKING
-const CONFIG = require('../config/development');
 const passport = require('passport');
-const knex = require('knex')(CONFIG.knex_config);
+const knex = require('../postgres_db/knex');
 const LocalStrategy = require('passport-local');
 
 const authHelpers = require('./auth/helpers');
