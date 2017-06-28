@@ -24,38 +24,33 @@ app.set('view engine', 'ejs');
 
 if (process.env.NODE_ENV !== 'production') {
   const compiler = middleware.webpack(webpackConfig);
-
   app.use(require('webpack-dev-middleware')(compiler, {
     noInfo: true, publicPath: webpackConfig.output.publicPath,
   }));
   app.use(require('webpack-hot-middleware')(compiler));
 }
 
-// WORKING
-const passport = require('./auth/passport');
+app.use(middleware.passport.initialize());
+app.use(middleware.passport.session());
 
-app.use(passport.initialize());
-app.use(passport.session());
-
-app.post('/login', passport.authenticate('local-login', {
+app.post('/login', middleware.passport.authenticate('local-login', {
   successRedirect: '/home',
   failureRedirect: '/login',
   failureFlash: true,
 }));
 
-app.post('/signup', passport.authenticate('local-signup', {
+app.post('/signup', middleware.passport.authenticate('local-signup', {
   successRedirect: '/home',
   failureRedirect: '/signup',
   failureFlash: true,
 }));
-// WORKING
 
 // prod environment
 app.use('/public', publicPath);
 // app.use(publicPath);
 app.get('/home', (req, res) => { res.sendFile(indexPath); });
 
-require('./routes.js')(app, passport);
+require('./routes.js')(app, middleware.passport);
 
 
 const allowCrossDomain = (req, res, next) => {
