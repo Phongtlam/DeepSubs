@@ -55,7 +55,7 @@ passport.use('local-signup', new LocalStrategy(LocalOpts, (req, username, passwo
 passport.use('facebook', new FacebookStrategy({
   clientID: '1375653399178909',
   clientSecret: '1426301145db3400ff43f01649c3f950',
-  callbackURL: 'http://localhost:3000/auth/facebook/callback',
+  callbackURL: '/auth/facebook/callback',
   passReqToCallback: true,
   enableProof: true,
   session: false,
