@@ -4,14 +4,7 @@ require('dotenv').config('./.env');
 
 module.exports = {
   client: 'postgresql',
-  connection: {
-    database: process.env.DATABASE_URL,
-    user: process.env.DATABASE_USER,
-    password: process.env.DATABASE_PASS,
-    host: process.env.DATABASE_HOST,
-    port: process.env.DATABASE_PORT,
-    ssl: true,
-  },
+  connection: process.env.DATABASE_URL,
   migrations: {
     tableName: 'knex_migrations',
     directory: 'postgres_db/migrations',
