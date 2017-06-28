@@ -1,6 +1,5 @@
 const bcrypt = require('bcryptjs');
-const CONFIG = require('../../config/development');
-const knex = require('knex')(CONFIG.knex_config);
+const knex = require('../../postgres_db/knex');
 
 function comparePass(userPassword, databasePassword) {
   return bcrypt.compareSync(userPassword, databasePassword);
