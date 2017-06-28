@@ -14,7 +14,8 @@ function createUser(req, res) {
     return knex('users')
     .insert({
       username: req.body.username,
-      password: hash
+      password: hash,
+      auth_provider: 'no_auth',
     })
     .returning('*');
   })
