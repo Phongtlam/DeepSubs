@@ -30,12 +30,12 @@
 require('dotenv').config();
 
 module.exports = {
-    development: {
-        client: 'pg',
-        connection: 'postgres://localhost/deep_subs'
-    },
-    production: {
-        client: 'pg',
-        connection: process.env.DATABASE_URL + '?ssl=true'
-    }
+  development: {
+    client: 'pg',
+    connection: process.env.DATABASE_LOCAL,
+  },
+  production: {
+    client: 'pg',
+    connection: process.env.DATABASE_URL + '?ssl=true',
+  },
 };
