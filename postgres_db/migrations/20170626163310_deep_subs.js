@@ -5,8 +5,10 @@ exports.up = (knex, Promise) => Promise.all([
     table.string('password', 100);
     table.string('first_name', 100);
     table.string('last_name', 100);
+    table.string('auth_id', 100);
+    table.string('auth_token', 100);
     table.string('img_url', 300);
-    table.string('auth_provider', 100)
+    table.string('auth_provider', 100);
     table.string('email', 100).nullable().unique();
     table.timestamps(true, true);
   }),

@@ -1,8 +1,6 @@
 const express = require('express');
 const path = require('path');
 const middleware = require('./middleware');
-const session = require('express-session');
-const flash = require('connect-flash');
 
 const webpackConfig = require('../webpack.config');
 
@@ -13,12 +11,13 @@ const app = express();
 
 app.use(middleware.bodyParser.urlencoded({ extended: false }));
 app.use(middleware.bodyParser.json());
-app.use(session({
+app.use(middleware.session({
   secret: 'iizphong',
   resave: true,
   saveUninitialized: true,
 }));
-app.use(flash());
+app.use(middleware.cookieParser());
+app.use(middleware.flash());
 app.set('views', path.join(__dirname, './views'));
 app.set('view engine', 'ejs');
 
@@ -45,12 +44,24 @@ app.post('/signup', middleware.passport.authenticate('local-signup', {
   failureFlash: true,
 }));
 
+app.get('/auth/facebook', middleware.passport.authenticate('facebook', { scope: 'email' }));
+
+// app.get('/auth/facebook/callback', middleware.passport.authenticate('facebook', (req, res) => {
+//   console.log('req is', req.body)
+// }))
+// handle the callback after facebook has authenticated the user
+app.get('/auth/facebook/callback', middleware.passport.authenticate('facebook', {
+  successRedirect: '/home',
+  failureRedirect: '/',
+  failureFlash: true,
+}));
+
 // prod environment
 app.use('/public', publicPath);
 // app.use(publicPath);
 app.get('/home', (req, res) => { res.sendFile(indexPath); });
 
-require('./routes.js')(app, middleware.passport);
+require('./routes.js')(app);
 
 
 const allowCrossDomain = (req, res, next) => {
