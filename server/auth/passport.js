@@ -1,6 +1,7 @@
 const passport = require('passport');
 const LocalStrategy = require('passport-local').Strategy;
 const FacebookStrategy = require('passport-facebook').Strategy;
+const GoogleStrategy = require('passport-google-oauth20').Strategy;
 
 const knex = require('../../postgres_db/knex');
 const authHelpers = require('./helpers');
@@ -57,6 +58,12 @@ passport.use('facebook', new FacebookStrategy({
 }, (req, token, refreshToken, profile, done) => {
   process.nextTick(() => authHelpers.processOauthUser(profile, done));
 }));
+
+passport.use('google', new GoogleStrategy({
+  clientID: process.env.GOG_ID,
+  clientSecret: process.env.GOG_SECRET,
+  callbackURL: process.env.GOG_CALLBACK,
+},
 
 
 module.exports = passport;
