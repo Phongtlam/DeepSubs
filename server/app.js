@@ -1,6 +1,7 @@
 const express = require('express');
 const path = require('path');
 const middleware = require('./middleware');
+require('dotenv').config();
 
 const webpackConfig = require('../webpack.config');
 
@@ -46,15 +47,29 @@ app.post('/signup', middleware.passport.authenticate('local-signup', {
 
 app.get('/auth/facebook', middleware.passport.authenticate('facebook', { scope: 'email' }));
 
-// app.get('/auth/facebook/callback', middleware.passport.authenticate('facebook', (req, res) => {
-//   console.log('req is', req.body)
-// }))
 // handle the callback after facebook has authenticated the user
 app.get('/auth/facebook/callback', middleware.passport.authenticate('facebook', {
   successRedirect: '/home',
   failureRedirect: '/',
   failureFlash: true,
 }));
+
+// app.get('/auth/facebook/callback',
+// (req, res, next) => {
+//   return middleware.passport.authenticate('facebook', {
+//     successRedirect: '/home',
+//     failureRedirect: '/login',
+//     failureFlash: true,
+//     session: false,
+//   },
+//   (err, user, info) => {
+//     if (err) {
+//       console.log('err', err);
+//     } else {
+//       next();
+//     }
+//   })(req, res, next);
+// });
 
 // prod environment
 app.use('/public', publicPath);

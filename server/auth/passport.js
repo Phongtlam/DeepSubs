@@ -1,5 +1,3 @@
-require('dotenv').config();
-
 const passport = require('passport');
 const LocalStrategy = require('passport-local').Strategy;
 const FacebookStrategy = require('passport-facebook').Strategy;
@@ -42,11 +40,7 @@ passport.use('local-login', new LocalStrategy(LocalOpts, (req, username, passwor
 passport.use('local-signup', new LocalStrategy(LocalOpts, (req, username, password, done) => {
   knex('users').where({ username }).first()
   .then((user) => {
-    if (user) {
-      return done(null, false);
-    } else {
-      return authHelpers.createUser(req);
-    }
+    return (user) ? done(null, false) : authHelpers.createUser(req);
   })
   .then(user => done(null, user[0]))
   .catch(err => done(err));
@@ -55,30 +49,42 @@ passport.use('local-signup', new LocalStrategy(LocalOpts, (req, username, passwo
 passport.use('facebook', new FacebookStrategy({
   clientID: '1375653399178909',
   clientSecret: '1426301145db3400ff43f01649c3f950',
-  callbackURL: '/auth/facebook/callback',
+  callbackURL: 'http://localhost:3000/auth/facebook/callback',
   passReqToCallback: true,
   enableProof: true,
-  session: false,
-  profileFields: ['id', 'name', 'first_name', 'last_name', 'email', 'picture'],
+  // session: false,
+  profileFields: ['id', 'displayName', 'name', 'email', 'picture.type(large)'],
 }, (req, token, refreshToken, profile, done) => {
-  console.log('profile', req.body, req.user, profile)
   process.nextTick(() => {
     knex('users').where('auth_id', profile.id)
     .then((user) => {
-      return (user) ? done(null, user) :
-      knex('users').insert({
-        auth_id: profile.id,
-        username: profile.name,
-        first_name: profile.first_name,
-        last_name: profile.last_name,
-        auth_token: profile.provider,
-        img_url: profile.picture,
-        email: profile.email,
-      }).returning('*');
+      console.log('NEWW USR', refreshToken)
+      if (user[0]) { return done(null, user.id); }
+      knex.insert({
+        auth_id: profile._json.id,
+        username: profile._json.name,
+        first_name: profile._json.first_name,
+        last_name: profile._json.last_name,
+        auth_provider: profile.provider,
+        img_url: profile._json.picture.data.url,
+        email: profile._json.email,
+        total_games: 0,
+        win: 0,
+        loss: 0,
+      }).returning('*').into('users')
+      .then((newUser) => {
+        console.log('NEW USERRRRR', newUser)
+        return done(null, newUser[0]);
+      })
+      // return done(null, newUser.id);
+
     })
-    .then(newUser => done(null, newUser))
     .catch(err => done(err));
   });
 }));
+
+const getOrSaveUser = () => {
+
+}
 
 module.exports = passport;
