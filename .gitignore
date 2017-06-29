@@ -5,6 +5,3 @@ client/dist/
 package-lock.json
 
 public/bundle.js
-
-.env
-env
