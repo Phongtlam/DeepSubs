@@ -81,8 +81,6 @@ class Chessboard extends React.Component {
         <button onClick={this.pickWhite}>Player W</button>
         <button onClick={this.pickBlack}>Player B</button>
         <li><button onClick={this.joinRoom}>room1</button></li>
-        {/* <li><button><Redirect to="/login" />room2</button></li> */}
-        <li><button>room3</button></li>
       </div>
     );
   }

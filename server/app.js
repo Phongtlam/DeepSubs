@@ -2,7 +2,7 @@ const express = require('express');
 const path = require('path');
 const middleware = require('./middleware');
 const routes = require('./routes');
-require('dotenv').config();
+require('dotenv').load();
 
 const webpackConfig = require('../webpack.config');
 

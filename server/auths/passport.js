@@ -2,7 +2,6 @@ const passport = require('passport');
 const LocalStrategy = require('passport-local').Strategy;
 const FacebookStrategy = require('passport-facebook').Strategy;
 const GoogleStrategy = require('passport-google-oauth20').Strategy;
-require('dotenv').load();
 
 const knex = require('../../postgres_db/knex');
 const authHelpers = require('./helpers');
@@ -26,7 +25,6 @@ passport.deserializeUser((id, done) => {
 
 passport.use('local-login', new LocalStrategy(LocalOpts, (req, username, password, done) => {
   // check to see if the username exists
-  console.log(username, password);
   knex('users').where({ username }).first()
   .then((user) => {
     if (!user) return done(null, false);
@@ -57,7 +55,6 @@ passport.use('facebook', new FacebookStrategy({
   // session: false,
   profileFields: ['id', 'displayName', 'name', 'email', 'picture.type(large)'],
 }, (req, token, refreshToken, profile, done) => {
-  console.log('fb prof', profile)
   process.nextTick(() => authHelpers.processOauthUser(profile, done));
 }));
 
@@ -67,7 +64,6 @@ passport.use('google', new GoogleStrategy({
   callbackURL: process.env.GOG_CALLBACK,
   passReqToCallback: true,
 }, (req, token, refreshToken, profile, done) => {
-  console.log('profilllle', profile)
   process.nextTick(() => authHelpers.processOauthUser(profile, done));
 }));
 
