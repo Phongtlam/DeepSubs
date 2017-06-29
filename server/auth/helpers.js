@@ -64,10 +64,30 @@ function handleErrors(req) {
   });
 }
 
+const processOauthUser = (profile, done) => knex('users').where('auth_id', profile.id)
+  .then((user) => {
+    if (user[0]) { return done(null, user[0]); }
+    return knex.insert({
+      auth_id: profile._json.id,
+      username: profile._json.name,
+      first_name: profile._json.first_name,
+      last_name: profile._json.last_name,
+      auth_provider: profile.provider,
+      img_url: profile._json.picture.data.url,
+      email: profile._json.email,
+      total_games: 0,
+      win: 0,
+      loss: 0,
+    }).returning('*').into('users')
+    .then(newUser => done(null, newUser[0]))
+    .catch(err => done(err));
+  });
+
 module.exports = {
   comparePass,
   createUser,
   loginRequired,
   adminRequired,
-  loginRedirect
+  loginRedirect,
+  processOauthUser,
 };
