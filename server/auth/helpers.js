@@ -87,6 +87,12 @@ const processOauthUser = (profile, done) => knex('users')
     .catch(err => done(err));
   });
 
+const isLoggedIn = (req, res, next) => {
+  if (req.isAuthenticated()) { return next(); }
+  res.redirect('/');
+  return null;
+}
+
 module.exports = {
   comparePass,
   createUser,
@@ -94,4 +100,5 @@ module.exports = {
   adminRequired,
   loginRedirect,
   processOauthUser,
+  isLoggedIn,
 };

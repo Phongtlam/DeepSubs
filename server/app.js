@@ -1,6 +1,7 @@
 const express = require('express');
 const path = require('path');
 const middleware = require('./middleware');
+const routes = require('./routes');
 require('dotenv').config();
 
 const webpackConfig = require('../webpack.config');
@@ -33,59 +34,11 @@ if (process.env.NODE_ENV !== 'production') {
 app.use(middleware.passport.initialize());
 app.use(middleware.passport.session());
 
-app.post('/login', middleware.passport.authenticate('local-login', {
-  successRedirect: '/home',
-  failureRedirect: '/login',
-  failureFlash: true,
-}));
-
-app.post('/signup', middleware.passport.authenticate('local-signup', {
-  successRedirect: '/home',
-  failureRedirect: '/signup',
-  failureFlash: true,
-}));
-
-app.get('/auth/facebook', middleware.passport.authenticate('facebook', { scope: 'email' }));
-
-// handle the callback after facebook has authenticated the user
-app.get('/auth/facebook/callback', middleware.passport.authenticate('facebook', {
-  successRedirect: '/home',
-  failureRedirect: '/',
-  failureFlash: true,
-}));
-
-app.get('/auth/google', middleware.passport.authenticate('google', { scope: ['profile', 'email'] }));
-
-app.get('/auth/google/callback', middleware.passport.authenticate('google', {
-  successRedirect: '/home',
-  failureRedirect: '/',
-  failureFlash: true,
-}));
-
-// app.get('/auth/google/callback',
-// (req, res, next) => {
-//   return middleware.passport.authenticate('google', {
-//     successRedirect: '/home',
-//     failureRedirect: '/login',
-//     failureFlash: true,
-//     session: false,
-//   },
-//   (err, user, info) => {
-//     if (err) {
-//       console.log('err', err);
-//     } else {
-//       next();
-//     }
-//   })(req, res, next);
-// });
-
+app.use('/', routes.auths);
 // prod environment
 app.use('/public', publicPath);
 // app.use(publicPath);
 app.get('/home', (req, res) => { res.sendFile(indexPath); });
-
-require('./routes.js')(app);
-
 
 const allowCrossDomain = (req, res, next) => {
   res.header('Access-Control-Allow-Origin', '*');
