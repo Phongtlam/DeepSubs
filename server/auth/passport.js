@@ -2,7 +2,7 @@ const passport = require('passport');
 const LocalStrategy = require('passport-local').Strategy;
 const FacebookStrategy = require('passport-facebook').Strategy;
 const GoogleStrategy = require('passport-google-oauth20').Strategy;
-require('dotenv').config();
+require('dotenv').load();
 
 const knex = require('../../postgres_db/knex');
 const authHelpers = require('./helpers');
@@ -57,6 +57,7 @@ passport.use('facebook', new FacebookStrategy({
   // session: false,
   profileFields: ['id', 'displayName', 'name', 'email', 'picture.type(large)'],
 }, (req, token, refreshToken, profile, done) => {
+  console.log('fb prof', profile)
   process.nextTick(() => authHelpers.processOauthUser(profile, done));
 }));
 
