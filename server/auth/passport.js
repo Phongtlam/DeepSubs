@@ -65,6 +65,7 @@ passport.use('google', new GoogleStrategy({
   callbackURL: process.env.GOG_CALLBACK,
   passReqToCallback: true,
 }, (req, token, refreshToken, profile, done) => {
+  console.log('profilllle', profile)
   process.nextTick(() => authHelpers.processOauthUser(profile, done));
 }));
 

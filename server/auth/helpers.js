@@ -67,7 +67,8 @@ function handleErrors(req) {
   });
 }
 
-const processOauthUser = (profile, done) => knex('users').where('auth_id', profile.id)
+const processOauthUser = (profile, done) => knex('users')
+  .where('auth_id', profile.id)
   .then((user) => {
     if (user[0]) { return done(null, user[0]); }
     return knex.insert({
