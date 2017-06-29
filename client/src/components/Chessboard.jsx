@@ -34,7 +34,7 @@ class Chessboard extends React.Component {
 
   onMovePiece(piece, from, to) {
     this.engine.move({ piece, from, to });
-    const newBoard = this.engine.fen()
+    const newBoard = this.engine.fen();
     this.socket.emit('board-update', newBoard);
     this.props.updateBoardAsync(newBoard);
   }

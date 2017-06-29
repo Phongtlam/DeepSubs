@@ -20,6 +20,8 @@ app.use(middleware.session({
 }));
 app.use(middleware.cookieParser());
 app.use(middleware.flash());
+app.use(middleware.passport.initialize());
+app.use(middleware.passport.session());
 app.set('views', path.join(__dirname, './views'));
 app.set('view engine', 'ejs');
 
@@ -30,9 +32,6 @@ if (process.env.NODE_ENV !== 'production') {
   }));
   app.use(require('webpack-hot-middleware')(compiler));
 }
-
-app.use(middleware.passport.initialize());
-app.use(middleware.passport.session());
 
 app.use('/', routes.auths);
 // prod environment

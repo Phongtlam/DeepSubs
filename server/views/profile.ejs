@@ -2,7 +2,7 @@
 
     <div class="page-header text-center">
         <h1><span class="fa fa-anchor"></span> Profile Page</h1>
-        <a href="/" class="btn btn-default btn-sm">Home page</a>
+        <a href="/home" class="btn btn-default btn-sm">Home page</a>
         <a href="/logout" class="btn btn-default btn-sm">Logout</a>
     </div>
 
@@ -11,18 +11,21 @@
         <!-- LOCAL INFORMATION -->
         <div class="col-sm-6">
             <div class="well">
-                <h3><span class="fa fa-user"></span> Local</h3>
+                <h3><span class="fa fa-user"></span> <%= user.username %></h3>
 
-                <% if (user.email) { %>
+                <% if (user.auth_id) { %>
                 <p>
-                    <strong>display name</strong>: <%= user.display %><br>
-                    <strong>id</strong>: <%= user.id %><br>
+                    <img src="<%= user.img_url %>" alt="profile picture"><br>
+                    <strong>name</strong>: <%= user.first_name %> <%= user.last_name %><br>
+                    <strong>total games</strong>: <%= user.total_games %><br>
+                    <strong>win/loss</strong>: <%= user.win %> / <%= user.loss %><br>
                     <strong>email</strong>: <%= user.email %>
                 </p>
 
                 <a href="/unlink/local" class="btn btn-default">Unlink</a>
                 <% } else { %>
-                <a href="/connect/local" class="btn btn-default">Connect Local</a>
+                <a href="/auth/facebook" class="btn btn-primary">Connect to Facebook</a>
+                <a href="/auth/google" class="btn btn-danger">Connect to Google+   </a>
                 <% } %>
 
             </div>
