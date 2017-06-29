@@ -60,12 +60,11 @@ passport.use('facebook', new FacebookStrategy({
 }));
 
 passport.use('google', new GoogleStrategy({
-  clientID: '642501203934-5h5qju47ndfej211na2ffkebdhuuford.apps.googleusercontent.com',
-  clientSecret: '3pD1IhLTUqxgdeL2hOPxr7IF',
-  callbackURL: '/auth/google/callback',
+  clientID: process.env.GOG_ID,
+  clientSecret: process.env.GOG_SECRET,
+  callbackURL: process.env.GOG_CALLBACK,
   passReqToCallback: true,
 }, (req, token, refreshToken, profile, done) => {
-  console.log('profile', profile)
   process.nextTick(() => authHelpers.processOauthUser(profile, done));
 }));
 

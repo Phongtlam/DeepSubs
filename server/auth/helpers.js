@@ -5,7 +5,7 @@ function comparePass(userPassword, databasePassword) {
   return bcrypt.compareSync(userPassword, databasePassword);
 }
 
-function createUser(req, res) {
+const createUser = (req, res) => {
   console.log('req', req.body)
   return handleErrors(req)
   .then(() => {
@@ -16,6 +16,9 @@ function createUser(req, res) {
       username: req.body.username,
       password: hash,
       auth_provider: 'no_auth',
+      total_games: 0,
+      win: 0,
+      loss: 0,
     })
     .returning('*');
   })
@@ -68,13 +71,13 @@ const processOauthUser = (profile, done) => knex('users').where('auth_id', profi
   .then((user) => {
     if (user[0]) { return done(null, user[0]); }
     return knex.insert({
-      auth_id: profile._json.id,
-      username: profile._json.name,
-      first_name: profile._json.first_name,
-      last_name: profile._json.last_name,
+      auth_id: profile.id,
+      username: profile.displayName,
+      first_name: profile.name.givenName,
+      last_name: profile.name.familyName,
       auth_provider: profile.provider,
-      img_url: profile._json.picture.data.url,
-      email: profile._json.email,
+      img_url: profile.photos[0].value,
+      email: profile.emails[0].value,
       total_games: 0,
       win: 0,
       loss: 0,

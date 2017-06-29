@@ -56,28 +56,28 @@ app.get('/auth/facebook/callback', middleware.passport.authenticate('facebook', 
 
 app.get('/auth/google', middleware.passport.authenticate('google', { scope: ['profile', 'email'] }));
 
-// app.get('/auth/google/callback', middleware.passport.authenticate('google', {
-//   successRedirect: '/auth/google/home',
-//   failureRedirect: '/auth/google/',
-//   failureFlash: true,
-// }));
+app.get('/auth/google/callback', middleware.passport.authenticate('google', {
+  successRedirect: '/home',
+  failureRedirect: '/',
+  failureFlash: true,
+}));
 
-app.get('/auth/google/callback',
-(req, res, next) => {
-  return middleware.passport.authenticate('google', {
-    successRedirect: '/home',
-    failureRedirect: '/login',
-    failureFlash: true,
-    session: false,
-  },
-  (err, user, info) => {
-    if (err) {
-      console.log('err', err);
-    } else {
-      next();
-    }
-  })(req, res, next);
-});
+// app.get('/auth/google/callback',
+// (req, res, next) => {
+//   return middleware.passport.authenticate('google', {
+//     successRedirect: '/home',
+//     failureRedirect: '/login',
+//     failureFlash: true,
+//     session: false,
+//   },
+//   (err, user, info) => {
+//     if (err) {
+//       console.log('err', err);
+//     } else {
+//       next();
+//     }
+//   })(req, res, next);
+// });
 
 // prod environment
 app.use('/public', publicPath);
