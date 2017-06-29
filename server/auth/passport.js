@@ -2,6 +2,7 @@ const passport = require('passport');
 const LocalStrategy = require('passport-local').Strategy;
 const FacebookStrategy = require('passport-facebook').Strategy;
 const GoogleStrategy = require('passport-google-oauth20').Strategy;
+require('dotenv').config();
 
 const knex = require('../../postgres_db/knex');
 const authHelpers = require('./helpers');
