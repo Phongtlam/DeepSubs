@@ -27,9 +27,9 @@ passport.use('local-login', new LocalStrategy(LocalOpts, (req, username, passwor
   // check to see if the username exists
   knex('users').where({ username }).first()
   .then((user) => {
-    if (!user) return done(null, false, req.flash('loginMessage', 'Wrong username'));
+    if (!user) return done(null, false, req.flash('loginMessage', 'Wrong username!'));
     if (!authHelpers.comparePass(password, user.password)) {
-      return done(null, false, req.flash('loginMessage', 'Wrong password'));
+      return done(null, false, req.flash('loginMessage', 'Wrong password!'));
     } else {
       return done(null, user);
     }
@@ -45,7 +45,7 @@ passport.use('local-signup', new LocalStrategy(LocalOpts, (req, username, passwo
     authHelpers.createUser(req);
   })
   .then(user => done(null, user[0]))
-  .catch(err => done(err));
+  .catch(err => done(null, false, req.flash('signupMessage', 'username and/or password must be longer than 6 characters.')));
 }));
 
 passport.use('facebook', new FacebookStrategy({
