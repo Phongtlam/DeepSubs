@@ -10,36 +10,34 @@ router.route('/signup')
     res.render('signup.ejs', { message: req.flash('signupMessage') });
   })
   .post(middleware.passport.authenticate('local-signup', {
-    successRedirect: '/home',
+    successRedirect: '/profile',
     failureRedirect: '/signup',
-    failureFlash: true,
   }));
 
 router.route('/login')
   .get((req, res) => {
-    res.render('login.ejs', { message: req.flash('signupMessage') });
+    res.render('login.ejs', { message: req.flash('loginMessage') });
   })
   .post(middleware.passport.authenticate('local-login', {
-    successRedirect: '/home',
+    successRedirect: '/profile',
     failureRedirect: '/login',
-    failureFlash: true,
   }));
 
 router.route('/profile')
   .get(authHelpers.isLoggedIn, (req, res) => {
-  res.render('profile.ejs', {
-    user: req.user, // get the user out of session and pass to template
+    res.render('profile.ejs', {
+      gameId: '',
+      user: req.user, // get the user out of session and pass to template
+    });
   });
-});
 
 router.route('/auth/facebook')
   .get(middleware.passport.authenticate('facebook', { scope: 'email' }));
 
 router.route('/auth/facebook/callback')
   .get(middleware.passport.authenticate('facebook', {
-    successRedirect: '/home',
+    successRedirect: '/profile',
     failureRedirect: '/',
-    failureFlash: true,
   }));
 
 router.route('/auth/google')
@@ -47,9 +45,8 @@ router.route('/auth/google')
 
 router.route('/auth/google/callback')
   .get(middleware.passport.authenticate('google', {
-    successRedirect: '/home',
+    successRedirect: '/profile',
     failureRedirect: '/',
-    failureFlash: true,
   }));
 
 router.route('/logout')

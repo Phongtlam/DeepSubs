@@ -1,19 +1,29 @@
 <% include head.ejs%>
 
     <div class="page-header text-center">
-        <h1><span class="fa fa-anchor"></span> Profile Page</h1>
-        <a href="/home" class="btn btn-default btn-sm">Home page</a>
-        <a href="/logout" class="btn btn-default btn-sm">Logout</a>
+        <h1><span class="fa fa-anchor"></span> Welcome <%= user.username %> !</h1>
+        <a href="/game?id=<%= user.username %>" class="btn btn-primary"> Generate Game ID </a>
+        <a href="/logout" class="btn btn-warning btn-sm"><span class="fa fa-sign-out"></span> Logout</a>
     </div>
+
+    <form action="/game/join" method="post">
+        <div class="form-group">
+          <label>Join on room ID</label>
+          <input type="text" class="form-control" name="gameId">
+        </div>
+        <button type="submit" class="btn btn-primary">Join Game ID</button>
+    </form>
+
+    <hr>
 
     <div class="row">
 
         <!-- LOCAL INFORMATION -->
         <div class="col-sm-6">
             <div class="well">
-                <h3><span class="fa fa-user"></span> <%= user.username %></h3>
+                <h3><span class="fa fa-user"></span> Your Profile</h3>
 
-                <% if (user.auth_id) { %>
+                <% if (user) { %>
                 <p>
                     <img src="<%= user.img_url %>" alt="profile picture"><br>
                     <strong>name</strong>: <%= user.first_name %> <%= user.last_name %><br>
@@ -22,7 +32,7 @@
                     <strong>email</strong>: <%= user.email %>
                 </p>
 
-                <a href="/unlink/local" class="btn btn-default">Unlink</a>
+                <a href="/unlink/local" class="btn btn-default">Update profile</a>
                 <% } else { %>
                 <a href="/auth/facebook" class="btn btn-primary">Connect to Facebook</a>
                 <a href="/auth/google" class="btn btn-danger">Connect to Google+   </a>

@@ -5,6 +5,11 @@ function comparePass(userPassword, databasePassword) {
   return bcrypt.compareSync(userPassword, databasePassword);
 }
 
+const createId = (id) => {
+  const salt = bcrypt.genSaltSync();
+  return bcrypt.hashSync(id, salt);
+}
+
 const createUser = (req, res) => {
   console.log('req', req.body)
   return handleErrors(req)
@@ -28,15 +33,15 @@ const createUser = (req, res) => {
 }
 
 function loginRequired(req, res, next) {
-  if (!req.user) return res.status(401).json({status: 'Please log in'});
+  if (!req.user) return res.status(401).json({ status: 'Please log in' });
   return next();
 }
 
 function adminRequired(req, res, next) {
-  if (!req.user) res.status(401).json({status: 'Please log in'});
+  if (!req.user) res.status(401).json({ status: 'Please log in' });
   return knex('users').where({ username: req.user.username }).first()
   .then((user) => {
-    if (!user.admin) res.status(401).json({status: 'You are not authorized'});
+    if (!user.admin) res.status(401).json({ status: 'You are not authorized' });
     return next();
   })
   .catch((err) => {
@@ -46,7 +51,7 @@ function adminRequired(req, res, next) {
 
 function loginRedirect(req, res, next) {
   if (req.user) return res.status(401).json(
-    {status: 'You are already logged in'});
+    { status: 'You are already logged in' });
   return next();
 }
 
@@ -101,4 +106,5 @@ module.exports = {
   loginRedirect,
   processOauthUser,
   isLoggedIn,
+  createId,
 };

@@ -1,6 +1,5 @@
 import React from 'react';
 import Board from 'react-chessdiagram';
-import { Redirect, Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 import propTypes from 'prop-types';
 import Chess from 'chess.js';
@@ -14,6 +13,7 @@ class Chessboard extends React.Component {
     super(props);
     this.state = {
       player: false,
+      roomId: '',
     };
     this.engine = null;
     this.socket = SocketIoClient();
@@ -27,9 +27,7 @@ class Chessboard extends React.Component {
   }
 
   componentDidMount() {
-    this.socket.on('connect', () => {
-      console.log('socket connect on client', this.socket.id);
-    });
+    this.joinRoom();
   }
 
   onMovePiece(piece, from, to) {
@@ -63,12 +61,18 @@ class Chessboard extends React.Component {
   }
 
   joinRoom() {
-    this.socket.emit('join-room', 'room1');
+    const qs = location.search;
+    const roomId = qs.slice(8, qs.length);
+    this.setState({
+      roomId,
+    });
+    this.socket.emit('join-room', roomId);
   }
 
   render() {
     return (
       <div>
+        This is the room ID: {this.state.roomId}
         <Board
           flip={this.state.player}
           fen={this.props.boardState}
@@ -80,7 +84,7 @@ class Chessboard extends React.Component {
         <button onClick={this.initBoard}>Start New Game</button>
         <button onClick={this.pickWhite}>Player W</button>
         <button onClick={this.pickBlack}>Player B</button>
-        <li><button onClick={this.joinRoom}>room1</button></li>
+        <li><button onClick={this.joinRoom}>join room</button></li>
       </div>
     );
   }

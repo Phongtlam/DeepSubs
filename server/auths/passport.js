@@ -27,9 +27,9 @@ passport.use('local-login', new LocalStrategy(LocalOpts, (req, username, passwor
   // check to see if the username exists
   knex('users').where({ username }).first()
   .then((user) => {
-    if (!user) return done(null, false);
+    if (!user) return done(null, false, req.flash('loginMessage', 'Wrong username'));
     if (!authHelpers.comparePass(password, user.password)) {
-      return done(null, false);
+      return done(null, false, req.flash('loginMessage', 'Wrong password'));
     } else {
       return done(null, user);
     }
@@ -40,7 +40,9 @@ passport.use('local-login', new LocalStrategy(LocalOpts, (req, username, passwor
 passport.use('local-signup', new LocalStrategy(LocalOpts, (req, username, password, done) => {
   knex('users').where({ username }).first()
   .then((user) => {
-    return (user) ? done(null, false) : authHelpers.createUser(req);
+    return (user) ?
+    done(null, false, req.flash('signupMessage', 'Please choose a different username.')) :
+    authHelpers.createUser(req);
   })
   .then(user => done(null, user[0]))
   .catch(err => done(err));

@@ -11,6 +11,7 @@ const publicPath = express.static(path.join(__dirname, '../public'));
 
 const app = express();
 
+app.use(middleware.flash());
 app.use(middleware.bodyParser.urlencoded({ extended: false }));
 app.use(middleware.bodyParser.json());
 app.use(middleware.session({
@@ -19,7 +20,6 @@ app.use(middleware.session({
   saveUninitialized: true,
 }));
 app.use(middleware.cookieParser());
-app.use(middleware.flash());
 app.use(middleware.passport.initialize());
 app.use(middleware.passport.session());
 app.set('views', path.join(__dirname, './views'));
@@ -34,6 +34,7 @@ if (process.env.NODE_ENV !== 'production') {
 }
 
 app.use('/', routes.auths);
+app.use('/game', routes.game)
 // prod environment
 app.use('/public', publicPath);
 // app.use(publicPath);
