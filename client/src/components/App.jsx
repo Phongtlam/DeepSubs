@@ -1,7 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import Chessboard from './Chessboard';
-import Chatterbox from './Chatterbox';
 import ChessHeader from './ChessHeader';
 
 import {
@@ -17,7 +16,6 @@ const App = props => (
   <div>
     <ChessHeader {...props} />
     <Chessboard {...props} />
-    <Chatterbox />
   </div>
 );
 

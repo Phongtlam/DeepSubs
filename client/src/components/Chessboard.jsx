@@ -1,6 +1,5 @@
 import React from 'react';
 import Board from 'react-chessdiagram';
-import { connect } from 'react-redux';
 import propTypes from 'prop-types';
 import Chess from 'chess.js';
 import SocketIo from '../socket_io_client/index';
@@ -48,9 +47,9 @@ class Chessboard extends React.Component {
 
   joinRoom() {
     const qs = location.search;
-    const roomId = qs.slice(8, qs.length);
-    this.props.getGameIdAsync(roomId);
-    SocketIo.emit('join-room', roomId);
+    const gameId = qs.slice(8, qs.length);
+    this.props.getGameIdAsync(gameId);
+    SocketIo.emit('join-room', gameId);
   }
 
   render() {

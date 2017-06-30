@@ -2,13 +2,13 @@
 
     <div class="page-header text-center">
         <h1><span class="fa fa-anchor"></span> Welcome <%= user.username %> !</h1>
-        <a href="/game?id=<%= user.username %>" class="btn btn-primary"> Generate Game ID </a>
+        <a href="/game?id=<%= user.username %>" class="btn btn-primary"> Make a new game </a>
         <a href="/logout" class="btn btn-warning btn-sm"><span class="fa fa-sign-out"></span> Logout</a>
     </div>
 
     <form action="/game/join" method="post">
         <div class="form-group">
-          <label>Join on room ID</label>
+          <label>Put your friend's ID code here</label>
           <input type="text" class="form-control" name="gameId">
         </div>
         <button type="submit" class="btn btn-primary">Join Game ID</button>
