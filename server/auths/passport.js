@@ -24,6 +24,9 @@ passport.deserializeUser((id, done) => {
 });
 
 passport.use('local-login', new LocalStrategy(LocalOpts, (req, username, password, done) => {
+  if ((!username || !password) && (!username && !password)) {
+    return done(null, false, req.flash('loginMessage', 'Please enter a username and/or password'));
+  }
   // check to see if the username exists
   knex('users').where({ username }).first()
   .then((user) => {
