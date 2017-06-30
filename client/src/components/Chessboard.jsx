@@ -82,9 +82,8 @@ class Chessboard extends React.Component {
           darkSquareColor={styles.board.dark}
         />
         <button onClick={this.initBoard}>Start New Game</button>
-        <button onClick={this.pickWhite}>Player W</button>
-        <button onClick={this.pickBlack}>Player B</button>
-        <li><button onClick={this.joinRoom}>join room</button></li>
+        <button onClick={this.pickWhite}>Play as White</button>
+        <button onClick={this.pickBlack}>Play as Black</button>
       </div>
     );
   }
