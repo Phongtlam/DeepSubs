@@ -3,7 +3,7 @@ import Board from 'react-chessdiagram';
 import { connect } from 'react-redux';
 import propTypes from 'prop-types';
 import Chess from 'chess.js';
-import SocketIoClient from 'socket.io-client';
+import SocketIo from '../socket_io_client/index';
 
 import ChessFooter from './ChessFooter';
 
@@ -13,11 +13,10 @@ class Chessboard extends React.Component {
   constructor(props) {
     super(props);
     this.engine = null;
-    this.socket = SocketIoClient();
     this.onMovePiece = this.onMovePiece.bind(this);
     this.initBoard = this.initBoard.bind(this);
     this.updateBoardListener = this.updateBoardListener.bind(this);
-    this.socket.on('board-update', this.updateBoardListener);
+    SocketIo.on('board-update', this.updateBoardListener);
     this.joinRoom = this.joinRoom.bind(this);
   }
 
@@ -28,7 +27,7 @@ class Chessboard extends React.Component {
   onMovePiece(piece, from, to) {
     this.engine.move({ piece, from, to });
     const newBoard = this.engine.fen();
-    this.socket.emit('board-update', newBoard);
+    SocketIo.emit('board-update', newBoard);
     this.props.updateBoardAsync(newBoard);
   }
 
@@ -51,7 +50,7 @@ class Chessboard extends React.Component {
     const qs = location.search;
     const roomId = qs.slice(8, qs.length);
     this.props.getGameIdAsync(roomId);
-    this.socket.emit('join-room', roomId);
+    SocketIo.emit('join-room', roomId);
   }
 
   render() {
