@@ -16,8 +16,8 @@ export const getGameIdAsync = roomId => (dispatch) => {
 
 export const pickWhiteAsync = () => (dispatch) => {
   dispatch(pickWhite());
-}
+};
 
 export const pickBlackAsync = () => (dispatch) => {
   dispatch(pickBlack());
-}
+};

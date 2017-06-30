@@ -3,8 +3,9 @@ import Board from 'react-chessdiagram';
 import { connect } from 'react-redux';
 import propTypes from 'prop-types';
 import Chess from 'chess.js';
-import { Button } from 'react-bootstrap';
 import SocketIoClient from 'socket.io-client';
+
+import ChessFooter from './ChessFooter';
 
 import {
   startNewGameAsync,
@@ -23,8 +24,6 @@ class Chessboard extends React.Component {
     this.socket = SocketIoClient();
     this.onMovePiece = this.onMovePiece.bind(this);
     this.initBoard = this.initBoard.bind(this);
-    this.pickWhite = this.pickWhite.bind(this);
-    this.pickBlack = this.pickBlack.bind(this);
     this.updateBoardListener = this.updateBoardListener.bind(this);
     this.socket.on('board-update', this.updateBoardListener);
     this.joinRoom = this.joinRoom.bind(this);
@@ -56,16 +55,6 @@ class Chessboard extends React.Component {
     this.props.startNewGameAsync();
   }
 
-  pickWhite() {
-    // this.setState({ player: false });
-    this.props.pickWhiteAsync();
-  }
-
-  pickBlack() {
-    // this.setState({ player: true });
-    this.props.pickBlackAsync();
-  }
-
   joinRoom() {
     const qs = location.search;
     const roomId = qs.slice(8, qs.length);
@@ -85,11 +74,10 @@ class Chessboard extends React.Component {
           lightSquareColor={styles.board.light}
           darkSquareColor={styles.board.dark}
         />
-        <div className="text center">
-          <Button bsStyle="primary" onClick={this.initBoard}>Start New Game</Button>
-          <Button onClick={this.pickWhite}>Play as White</Button>
-          <Button onClick={this.pickBlack}>Play as Black</Button>
-        </div>
+        <ChessFooter
+          {...this.props}
+          initBoard={this.initBoard}
+        />
       </div>
     );
   }
@@ -121,8 +109,6 @@ Chessboard.propTypes = {
   updateBoardAsync: propTypes.func,
   startNewGameAsync: propTypes.func,
   getGameIdAsync: propTypes.func,
-  pickWhiteAsync: propTypes.func,
-  pickBlackAsync: propTypes.func,
 };
 Chessboard.defaultProps = {
   gameId: '',
@@ -131,6 +117,4 @@ Chessboard.defaultProps = {
   updateBoardAsync: propTypes.func,
   startNewGameAsync: propTypes.func,
   getGameIdAsync: propTypes.func,
-  pickWhiteAsync: propTypes.func,
-  pickBlackAsync: propTypes.func,
 };
