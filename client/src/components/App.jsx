@@ -1,15 +1,41 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import Chessboard from './Chessboard';
-import { startNewGame } from '../redux/actions/index';
 import Chatterbox from './Chatterbox';
+import ChessHeader from './ChessHeader';
 
-const App = () => (
+import {
+  startNewGameAsync,
+  updateBoardAsync,
+  getGameIdAsync,
+  pickWhiteAsync,
+  pickBlackAsync,
+} from '../redux/actions/index';
+
+
+const App = props => (
   <div>
-    <Chessboard />
+    <ChessHeader {...props} />
+    <Chessboard {...props} />
     <Chatterbox />
   </div>
 );
 
+const mapStateToProps = ({ board, room }) => {
+  const { boardState } = board;
+  const { gameId, side } = room;
+  return {
+    boardState,
+    gameId,
+    side,
+  };
+};
 
-export default connect(null, { startNewGame })(App);
+
+export default connect(mapStateToProps,
+  { startNewGameAsync,
+    updateBoardAsync,
+    getGameIdAsync,
+    pickWhiteAsync,
+    pickBlackAsync,
+  })(App);

@@ -13,11 +13,13 @@ const ChessFooter = props => (
 export default ChessFooter;
 
 ChessFooter.propTypes = {
+  initBoard: propTypes.func,
   pickWhiteAsync: propTypes.func,
   pickBlackAsync: propTypes.func,
 };
 
 ChessFooter.defaultProps = {
+  initBoard: propTypes.func,
   pickWhiteAsync: propTypes.func,
   pickBlackAsync: propTypes.func,
 }

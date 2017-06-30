@@ -7,14 +7,6 @@ import SocketIoClient from 'socket.io-client';
 
 import ChessFooter from './ChessFooter';
 
-import {
-  startNewGameAsync,
-  updateBoardAsync,
-  getGameIdAsync,
-  pickWhiteAsync,
-  pickBlackAsync,
-} from '../redux/actions/index';
-
 import styles from '../styles/styles';
 
 class Chessboard extends React.Component {
@@ -65,7 +57,6 @@ class Chessboard extends React.Component {
   render() {
     return (
       <div>
-        This is the room ID: {this.props.gameId}
         <Board
           flip={this.props.side}
           fen={this.props.boardState}
@@ -83,27 +74,9 @@ class Chessboard extends React.Component {
   }
 }
 
-const mapStateToProps = ({ board, room }) => {
-  const { boardState } = board;
-  const { gameId, side } = room;
-  return {
-    boardState,
-    gameId,
-    side,
-  };
-};
-
-
-export default connect(mapStateToProps,
-  { startNewGameAsync,
-    updateBoardAsync,
-    getGameIdAsync,
-    pickWhiteAsync,
-    pickBlackAsync,
-  })(Chessboard);
+export default Chessboard;
 
 Chessboard.propTypes = {
-  gameId: propTypes.string,
   boardState: propTypes.string,
   side: propTypes.bool,
   updateBoardAsync: propTypes.func,
@@ -111,7 +84,6 @@ Chessboard.propTypes = {
   getGameIdAsync: propTypes.func,
 };
 Chessboard.defaultProps = {
-  gameId: '',
   boardState: '',
   side: false,
   updateBoardAsync: propTypes.func,

@@ -2,6 +2,8 @@ import { newGame, updateBoard } from './boardAction';
 import { getGameId, pickWhite, pickBlack } from './roomAction';
 
 // async action by Thunk
+
+// board controllers
 export const startNewGameAsync = () => (dispatch) => {
   dispatch(newGame());
 };
