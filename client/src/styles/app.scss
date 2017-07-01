@@ -1,0 +1,32 @@
+.container {
+  background-color: #EEE;
+  // margin-left: auto;
+  // margin-right: auto;
+  font-family: Helvetica, Arial, Calibri, sans-serif;
+}
+
+.header {
+  text-align: left;
+  padding: 10px;
+}
+
+.content {
+  // margin: -30px;
+  padding: 10px;
+}
+
+.chessboard {
+  // margin: 10px;
+  float: left;
+}
+
+.chatterbox {
+  float: right;
+  // margin: 10px;
+}
+
+.footer {
+  padding: 10px;
+  text-align: center;
+  clear: both;
+}

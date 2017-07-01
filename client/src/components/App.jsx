@@ -3,6 +3,7 @@ import { connect } from 'react-redux';
 import Chessboard from './Chessboard';
 import ChessHeader from './ChessHeader';
 import Chatterbox from './Chatterbox';
+import '../styles/app.scss';
 
 import {
   startNewGameAsync,

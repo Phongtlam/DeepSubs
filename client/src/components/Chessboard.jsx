@@ -8,7 +8,7 @@ import ChessFooter from './ChessFooter';
 
 const styles = {
   board: {
-    size: 70,
+    size: 60,
     light: '#ffffff',
     dark: '#808080',
   },
@@ -68,6 +68,7 @@ class Chessboard extends React.Component {
     return (
       <div>
         <Board
+          highlights={{ one: 'one' }}
           allowMoves={this.state.go}
           flip={this.props.side}
           fen={this.props.boardState}

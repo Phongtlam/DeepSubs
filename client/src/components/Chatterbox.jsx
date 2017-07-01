@@ -1,5 +1,5 @@
 import React from 'react';
-import { FormGroup, InputGroup, Button, FormControl } from 'react-bootstrap';
+import { FormGroup, Button, FormControl, Modal } from 'react-bootstrap';
 import Message from './Message';
 import '../styles/chatterbox.scss';
 
@@ -14,9 +14,10 @@ class Chatterbox extends React.Component {
 
   render() {
     return (
-      <div className="top-bar">
-        <h3>THIS IS CHAT</h3>
+      <div className="chat-body">
+        <h3>This is chat head</h3>
         <div className="msg_container" id="messageList">
+          <h4>THIS IS MESSAGE CONTAINER</h4>
           {this.state.messages.map((message, i) =>
             (<Message
               key={i}
@@ -26,30 +27,21 @@ class Chatterbox extends React.Component {
             />),
           )}
         </div>
-        {/* <FormGroup>
-          <InputGroup>
-            <FormControl
-              placeholder="Your message here..."
-              onChange={this.handleOnChange}
-              value={this.state.input}
-            />
-            <Button
-              bsStyle="primary"
-              type="submit"
-              onClick={this.handleOnSubmit}
-            > Send
-            </Button>
-          </InputGroup>
-        </FormGroup> */}
-        <form className="chat-input" onSubmit={this.submitHandler}>
-          <input
+        <FormGroup>
+          <FormControl
             type="text"
-            onChange={this.textChangeHandler}
-            value={this.state.chatInput}
-            placeholder="Write a message..."
-            required
+            placeholder="Your message here..."
+            onChange={this.handleOnChange}
+            value={this.state.input}
           />
-        </form>
+          <Button
+            className="fa fa-paper-plane-o"
+            bsStyle="success"
+            type="submit"
+            onClick={this.handleOnSubmit}
+          > Send
+          </Button>
+        </FormGroup>
       </div>
     );
   }
