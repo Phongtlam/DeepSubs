@@ -6,7 +6,13 @@ import SocketIo from '../socket_io_client/index';
 
 import ChessFooter from './ChessFooter';
 
-import styles from '../styles/styles';
+const styles = {
+  board: {
+    size: 70,
+    light: '#ffffff',
+    dark: '#808080',
+  },
+};
 
 class Chessboard extends React.Component {
   constructor(props) {
@@ -31,14 +37,14 @@ class Chessboard extends React.Component {
     this.engine.move({ piece, from, to });
     const newBoard = this.engine.fen();
     SocketIo.emit('board-update', newBoard);
+    this.setState({ go: false });
     this.props.updateBoardAsync(newBoard);
-    this.setState({ go: false })
   }
 
   updateBoardListener(newBoard) {
     // listen to changes from the other side
     this.engine.load(newBoard);
-    this.setState({ go: true })
+    this.setState({ go: true });
     this.props.updateBoardAsync(newBoard);
   }
 

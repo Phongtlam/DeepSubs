@@ -11,6 +11,7 @@ const publicPath = express.static(path.join(__dirname, '../public'));
 
 const app = express();
 
+app.use(middleware.cors());
 app.use(middleware.flash());
 app.use(middleware.bodyParser.urlencoded({ extended: false }));
 app.use(middleware.bodyParser.json());
@@ -34,17 +35,10 @@ if (process.env.NODE_ENV !== 'production') {
 }
 
 app.use('/', routes.auths);
-app.use('/game', routes.game)
+app.use('/game', routes.game);
 // prod environment
 app.use('/public', publicPath);
 // app.use(publicPath);
 app.get('/home', (req, res) => { res.sendFile(indexPath); });
-
-const allowCrossDomain = (req, res, next) => {
-  res.header('Access-Control-Allow-Origin', '*');
-  next();
-};
-
-app.use(allowCrossDomain);
 
 module.exports = app;

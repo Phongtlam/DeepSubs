@@ -4,3 +4,4 @@ module.exports.webpack = require('webpack');
 module.exports.passport = require('../auths/passport');
 module.exports.cookieParser = require('cookie-parser');
 module.exports.session = require('express-session');
+module.exports.cors = require('cors');
