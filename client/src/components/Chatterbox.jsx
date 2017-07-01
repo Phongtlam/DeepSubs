@@ -10,12 +10,26 @@ class Chatterbox extends React.Component {
       input: '',
       messages: [],
     };
+    this.handleOnChange = this.handleOnChange.bind(this);
+  }
+
+  handleOnChange(e) {
+    this.setState({
+      input: e.target.value,
+    })
+  }
+
+  handleOnSubmit(e) {
+    e.preventDefault();
+    this.setState((prevState) => {
+      prevState.messages.concat(this.state.input);
+    });
   }
 
   render() {
     return (
-      <div className="chat-body">
-        <h3>This is chat head</h3>
+      <div>
+        <div className="chat-header ui-widget-header">React p2p Chat</div>
         <div className="msg_container" id="messageList">
           <h4>THIS IS MESSAGE CONTAINER</h4>
           {this.state.messages.map((message, i) =>
