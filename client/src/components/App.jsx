@@ -48,7 +48,6 @@ class App extends React.Component {
           <div className="chatterbox">
             <Chatterbox {...this.props} />
           </div>
-          <button onClick={this.getProfile}>GET PROFILE</button>
         </div>
         <div className="footer">
           Copyright &copy; PhongLam 2017
