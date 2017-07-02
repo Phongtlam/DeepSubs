@@ -5,7 +5,7 @@ const INITIAL_STATE = {
   side: false,
 };
 
-const room = (state = INITIAL_STATE, { type, gameId, side }) => {
+const room = (state = INITIAL_STATE, { type, gameId }) => {
   switch (type) {
     case GET_GAME_ID:
       return {
@@ -13,14 +13,11 @@ const room = (state = INITIAL_STATE, { type, gameId, side }) => {
         gameId,
       };
     case PICK_WHITE:
-      return {
-        ...state,
-        side,
-      };
+      return INITIAL_STATE.side;
     case PICK_BLACK:
       return {
         ...state,
-        side,
+        side: true,
       };
     default:
       return state;

@@ -7,7 +7,7 @@ const board = (state = INITIAL_STATE, { type, boardState }) => {
     case START_GAME:
       return {
         ...state,
-        boardState,
+        boardState: 'rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1',
       };
     case UPDATE_BOARD:
       return {

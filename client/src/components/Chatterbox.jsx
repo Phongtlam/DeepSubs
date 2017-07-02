@@ -1,5 +1,5 @@
 import React from 'react';
-import { FormGroup, Button, FormControl, Modal } from 'react-bootstrap';
+import { FormGroup, Button, FormControl } from 'react-bootstrap';
 import Message from './Message';
 import '../styles/chatterbox.scss';
 
@@ -10,20 +10,21 @@ class Chatterbox extends React.Component {
       input: '',
       messages: [],
     };
-    this.handleOnChange = this.handleOnChange.bind(this);
+    this.onChangeHandler = this.onChangeHandler.bind(this);
+    this.onSubmitHandler = this.onSubmitHandler.bind(this);
   }
 
-  handleOnChange(e) {
-    this.setState({
-      input: e.target.value,
-    })
+  onChangeHandler(e) {
+    this.setState({ input: e.target.value });
   }
 
-  handleOnSubmit(e) {
+  onSubmitHandler(e) {
     e.preventDefault();
-    this.setState((prevState) => {
-      prevState.messages.concat(this.state.input);
-    });
+    this.setState({ input: '' });
+    this.setState(prevState => ({
+      messages: prevState.messages.concat([this.state.input]),
+    }));
+    console.log(this.state.messages)
   }
 
   render() {
@@ -32,30 +33,24 @@ class Chatterbox extends React.Component {
         <div className="chat-header ui-widget-header">React p2p Chat</div>
         <div className="msg_container" id="messageList">
           <h4>THIS IS MESSAGE CONTAINER</h4>
-          {this.state.messages.map((message, i) =>
-            (<Message
-              key={i}
-              username={message.username}
-              message={message.message}
-              fromMe={message.fromMe}
-            />),
-          )}
+          <Message {...this.state} />
         </div>
-        <FormGroup>
-          <FormControl
-            type="text"
-            placeholder="Your message here..."
-            onChange={this.handleOnChange}
-            value={this.state.input}
-          />
-          <Button
-            className="fa fa-paper-plane-o"
-            bsStyle="success"
-            type="submit"
-            onClick={this.handleOnSubmit}
-          > Send
-          </Button>
-        </FormGroup>
+        <form onSubmit={this.onSubmitHandler}>
+          <FormGroup>
+            <FormControl
+              type="text"
+              placeholder="Your message here..."
+              onChange={this.onChangeHandler}
+              value={this.state.input}
+            />
+            <Button
+              className="fa fa-paper-plane-o send-button"
+              bsStyle="success"
+              type="submit"
+              > Send
+            </Button>
+          </FormGroup>
+        </form>
       </div>
     );
   }

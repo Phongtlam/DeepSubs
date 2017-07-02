@@ -1,7 +1,7 @@
 .msg_container {
   list-style: none;
   background: none;
-  height: 450px;
+  height: 480px;
   width: 500px;
   overflow: scroll;
 }
@@ -18,4 +18,8 @@
   font-weight: bold;
   color: #fff;
   background-color: #59ADEB;
+}
+
+.send-button {
+  margin-top: 10px;
 }

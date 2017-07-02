@@ -8,10 +8,8 @@ export const getGameId = gameId => ({
 
 export const pickWhite = () => ({
   type: PICK_WHITE,
-  side: false,
 });
 
 export const pickBlack = () => ({
   type: PICK_BLACK,
-  side: true,
 });

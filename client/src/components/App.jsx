@@ -11,6 +11,7 @@ import {
   getGameIdAsync,
   pickWhiteAsync,
   pickBlackAsync,
+  getInputAsync,
 } from '../redux/actions/index';
 
 
@@ -24,7 +25,7 @@ const App = props => (
         <Chessboard {...props} />
       </div>
       <div className="chatterbox">
-        <Chatterbox />
+        <Chatterbox {...props} />
       </div>
     </div>
     <div className="footer">
@@ -33,13 +34,15 @@ const App = props => (
   </div>
 );
 
-const mapStateToProps = ({ board, room }) => {
+const mapStateToProps = ({ board, room, chat }) => {
   const { boardState } = board;
   const { gameId, side } = room;
+  const { input } = chat;
   return {
     boardState,
     gameId,
     side,
+    input,
   };
 };
 
@@ -50,4 +53,5 @@ export default connect(mapStateToProps,
     getGameIdAsync,
     pickWhiteAsync,
     pickBlackAsync,
+    getInputAsync,
   })(App);

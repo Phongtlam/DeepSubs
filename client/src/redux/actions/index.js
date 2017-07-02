@@ -1,5 +1,6 @@
 import { newGame, updateBoard } from './boardAction';
 import { getGameId, pickWhite, pickBlack } from './roomAction';
+import { getInput } from './chatAction';
 
 // async action by Thunk
 
@@ -22,4 +23,8 @@ export const pickWhiteAsync = () => (dispatch) => {
 
 export const pickBlackAsync = () => (dispatch) => {
   dispatch(pickBlack());
+};
+
+export const getInputAsync = newInput => (dispatch) => {
+  dispatch(getInput(newInput));
 };
