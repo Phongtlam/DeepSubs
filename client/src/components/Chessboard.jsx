@@ -57,7 +57,7 @@ class Chessboard extends React.Component {
     this.props.startNewGameAsync();
   }
 
-  joinRoom(location) {
+  joinRoom() {
     const qs = location.search;
     const gameId = qs.slice(8, qs.length);
     this.props.getGameIdAsync(gameId);
