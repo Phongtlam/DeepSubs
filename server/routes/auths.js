@@ -23,14 +23,6 @@ router.route('/login')
     failureRedirect: '/login',
   }));
 
-router.route('/profile')
-  .get(authHelpers.isLoggedIn, (req, res) => {
-    res.render('profile.ejs', {
-      gameId: '',
-      user: req.user, // get the user out of session and pass to template
-    });
-  });
-
 router.route('/auth/facebook')
   .get(middleware.passport.authenticate('facebook', { scope: 'email' }));
 
@@ -48,6 +40,14 @@ router.route('/auth/google/callback')
     successRedirect: '/profile',
     failureRedirect: '/',
   }));
+
+router.route('/profile')
+.get(authHelpers.isLoggedIn, (req, res) => {
+  res.render('profile.ejs', {
+    gameId: '',
+    user: req.user, // get the user out of session and pass to template
+  });
+});
 
 router.route('/logout')
   .get((req, res) => {

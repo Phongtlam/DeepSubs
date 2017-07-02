@@ -19,7 +19,7 @@ class Chessboard extends React.Component {
     super(props);
     this.state = {
       go: true,
-    }
+    };
     this.engine = null;
     this.onMovePiece = this.onMovePiece.bind(this);
     this.initBoard = this.initBoard.bind(this);

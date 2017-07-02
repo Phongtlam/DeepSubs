@@ -36,9 +36,10 @@ if (process.env.NODE_ENV !== 'production') {
 
 app.use('/', routes.auths);
 app.use('/game', routes.game);
+app.use('/get-profile', routes.profile);
 // prod environment
 app.use('/public', publicPath);
 // app.use(publicPath);
-app.get('/home', (req, res) => { res.sendFile(indexPath); });
+app.get('*', (req, res) => { res.sendFile(indexPath); });
 
 module.exports = app;

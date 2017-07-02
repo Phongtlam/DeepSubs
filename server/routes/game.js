@@ -1,20 +1,17 @@
 const express = require('express');
 const authHelpers = require('../auths/helpers');
+const createIdController = require('../controllers').createId;
 
 const router = express.Router();
 
 router.route('/')
   .get(authHelpers.isLoggedIn, (req, res) => {
-    const gameId = authHelpers.createId(req.query.id);
+    const gameId = createIdController.createId(req.query.id);
     res.redirect(`/home?gameId=${gameId}`);
-    // res.render('profile.ejs', {
-    //   gameId,
-    //   // user: req.user,
-    // });
   });
 
 router.route('/join')
-  .post((req, res) => {
+  .post(authHelpers.isLoggedIn, (req, res) => {
     res.redirect(`/home?gameId=${req.body.gameId}`);
   });
 

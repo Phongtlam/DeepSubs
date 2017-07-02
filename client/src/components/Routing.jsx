@@ -15,7 +15,6 @@ const Routing = () => (
     <BrowserRouter>
       <Switch>
         <Route exact path="/home" component={App} />
-        <Route path="/chessboard" component={Chessboard} />
       </Switch>
     </BrowserRouter>
   </Provider>
