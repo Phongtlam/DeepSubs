@@ -18,7 +18,6 @@ module.exports = (server) => {
     socket.on('send-msg', (newMsg) => {
       console.log('this is the new MSG', newMsg);
       socket.broadcast.to(user.roomId).emit('receive-msg', newMsg);
-    })
-
+    });
   });
 };

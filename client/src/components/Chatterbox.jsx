@@ -30,7 +30,9 @@ class Chatterbox extends React.Component {
     };
     this.onChangeHandler = this.onChangeHandler.bind(this);
     this.onSubmitHandler = this.onSubmitHandler.bind(this);
-    this.onReceiveMsg = this.onReceiveMsg.bind(this);
+    this.onNewMessage = this.onNewMessage.bind(this);
+    this.onReceiveMessage = this.onReceiveMessage.bind(this);
+    SocketIo.on('receive-msg', this.onReceiveMessage);
   }
 
   componentDidMount() {
@@ -58,12 +60,16 @@ class Chatterbox extends React.Component {
       time: getTime(),
       fromMe: true,
     };
-    this.onReceiveMsg(newMsg);
+    this.onNewMessage(newMsg);
     newMsg.fromMe = false;
     SocketIo.emit('send-msg', newMsg);
   }
 
-  onReceiveMsg(newMsg) {
+  onReceiveMessage(newMsg) {
+    this.onNewMessage(newMsg);
+  }
+
+  onNewMessage(newMsg) {
     this.setState(prevState => ({
       messages: prevState.messages.concat([newMsg]),
     }));
