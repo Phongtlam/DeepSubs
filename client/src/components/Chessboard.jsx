@@ -17,9 +17,6 @@ const styles = {
 class Chessboard extends React.Component {
   constructor(props) {
     super(props);
-    this.state = {
-      go: true,
-    };
     this.engine = null;
     this.onMovePiece = this.onMovePiece.bind(this);
     this.initBoard = this.initBoard.bind(this);
@@ -28,21 +25,16 @@ class Chessboard extends React.Component {
   }
 
   onMovePiece(piece, from, to) {
-    console.log(piece, 'was move from', from, 'to', to)
     const username = this.props.profileData.username;
-    console.log('USERNAME', username);
-    SocketIo.emit('announcer', from, to, username);
     this.engine.move({ piece, from, to });
     const newBoard = this.engine.fen();
     SocketIo.emit('board-update', newBoard);
-    this.setState({ go: false });
-    this.props.updateBoardAsync(newBoard);
+    this.props.updateBoardAsync(newBoard, from, to, username);
   }
 
   updateBoardListener(newBoard) {
     // listen to changes from the other side
     this.engine.load(newBoard);
-    this.setState({ go: true });
     this.props.updateBoardAsync(newBoard);
   }
 
@@ -60,7 +52,6 @@ class Chessboard extends React.Component {
       <div>
         <Board
           highlights={{ one: 'one' }}
-          // allowMoves={this.state.go}
           flip={this.props.side}
           fen={this.props.boardState}
           onMovePiece={this.onMovePiece}
