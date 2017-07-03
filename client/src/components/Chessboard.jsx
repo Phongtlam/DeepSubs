@@ -31,8 +31,15 @@ class Chessboard extends React.Component {
     const username = this.props.profileData.username;
     this.engine.move({ piece, from, to });
     const newBoard = this.engine.fen();
+    let isCheck = 'normal';
+    if (this.engine.in_check() === true) {
+      isCheck = 'check';
+    }
+    if (this.engine.in_checkmate() === true) {
+      isCheck = 'check_mate';
+    }
     SocketIo.emit('board-update', newBoard);
-    this.props.updateBoardAsync(newBoard, from, to, username);
+    this.props.updateBoardAsync(newBoard, from, to, username, isCheck);
   }
 
   updateBoardListener(newBoard) {
