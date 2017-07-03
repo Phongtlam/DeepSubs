@@ -19,5 +19,3 @@ Link: https://deep-subs.herokuapp.com/
 - Improve UI interface
 - Chess AI engine
 - Ability to invite friends through social media
-
-heroku pg:psql postgresql-regular-47473 --app deep-subs
