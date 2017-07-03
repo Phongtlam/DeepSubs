@@ -50,7 +50,7 @@ module.exports = (server) => {
 
     socket.on('announcer', (from, to, username) => {
       deepSubs.id = Math.floor(Math.random() * 1000000);
-      deepSubs.message = `${username} moved from ${from} to ${to}`;
+      deepSubs.message = `${username} has moved from ${from} to ${to}`;
       socket.broadcast.to(user.roomId).emit('receive-msg', deepSubs);
     });
   });
