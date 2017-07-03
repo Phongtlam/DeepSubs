@@ -3,6 +3,7 @@ import { newGame, updateBoard } from './boardAction';
 import { getGameId, pickWhite, pickBlack } from './roomAction';
 import { getInput } from './chatAction';
 import { getProfile } from './profileAction';
+import SocketIo from '../../socket_io_client/index';
 
 // async action by Thunk
 
@@ -16,6 +17,7 @@ export const updateBoardAsync = boardState => (dispatch) => {
 };
 
 export const getGameIdAsync = roomId => (dispatch) => {
+  SocketIo.emit('join-room', roomId);
   dispatch(getGameId(roomId));
 };
 
@@ -36,6 +38,10 @@ export const getProfileAsync = () => {
     axios.get('/get-profile')
     .then((data) => {
       dispatch(getProfile(data.data));
-    });
+      return data.data.username;
+    })
+    .then((username) => {
+      SocketIo.emit('new-user', username);
+    })
   };
 };

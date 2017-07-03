@@ -25,11 +25,6 @@ class Chessboard extends React.Component {
     this.initBoard = this.initBoard.bind(this);
     this.updateBoardListener = this.updateBoardListener.bind(this);
     SocketIo.on('board-update', this.updateBoardListener);
-    this.joinRoom = this.joinRoom.bind(this);
-  }
-
-  componentDidMount() {
-    this.joinRoom();
   }
 
   onMovePiece(piece, from, to) {
@@ -37,14 +32,14 @@ class Chessboard extends React.Component {
     this.engine.move({ piece, from, to });
     const newBoard = this.engine.fen();
     SocketIo.emit('board-update', newBoard);
-    // this.setState({ go: false });
+    this.setState({ go: false });
     this.props.updateBoardAsync(newBoard);
   }
 
   updateBoardListener(newBoard) {
     // listen to changes from the other side
     this.engine.load(newBoard);
-    // this.setState({ go: true });
+    this.setState({ go: true });
     this.props.updateBoardAsync(newBoard);
   }
 
@@ -57,19 +52,12 @@ class Chessboard extends React.Component {
     this.props.startNewGameAsync();
   }
 
-  joinRoom() {
-    const qs = location.search;
-    const gameId = qs.slice(8, qs.length);
-    this.props.getGameIdAsync(gameId);
-    SocketIo.emit('join-room', gameId);
-  }
-
   render() {
     return (
       <div>
         <Board
           highlights={{ one: 'one' }}
-          // allowMoves={this.state.go}
+          allowMoves={this.state.go}
           flip={this.props.side}
           fen={this.props.boardState}
           onMovePiece={this.onMovePiece}
@@ -93,12 +81,12 @@ Chessboard.propTypes = {
   side: propTypes.bool,
   updateBoardAsync: propTypes.func,
   startNewGameAsync: propTypes.func,
-  getGameIdAsync: propTypes.func,
+  profileData: propTypes.object,
 };
 Chessboard.defaultProps = {
   boardState: '',
   side: false,
   updateBoardAsync: propTypes.func,
   startNewGameAsync: propTypes.func,
-  getGameIdAsync: propTypes.func,
+  profileData: {},
 };

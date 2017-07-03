@@ -60,16 +60,17 @@ class Chatterbox extends React.Component {
       time: getTime(),
       fromMe: true,
     };
-    this.onNewMessage(newMsg);
     newMsg.fromMe = false;
     SocketIo.emit('send-msg', newMsg);
   }
 
   onReceiveMessage(newMsg) {
+    console.log('in on receive', newMsg)
     this.onNewMessage(newMsg);
   }
 
   onNewMessage(newMsg) {
+    console.log('in on on new msg', newMsg)
     this.setState(prevState => ({
       messages: prevState.messages.concat([newMsg]),
     }));

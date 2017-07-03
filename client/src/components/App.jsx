@@ -18,9 +18,20 @@ import {
 
 
 class App extends React.Component {
+  constructor(props) {
+    super(props);
+    this.joinRoom = this.joinRoom.bind(this);
+    this.joinRoom();
+  }
 
   componentWillMount() {
     this.props.getProfileAsync();
+  }
+
+  joinRoom() {
+    const qs = location.search;
+    const gameId = qs.slice(8, qs.length);
+    this.props.getGameIdAsync(gameId);
   }
 
   render() {
@@ -72,8 +83,12 @@ export default connect(mapStateToProps,
 
 App.propTypes = {
   getProfileAsync: propTypes.func,
+  getGameIdAsync: propTypes.func,
+  profileData: propTypes.object,
 };
 
 App.defaultProps = {
   getProfileAsync: propTypes.func,
+  getGameIdAsync: propTypes.func,
+  profileData: {},
 };

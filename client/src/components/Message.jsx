@@ -1,6 +1,7 @@
 import React from 'react';
 import propTypes from 'prop-types';
 import '../styles/message.scss';
+import SocketIo from '../socket_io_client/index';
 
 class Message extends React.Component {
   constructor(props) {
@@ -13,7 +14,7 @@ class Message extends React.Component {
         {this.props.messages.map((one, i) =>
           (<div
             className="message right"
-            key={one.id + i}
+            key={SocketIo.id + i}
           >
             <img src={one.img_url} className="avatar" alt="avatar" />
             <div className="text_wrapper">
