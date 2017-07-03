@@ -10,7 +10,7 @@ const getTime = () => {
   let hr = time.getHours();
   let min = time.getMinutes();
   let ampm = 'AM';
-  if (hr >= 12) {
+  if (hr > 12) {
     hr -= 12;
     ampm = 'PM';
   }
@@ -57,12 +57,14 @@ class Chatterbox extends React.Component {
       username: this.props.profileData.username,
       img_url: this.props.profileData.img_url,
       message: this.state.input,
-      time: getTime(),
+      time: '',
     };
     SocketIo.emit('send-msg', newMsg);
   }
 
   onReceiveMessage(newMsg) {
+    const currentTime = getTime();
+    newMsg.time = currentTime;
     this.onNewMessage(newMsg);
   }
 

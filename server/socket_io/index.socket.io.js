@@ -1,24 +1,6 @@
 const socketIo = require('socket.io');
 
-const getTime = () => {
-  const time = new Date();
-  let hr = time.getHours();
-  let min = time.getMinutes();
-  let ampm = 'AM';
-  if (hr >= 12) {
-    hr -= 12;
-    ampm = 'PM';
-  }
-  if (min < 10) {
-    min = (`0${min}`).slice(-2);
-  }
-  const currentTime = `${hr}:${min}${ampm}`;
-  return currentTime;
-};
-
-const getUniqeId = () => {
-  return new Date().getTime();
-};
+const getUniqeId = () => new Date().getTime();
 
 const user = {
   roomId: '',
@@ -45,7 +27,6 @@ module.exports = (server) => {
 
     socket.on('new-user', (username) => {
       deepSubs.id = getUniqeId();
-      deepSubs.time = getTime();
       deepSubs.message = `${username} has joined the room!`;
       socket.broadcast.to(user.roomId).emit('receive-msg', deepSubs);
       deepSubs.message = `Hello ${username}! This is your room ID: ${user.roomId}`;
@@ -58,7 +39,6 @@ module.exports = (server) => {
 
     socket.on('announcer', (from, to, username) => {
       deepSubs.id = getUniqeId();
-      deepSubs.time = getTime();
       deepSubs.message = `${username} has moved from ${from} to ${to}`;
       socket.broadcast.to(user.roomId).emit('receive-msg', deepSubs);
     });
