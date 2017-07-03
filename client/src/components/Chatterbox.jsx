@@ -1,7 +1,25 @@
 import React from 'react';
-import { FormGroup, Button, FormControl } from 'react-bootstrap';
+import ReactDOM from 'react-dom';
+import propTypes from 'prop-types';
 import Message from './Message';
+import SocketIo from '../socket_io_client/index';
 import '../styles/chatterbox.scss';
+
+const getTime = () => {
+  const time = new Date();
+  let hr = time.getHours();
+  let min = time.getMinutes();
+  let ampm = 'AM';
+  if (hr >= 12) {
+    hr -= 12;
+    ampm = 'PM';
+  }
+  if (min < 10) {
+    min = (`0${min}`).slice(-2);
+  }
+  const currentTime = `${hr}:${min}${ampm}`;
+  return currentTime;
+};
 
 class Chatterbox extends React.Component {
   constructor(props) {
@@ -12,6 +30,17 @@ class Chatterbox extends React.Component {
     };
     this.onChangeHandler = this.onChangeHandler.bind(this);
     this.onSubmitHandler = this.onSubmitHandler.bind(this);
+    this.onReceiveMsg = this.onReceiveMsg.bind(this);
+  }
+
+  componentDidMount() {
+    SocketIo.on('connect', () => {
+      console.log('connect on', SocketIo.id);
+    });
+  }
+
+  componentDidUpdate() {
+    this.scrollToBottom();
   }
 
   onChangeHandler(e) {
@@ -21,10 +50,29 @@ class Chatterbox extends React.Component {
   onSubmitHandler(e) {
     e.preventDefault();
     this.setState({ input: '' });
+    const newMsg = {
+      id: this.props.profileData.id,
+      username: this.props.profileData.username,
+      img_url: this.props.profileData.img_url,
+      message: this.state.input,
+      time: getTime(),
+      fromMe: true,
+    };
+    this.onReceiveMsg(newMsg);
+    newMsg.fromMe = false;
+    SocketIo.emit('send-msg', newMsg);
+  }
+
+  onReceiveMsg(newMsg) {
     this.setState(prevState => ({
-      messages: prevState.messages.concat([this.state.input]),
+      messages: prevState.messages.concat([newMsg]),
     }));
-    console.log(this.state.messages)
+  }
+
+  // this is a trick to scroll to bottom of page on new msg added
+  scrollToBottom() {
+    const node = ReactDOM.findDOMNode(this.messagesEnd);
+    node.scrollIntoView({ behavior: 'smooth' });
   }
 
   render() {
@@ -32,12 +80,15 @@ class Chatterbox extends React.Component {
       <div className="chat-window">
         <div className="chat-header">Welcome to React-Chat</div>
         <div className="msg_container">
-          <h4>THIS IS MESSAGE CONTAINER</h4>
           <Message {...this.state} {...this.props} />
+          <div
+            style={{ float: 'left', clear: 'both' }}
+            ref={(el) => { this.messagesEnd = el; }}
+          />
         </div>
         <form
           onSubmit={this.onSubmitHandler}
-          className="bottom_wrapper clearfix"
+          className="bottom_wrapper"
         >
           <div className="message_input_wrapper">
             <input
@@ -61,3 +112,11 @@ class Chatterbox extends React.Component {
 
 
 export default Chatterbox;
+
+Chatterbox.propTypes = {
+  profileData: propTypes.object,
+};
+
+Chatterbox.defaultProps = {
+  profileData: {},
+};

@@ -14,5 +14,11 @@ module.exports = (server) => {
     socket.on('board-update', (newBoard) => {
       socket.broadcast.to(user.roomId).emit('board-update', newBoard);
     });
+
+    socket.on('send-msg', (newMsg) => {
+      console.log('this is the new MSG', newMsg);
+      socket.broadcast.to(user.roomId).emit('receive-msg', newMsg);
+    })
+
   });
 };

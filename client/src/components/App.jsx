@@ -1,6 +1,5 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import axios from 'axios';
 import propTypes from 'prop-types';
 import Chessboard from './Chessboard';
 import ChessHeader from './ChessHeader';

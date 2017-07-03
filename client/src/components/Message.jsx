@@ -1,28 +1,32 @@
 import React from 'react';
 import propTypes from 'prop-types';
+import '../styles/message.scss';
 
-// const Message = (props) => {
-//     // Was the message sent by the current user. If so, add a css class
-//   const fromMe = props.fromMe ? 'from-me' : '';
-//   return (
-//     <div className={`message ${fromMe}`}>
-//       <div className="username">
-//         { props.username }
-//       </div>
-//       <div className="message-body">
-//         { props.message }
-//       </div>
-//     </div>
-//   );
-// };
+class Message extends React.Component {
+  constructor(props) {
+    super(props);
+  }
 
-const Message = props => (
-  <div>
-    {props.messages.map(one =>
-      <div>{one}</div>,
-    )}
-  </div>
-);
+  render() {
+    return (
+      <div>
+        {this.props.messages.map((one, i) =>
+          (<div
+            className="message right"
+            key={one.id + i}
+          >
+            <img src={one.img_url} className="avatar" alt="avatar" />
+            <div className="text_wrapper">
+              <div className="name">{one.username}</div>
+              <div className="text">{one.message}</div>
+              <div className="time">{one.time}</div>
+            </div>
+          </div>),
+        )}
+      </div>
+    );
+  }
+}
 
 // Message.propTypes = {
 //   message: propTypes.string,
