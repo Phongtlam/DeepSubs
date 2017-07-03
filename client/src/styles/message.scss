@@ -61,3 +61,34 @@
   font-size: 10px;
   color: #0d47a1;
 }
+
+.message.left .avatar {
+  float: left;
+}
+.message.left .text_wrapper.submarine {
+  background-color: #ffbb33;
+  margin-left: 20px;
+}
+
+.message.left .text_wrapper.submarine::after {
+  right: 100%;
+  border-right-color: #ffbb33;
+}
+
+.message.left .text.submarine {
+  color: #ff4444;
+}
+
+.message.left .text_wrapper {
+  background-color: #b8ed82;
+  margin-left: 20px;
+}
+
+.message.left .text_wrapper::after {
+  right: 100%;
+  border-right-color: #b8ed82;
+}
+
+.message.left .text {
+  color: rgb(143, 64, 186);
+}

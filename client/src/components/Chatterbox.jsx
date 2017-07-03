@@ -58,19 +58,15 @@ class Chatterbox extends React.Component {
       img_url: this.props.profileData.img_url,
       message: this.state.input,
       time: getTime(),
-      fromMe: true,
     };
-    newMsg.fromMe = false;
     SocketIo.emit('send-msg', newMsg);
   }
 
   onReceiveMessage(newMsg) {
-    console.log('in on receive', newMsg)
     this.onNewMessage(newMsg);
   }
 
   onNewMessage(newMsg) {
-    console.log('in on on new msg', newMsg)
     this.setState(prevState => ({
       messages: prevState.messages.concat([newMsg]),
     }));

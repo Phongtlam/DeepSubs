@@ -29,6 +29,9 @@ class Chessboard extends React.Component {
 
   onMovePiece(piece, from, to) {
     console.log(piece, 'was move from', from, 'to', to)
+    const username = this.props.profileData.username;
+    console.log('USERNAME', username);
+    SocketIo.emit('announcer', from, to, username);
     this.engine.move({ piece, from, to });
     const newBoard = this.engine.fen();
     SocketIo.emit('board-update', newBoard);

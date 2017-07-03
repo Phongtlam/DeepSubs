@@ -23,6 +23,7 @@ const deepSubs = {
   img_url: 'http://yellowsubmarineswimschool.co.uk/wp-content/uploads/2016/12/Yellow-Submarine-Swim-School-Logo-transparent-windows-2.png',
   username: 'Yellow Sub',
   message: '',
+  id: '',
   time: getTime(),
 };
 
@@ -48,6 +49,7 @@ module.exports = (server) => {
     });
 
     socket.on('announcer', (from, to, username) => {
+      deepSubs.id = Math.floor(Math.random() * 1000000);
       deepSubs.message = `${username} moved from ${from} to ${to}`;
       socket.broadcast.to(user.roomId).emit('receive-msg', deepSubs);
     });
