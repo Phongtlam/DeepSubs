@@ -6,7 +6,7 @@ const Message = (props) => {
   const username = props.profileData.username;
   return (
     <div>
-      {props.messages.map((one, i) => {
+      {props.messages.map((one) => {
         if (one.username === username) {
           return (<div
             className="message right"
