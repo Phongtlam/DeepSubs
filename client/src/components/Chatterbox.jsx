@@ -21,6 +21,11 @@ const getTime = () => {
   return currentTime;
 };
 
+const getUniqeId = (id) => {
+  const time = new Date().getTime();
+  return time + id;
+};
+
 class Chatterbox extends React.Component {
   constructor(props) {
     super(props);
@@ -35,12 +40,6 @@ class Chatterbox extends React.Component {
     SocketIo.on('receive-msg', this.onReceiveMessage);
   }
 
-  componentDidMount() {
-    SocketIo.on('connect', () => {
-      console.log('connect on', SocketIo.id);
-    });
-  }
-
   componentDidUpdate() {
     this.scrollToBottom();
   }
@@ -52,8 +51,9 @@ class Chatterbox extends React.Component {
   onSubmitHandler(e) {
     e.preventDefault();
     this.setState({ input: '' });
+    const uniqueId = this.props.profileData.id + getUniqeId(this.props.profileData.id);
     const newMsg = {
-      id: this.props.profileData.id,
+      id: uniqueId,
       username: this.props.profileData.username,
       img_url: this.props.profileData.img_url,
       message: this.state.input,

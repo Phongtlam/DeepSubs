@@ -16,15 +16,19 @@ const getTime = () => {
   return currentTime;
 };
 
+const getUniqeId = () => {
+  return new Date().getTime();
+};
+
 const user = {
   roomId: '',
 };
 const deepSubs = {
   img_url: 'http://yellowsubmarineswimschool.co.uk/wp-content/uploads/2016/12/Yellow-Submarine-Swim-School-Logo-transparent-windows-2.png',
-  username: 'Yellow Sub',
+  username: 'Yellow Submarine',
   message: '',
   id: '',
-  time: getTime(),
+  time: '',
 };
 
 module.exports = (server) => {
@@ -40,8 +44,12 @@ module.exports = (server) => {
     });
 
     socket.on('new-user', (username) => {
+      deepSubs.id = getUniqeId();
+      deepSubs.time = getTime();
       deepSubs.message = `${username} has joined the room!`;
       socket.broadcast.to(user.roomId).emit('receive-msg', deepSubs);
+      deepSubs.message = `Hello ${username}! This is your room ID: ${user.roomId}`;
+      io.to(socket.id).emit('receive-msg', deepSubs);
     });
 
     socket.on('send-msg', (newMsg) => {
@@ -49,7 +57,8 @@ module.exports = (server) => {
     });
 
     socket.on('announcer', (from, to, username) => {
-      deepSubs.id = Math.floor(Math.random() * 1000000);
+      deepSubs.id = getUniqeId();
+      deepSubs.time = getTime();
       deepSubs.message = `${username} has moved from ${from} to ${to}`;
       socket.broadcast.to(user.roomId).emit('receive-msg', deepSubs);
     });

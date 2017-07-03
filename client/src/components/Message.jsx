@@ -1,7 +1,6 @@
 import React from 'react';
 import propTypes from 'prop-types';
 import '../styles/message.scss';
-import SocketIo from '../socket_io_client/index';
 
 const Message = (props) => {
   const username = props.profileData.username;
@@ -11,7 +10,7 @@ const Message = (props) => {
         if (one.username === username) {
           return (<div
             className="message right"
-            key={SocketIo.id + i}
+            key={one.id}
           >
             <img src={one.img_url} className="avatar" alt="avatar" />
             <div className="text_wrapper">
@@ -20,7 +19,7 @@ const Message = (props) => {
               <div className="time">{one.time}</div>
             </div>
           </div>);
-        } else if (one.username === 'Yellow Sub') {
+        } else if (one.username === 'Yellow Submarine') {
           return (
             <div
               className="message left"
@@ -60,7 +59,7 @@ Message.propTypes = {
 };
 
 Message.defaultProps = {
-  message: [],
+  messages: [],
   profileData: {},
 };
 

@@ -29,7 +29,7 @@ module.exports = {
         loaders: ['style-loader', 'css-loader', 'sass-loader'],
         include: path.join(__dirname, '/client/src/styles') },
       { test: /\.(ttf|eot|woff(2)?)(\?[a-z0-9]+)?$/,
-        loader: 'file' },
+        loader: 'file-loader' },
       { test: /\.(jpe?g|png|gif|svg)$/i,
         use: [
           { loader: 'file-loader',

@@ -17,6 +17,9 @@ const styles = {
 class Chessboard extends React.Component {
   constructor(props) {
     super(props);
+    this.state = {
+      canMove: false,
+    }
     this.engine = null;
     this.onMovePiece = this.onMovePiece.bind(this);
     this.initBoard = this.initBoard.bind(this);
@@ -44,6 +47,7 @@ class Chessboard extends React.Component {
     } else {
       this.engine.reset();
     }
+    this.setState({ canMove: true });
     this.props.startNewGameAsync();
   }
 
@@ -51,7 +55,7 @@ class Chessboard extends React.Component {
     return (
       <div>
         <Board
-          highlights={{ one: 'one' }}
+          allowMoves={this.state.canMove}
           flip={this.props.side}
           fen={this.props.boardState}
           onMovePiece={this.onMovePiece}
