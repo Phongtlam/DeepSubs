@@ -60,7 +60,7 @@ class Chessboard extends React.Component {
       <div>
         <Board
           highlights={{ one: 'one' }}
-          allowMoves={this.state.go}
+          // allowMoves={this.state.go}
           flip={this.props.side}
           fen={this.props.boardState}
           onMovePiece={this.onMovePiece}
