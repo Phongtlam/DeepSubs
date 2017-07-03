@@ -29,27 +29,30 @@ class Chatterbox extends React.Component {
 
   render() {
     return (
-      <div>
-        <div className="chat-header ui-widget-header">React p2p Chat</div>
-        <div className="msg_container" id="messageList">
+      <div className="chat-window">
+        <div className="chat-header">Welcome to React-Chat</div>
+        <div className="msg_container">
           <h4>THIS IS MESSAGE CONTAINER</h4>
-          <Message {...this.state} />
+          <Message {...this.state} {...this.props} />
         </div>
-        <form onSubmit={this.onSubmitHandler}>
-          <FormGroup>
-            <FormControl
-              type="text"
-              placeholder="Your message here..."
+        <form
+          onSubmit={this.onSubmitHandler}
+          className="bottom_wrapper clearfix"
+        >
+          <div className="message_input_wrapper">
+            <input
+              className="message_input"
+              placeholder="Type your message here..."
               onChange={this.onChangeHandler}
               value={this.state.input}
             />
-            <Button
-              className="fa fa-paper-plane-o send-button"
-              bsStyle="success"
-              type="submit"
-              > Send
-            </Button>
-          </FormGroup>
+          </div>
+          <div className="send_message ">
+            <div
+              onClick={this.onSubmitHandler}
+              className="fa fa-paper-plane-o text"
+            > Send</div>
+          </div>
         </form>
       </div>
     );
@@ -57,4 +60,4 @@ class Chatterbox extends React.Component {
 }
 
 
-  export default Chatterbox;
+export default Chatterbox;

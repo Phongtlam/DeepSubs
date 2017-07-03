@@ -19,20 +19,9 @@ import {
 
 
 class App extends React.Component {
-  constructor(props) {
-    super(props);
-    this.getProfile = this.getProfile.bind(this);
-  }
 
   componentWillMount() {
-    this.getProfile();
-  }
-
-  getProfile() {
-    axios.get('/get-profile')
-    .then((response) => {
-      this.props.getProfileAsync(response.data);
-    });
+    this.props.getProfileAsync();
   }
 
   render() {

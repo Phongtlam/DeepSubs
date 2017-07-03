@@ -16,6 +16,7 @@ const createUser = (req, res) => {
       username: req.body.username,
       password: hash,
       auth_provider: 'no_auth',
+      img_url: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTdeCBydLKH1OtzaPNFRiqTlwaAEjHruFxxVzsshdqFlQe0_7R8',
       total_games: 0,
       win: 0,
       loss: 0,
