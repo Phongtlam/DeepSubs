@@ -50,16 +50,18 @@ class Chatterbox extends React.Component {
 
   onSubmitHandler(e) {
     e.preventDefault();
+    if (this.state.input !== '') {
+      const uniqueId = this.props.profileData.id + getUniqeId(this.props.profileData.id);
+      const newMsg = {
+        id: uniqueId,
+        username: this.props.profileData.username,
+        img_url: this.props.profileData.img_url,
+        message: this.state.input,
+        time: '',
+      };
+      SocketIo.emit('send-msg', newMsg);
+    }
     this.setState({ input: '' });
-    const uniqueId = this.props.profileData.id + getUniqeId(this.props.profileData.id);
-    const newMsg = {
-      id: uniqueId,
-      username: this.props.profileData.username,
-      img_url: this.props.profileData.img_url,
-      message: this.state.input,
-      time: '',
-    };
-    SocketIo.emit('send-msg', newMsg);
   }
 
   onReceiveMessage(newMsg) {
