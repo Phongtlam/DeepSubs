@@ -39,15 +39,21 @@ module.exports = (server) => {
 
     socket.on('announcer', (from, to, username, isCheck) => {
       deepSubs.id = getUniqeId();
-      if (isCheck === 'check') {
-        deepSubs.message = `${username} has moved into check position!`;
-        socket.broadcast.to(user.roomId).emit('receive-msg', deepSubs);
-      } else if (isCheck === 'normal') {
-        deepSubs.message = `${username} has moved from ${from} to ${to}`;
-        socket.broadcast.to(user.roomId).emit('receive-msg', deepSubs);
-      } else if (isCheck === 'check_mate') {
-        deepSubs.message = `${username} wins!! Checkmated board position!!!`;
-        io.in(user.roomId).emit('receive-msg', deepSubs);
+      switch (isCheck) {
+        case 'check':
+          deepSubs.message = `${username} has moved into check position!`;
+          socket.broadcast.to(user.roomId).emit('receive-msg', deepSubs);
+          break;
+        case 'normal':
+          deepSubs.message = `${username} has moved from ${from} to ${to}`;
+          socket.broadcast.to(user.roomId).emit('receive-msg', deepSubs);
+          break;
+        case 'check_mate':
+          deepSubs.message = `${username} wins!! Checkmated board position!!!`;
+          io.in(user.roomId).emit('receive-msg', deepSubs);
+          break;
+        default:
+          break;
       }
     });
   });

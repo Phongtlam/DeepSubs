@@ -45,6 +45,6 @@ export const getProfileAsync = () => {
     })
     .then((username) => {
       SocketIo.emit('new-user', username);
-    })
+    });
   };
 };
