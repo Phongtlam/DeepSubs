@@ -50,7 +50,6 @@ class Chessboard extends React.Component {
 
   onReconnect() {
     const newBoard = this.engine.fen();
-    console.log('board after reconnect', newBoard);
     this.engine.load(newBoard);
     SocketIo.emit('board-update', newBoard);
     this.props.updateBoardAsync(newBoard);
