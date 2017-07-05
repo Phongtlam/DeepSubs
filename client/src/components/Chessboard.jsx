@@ -26,7 +26,8 @@ class Chessboard extends React.Component {
     this.updateBoardListener = this.updateBoardListener.bind(this);
     this.onReconnect = this.onReconnect.bind(this);
     SocketIo.on('board-update', this.updateBoardListener);
-    SocketIo.on('disconnect', () => {
+    SocketIo.on('reconnect', () => {
+      console.log('client reconnect');
       SocketIo.open();
       this.onReconnect();
     });
@@ -43,15 +44,16 @@ class Chessboard extends React.Component {
     if (this.engine.in_checkmate() === true) {
       isCheck = 'check_mate';
     }
+    SocketIo.emit('announcer', from, to, username, isCheck);
     SocketIo.emit('board-update', newBoard);
-    this.props.updateBoardAsync(newBoard, from, to, username, isCheck);
   }
 
   onReconnect() {
     const newBoard = this.engine.fen();
+    console.log('board after reconnect', newBoard);
+    this.engine.load(newBoard);
     SocketIo.emit('board-update', newBoard);
     this.props.updateBoardAsync(newBoard);
-    this.setState({ canMove: true });
   }
 
   updateBoardListener(newBoard) {
