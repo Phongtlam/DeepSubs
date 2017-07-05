@@ -24,7 +24,9 @@ class Chessboard extends React.Component {
     this.onMovePiece = this.onMovePiece.bind(this);
     this.initBoard = this.initBoard.bind(this);
     this.updateBoardListener = this.updateBoardListener.bind(this);
+    this.onReconnect = this.onReconnect.bind(this);
     SocketIo.on('board-update', this.updateBoardListener);
+    SocketIo.on('reconnect', this.onReconnect);
   }
 
   onMovePiece(piece, from, to) {
@@ -40,6 +42,12 @@ class Chessboard extends React.Component {
     }
     SocketIo.emit('board-update', newBoard);
     this.props.updateBoardAsync(newBoard, from, to, username, isCheck);
+  }
+
+  onReconnect() {
+    const newBoard = this.engine.fen();
+    SocketIo.emit('board-update', newBoard);
+    this.props.updateBoardAsync(newBoard);
   }
 
   updateBoardListener(newBoard) {
