@@ -51,6 +51,7 @@ class Chessboard extends React.Component {
     const newBoard = this.engine.fen();
     SocketIo.emit('board-update', newBoard);
     this.props.updateBoardAsync(newBoard);
+    this.setState({ canMove: true });
   }
 
   updateBoardListener(newBoard) {
