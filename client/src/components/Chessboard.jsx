@@ -56,7 +56,7 @@ class Chessboard extends React.Component {
   }
 
   updateBoardListener(newBoard) {
-    // listen to changes from server
+    // listen to changes
     this.engine.load(newBoard);
     this.props.updateBoardAsync(newBoard);
   }
