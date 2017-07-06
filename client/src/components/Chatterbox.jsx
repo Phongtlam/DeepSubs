@@ -53,7 +53,8 @@ class Chatterbox extends React.Component {
     if (this.state.input !== '') {
       const uniqueId = this.props.profileData.id + getUniqeId(this.props.profileData.id);
       const newMsg = {
-        id: uniqueId,
+        msgId: uniqueId,
+        id: this.props.profileData.id,
         username: this.props.profileData.username,
         img_url: this.props.profileData.img_url,
         message: this.state.input,

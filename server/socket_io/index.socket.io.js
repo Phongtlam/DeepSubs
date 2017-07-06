@@ -9,7 +9,8 @@ const deepSubs = {
   img_url: 'http://yellowsubmarineswimschool.co.uk/wp-content/uploads/2016/12/Yellow-Submarine-Swim-School-Logo-transparent-windows-2.png',
   username: 'Yellow Submarine',
   message: '',
-  id: '',
+  id: -1,
+  msgId: null,
   time: '',
 };
 
@@ -26,7 +27,7 @@ module.exports = (server) => {
     });
 
     socket.on('new-user', (username) => {
-      deepSubs.id = getUniqeId();
+      deepSubs.msgId = getUniqeId();
       deepSubs.message = `${username} has joined the room!`;
       socket.broadcast.to(user.roomId).emit('receive-msg', deepSubs);
       deepSubs.message = `Hello ${username}! This is your room ID: ${user.roomId}`;
@@ -38,7 +39,7 @@ module.exports = (server) => {
     });
 
     socket.on('announcer', (from, to, username, isCheck) => {
-      deepSubs.id = getUniqeId();
+      deepSubs.msgId = getUniqeId();
       switch (isCheck) {
         case 'check':
           deepSubs.message = `${username} has moved into check position!`;

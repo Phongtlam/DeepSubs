@@ -3,14 +3,14 @@ import propTypes from 'prop-types';
 import '../styles/message.scss';
 
 const Message = (props) => {
-  const username = props.profileData.username;
+  const id = props.profileData.id;
   return (
     <div>
       {props.messages.map((one) => {
-        if (one.username === username) {
+        if (one.id === id) {
           return (<div
             className="message right"
-            key={one.id}
+            key={one.msgId}
           >
             <img src={one.img_url} className="avatar" alt="avatar" />
             <div className="text_wrapper">
@@ -23,7 +23,7 @@ const Message = (props) => {
           return (
             <div
               className="message left"
-              key={one.id}
+              key={one.msgId}
             >
               <img src={one.img_url} className="avatar" alt="avatar" />
               <div className="text_wrapper submarine">
@@ -37,7 +37,7 @@ const Message = (props) => {
         return (
           <div
             className="message left"
-            key={one.id}
+            key={one.msgId}
           >
             <img src={one.img_url} className="avatar" alt="avatar" />
             <div className="text_wrapper">

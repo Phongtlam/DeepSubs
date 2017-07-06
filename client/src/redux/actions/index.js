@@ -39,5 +39,6 @@ export const getProfileAsync = () => (dispatch) => {
   })
   .then((username) => {
     SocketIo.emit('new-user', username);
-  });
+  })
+  .catch((err) => { console.log('err', err); });
 };
