@@ -44,14 +44,13 @@ class Chessboard extends React.Component {
       isCheck = 'check_mate';
     }
     SocketIo.emit('announcer', from, to, username, isCheck);
-    SocketIo.emit('board-update', newBoard);
-    this.props.updateBoardAsync(newBoard);
+    const fromMe = true;
+    this.props.updateBoardAsync(newBoard, fromMe);
   }
 
   _onReconnect() {
     const newBoard = this.engine.fen();
     this.engine.load(newBoard);
-    SocketIo.emit('board-update', newBoard);
     this.props.updateBoardAsync(newBoard);
   }
 
