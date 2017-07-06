@@ -26,9 +26,8 @@ class Chessboard extends React.Component {
     this._updateBoardListener = this._updateBoardListener.bind(this);
     this._onReconnect = this._onReconnect.bind(this);
     SocketIo.on('board-update', this._updateBoardListener);
-    SocketIo.on('reconnect', () => {
+    SocketIo.on('reconnect', this._onReconnect, () => {
       SocketIo.open();
-      this._onReconnect();
     });
   }
 
