@@ -33,22 +33,22 @@ class Chatterbox extends React.Component {
       input: '',
       messages: [],
     };
-    this.onChangeHandler = this.onChangeHandler.bind(this);
-    this.onSubmitHandler = this.onSubmitHandler.bind(this);
-    this.onNewMessage = this.onNewMessage.bind(this);
-    this.onReceiveMessage = this.onReceiveMessage.bind(this);
-    SocketIo.on('receive-msg', this.onReceiveMessage);
+    this._onChangeHandler = this._onChangeHandler.bind(this);
+    this._onSubmitHandler = this._onSubmitHandler.bind(this);
+    this._onNewMessage = this._onNewMessage.bind(this);
+    this._onReceiveMessage = this._onReceiveMessage.bind(this);
+    SocketIo.on('receive-msg', this._onReceiveMessage);
   }
 
   componentDidUpdate() {
-    this.scrollToBottom();
+    this._scrollToBottom();
   }
 
-  onChangeHandler(e) {
+  _onChangeHandler(e) {
     this.setState({ input: e.target.value });
   }
 
-  onSubmitHandler(e) {
+  _onSubmitHandler(e) {
     e.preventDefault();
     if (this.state.input !== '') {
       const uniqueId = this.props.profileData.id + getUniqeId(this.props.profileData.id);
@@ -64,20 +64,20 @@ class Chatterbox extends React.Component {
     this.setState({ input: '' });
   }
 
-  onReceiveMessage(newMsg) {
+  _onReceiveMessage(newMsg) {
     const currentTime = getTime();
     newMsg.time = currentTime;
-    this.onNewMessage(newMsg);
+    this._onNewMessage(newMsg);
   }
 
-  onNewMessage(newMsg) {
+  _onNewMessage(newMsg) {
     this.setState(prevState => ({
       messages: prevState.messages.concat([newMsg]),
     }));
   }
 
   // this is a trick to scroll to bottom of page on new msg added
-  scrollToBottom() {
+  _scrollToBottom() {
     const node = ReactDOM.findDOMNode(this.messagesEnd);
     node.scrollIntoView({ behavior: 'smooth' });
   }
@@ -94,20 +94,20 @@ class Chatterbox extends React.Component {
           />
         </div>
         <form
-          onSubmit={this.onSubmitHandler}
+          onSubmit={this._onSubmitHandler}
           className="bottom_wrapper"
         >
           <div className="message_input_wrapper">
             <input
               className="message_input"
               placeholder="Type your message here..."
-              onChange={this.onChangeHandler}
+              onChange={this._onChangeHandler}
               value={this.state.input}
             />
           </div>
           <div className="send_message ">
             <div
-              onClick={this.onSubmitHandler}
+              onClick={this._onSubmitHandler}
               className="fa fa-paper-plane-o text"
             > Send</div>
           </div>

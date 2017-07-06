@@ -21,18 +21,18 @@ class Chessboard extends React.Component {
       canMove: false,
     };
     this.engine = null;
-    this.onMovePiece = this.onMovePiece.bind(this);
-    this.initBoard = this.initBoard.bind(this);
-    this.updateBoardListener = this.updateBoardListener.bind(this);
-    this.onReconnect = this.onReconnect.bind(this);
-    SocketIo.on('board-update', this.updateBoardListener);
+    this._onMovePiece = this._onMovePiece.bind(this);
+    this._initBoard = this._initBoard.bind(this);
+    this._updateBoardListener = this._updateBoardListener.bind(this);
+    this._onReconnect = this._onReconnect.bind(this);
+    SocketIo.on('board-update', this._updateBoardListener);
     SocketIo.on('reconnect', () => {
       SocketIo.open();
-      this.onReconnect();
+      this._onReconnect();
     });
   }
 
-  onMovePiece(piece, from, to) {
+  _onMovePiece(piece, from, to) {
     const username = this.props.profileData.username;
     this.engine.move({ piece, from, to });
     const newBoard = this.engine.fen();
@@ -47,20 +47,20 @@ class Chessboard extends React.Component {
     SocketIo.emit('board-update', newBoard);
   }
 
-  onReconnect() {
+  _onReconnect() {
     const newBoard = this.engine.fen();
     this.engine.load(newBoard);
     SocketIo.emit('board-update', newBoard);
     this.props.updateBoardAsync(newBoard);
   }
 
-  updateBoardListener(newBoard) {
+  _updateBoardListener(newBoard) {
     // listen to changes
     this.engine.load(newBoard);
     this.props.updateBoardAsync(newBoard);
   }
 
-  initBoard() {
+  _initBoard() {
     if (!this.engine) {
       this.engine = new Chess();
     } else {
@@ -77,14 +77,14 @@ class Chessboard extends React.Component {
           allowMoves={this.state.canMove}
           flip={this.props.side}
           fen={this.props.boardState}
-          onMovePiece={this.onMovePiece}
+          onMovePiece={this._onMovePiece}
           squareSize={styles.board.size}
           lightSquareColor={styles.board.light}
           darkSquareColor={styles.board.dark}
         />
         <ChessFooter
           {...this.props}
-          initBoard={this.initBoard}
+          initBoard={this._initBoard}
         />
       </div>
     );
