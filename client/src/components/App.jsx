@@ -12,7 +12,6 @@ import {
   getGameIdAsync,
   pickWhiteAsync,
   pickBlackAsync,
-  getInputAsync,
   getProfileAsync,
 } from '../redux/actions/index';
 
@@ -56,16 +55,14 @@ class App extends React.Component {
   }
 }
 
-const mapStateToProps = ({ board, room, chat, profile }) => {
+const mapStateToProps = ({ board, room, profile }) => {
   const { boardState } = board;
   const { gameId, side } = room;
-  const { input } = chat;
   const { profileData } = profile;
   return {
     boardState,
     gameId,
     side,
-    input,
     profileData,
   };
 };
@@ -77,7 +74,6 @@ export default connect(mapStateToProps,
     getGameIdAsync,
     pickWhiteAsync,
     pickBlackAsync,
-    getInputAsync,
     getProfileAsync,
   })(App);
 

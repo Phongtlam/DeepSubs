@@ -49,8 +49,8 @@
   height: 50px;
   display: inline-block;
   border-radius: 10px;
-  background-color: #5cb85c;
-  border: 2px solid #5cb85c;
+  background-color: #007E33;
+  border: 2px solid #007E33;
   color: #fff;
   cursor: pointer;
   transition: all 0.2s linear;
@@ -58,7 +58,7 @@
   float: right;
 }
 .bottom_wrapper .send_message:hover {
-  color: #5cb85c;
+  color: #007E33;
   background-color: #fff;
 }
 .bottom_wrapper .send_message .text {
@@ -74,5 +74,5 @@
   font-size: 20px;
   font-weight: bold;
   color: #fff;
-  background-color: #59ADEB;
+  background-color: #0d47a1;
 }
