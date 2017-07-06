@@ -22,7 +22,7 @@ module.exports = (server) => {
     });
 
     socket.on('board-update', (newBoard) => {
-      io.in(user.roomId).emit('board-update', newBoard);
+      socket.broadcast.to(user.roomId).emit('board-update', newBoard);
     });
 
     socket.on('new-user', (username) => {
