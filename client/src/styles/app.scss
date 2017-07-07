@@ -14,23 +14,32 @@
 }
 
 .content {
+  margin-top: 0;
+  margin-bottom: 0;
   display: flex;
 }
 
 .chessboard {
-  margin: 10px;
-  padding: 30px;
+  padding: 20px 20px 20px 30px;
   float: left;
+  margin: 10px 0 10px 10px;
 }
 
 .chatterbox {
   float: right;
-  padding: 30px;
+  padding: 20px 20px 20px 70px;
   margin: 10px;
 }
 
 .footer {
-  padding: 10px;
   text-align: center;
   clear: both;
+}
+
+.logout {
+  margin-top: 10px;
+  position: relative;
+  display: inline-block;
+  left: 50%;
+  transform: translateX(-50%);
 }

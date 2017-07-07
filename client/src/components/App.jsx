@@ -16,12 +16,11 @@ import {
   appendMsgAsync,
 } from '../redux/actions/index';
 
-
 const App = props => (
   <div>
-    <h1 className="page-header text-center">
-      <span className="fa fa-gamepad" /> Good luck!</h1>
     <div className="container">
+      <a href="/logout" className="logout btn btn-warning btn">
+        <span className="fa fa-sign-out" /> Logout</a>
       <div className="content">
         <div className="chessboard">
           <Chessboard {...props} />
