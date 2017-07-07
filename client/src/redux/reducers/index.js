@@ -2,6 +2,7 @@ import { combineReducers } from 'redux';
 import board from './boardReducer';
 import room from './roomReducer';
 import profile from './profileReducer';
+import chatterbox from './chatterboxReducer';
 
 // store
 const rootReducer = combineReducers({
@@ -9,6 +10,7 @@ const rootReducer = combineReducers({
   board,
   room,
   profile,
+  chatterbox,
 });
 
 export default rootReducer;

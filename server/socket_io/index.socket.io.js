@@ -17,21 +17,25 @@ const deepSubs = {
 module.exports = (server) => {
   const io = socketIo(server);
   io.on('connect', (socket) => {
-    socket.on('join-room', (roomId) => {
+    // socket.on('join-room', (roomId) => {
+    //   user.roomId = roomId;
+    //   socket.join(user.roomId);
+    // });
+
+
+    socket.on('new-user', (username, roomId) => {
+      console.log('client ', username, ' with socket ', socket.id, ' join on room ', roomId)
       user.roomId = roomId;
       socket.join(user.roomId);
-    });
-
-    socket.on('board-update', (newBoard) => {
-      io.in(user.roomId).emit('board-update', newBoard);
-    });
-
-    socket.on('new-user', (username) => {
       deepSubs.msgId = getUniqeId();
       deepSubs.message = `${username} has joined the room!`;
       socket.broadcast.to(user.roomId).emit('receive-msg', deepSubs);
       deepSubs.message = `Hello ${username}! This is your room ID: ${user.roomId}`;
       io.to(socket.id).emit('receive-msg', deepSubs);
+    });
+
+    socket.on('board-update', (newBoard) => {
+      io.in(user.roomId).emit('board-update', newBoard);
     });
 
     socket.on('send-msg', (newMsg) => {

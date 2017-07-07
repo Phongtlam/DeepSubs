@@ -3,7 +3,7 @@ import { BrowserRouter, Route, Switch } from 'react-router-dom';
 import { Provider } from 'react-redux';
 
 import App from './App';
-import Chessboard from './Chessboard';
+import Home from './Home';
 import configureStore from '../redux/store';
 
 // import store from './redux/store';
@@ -14,7 +14,8 @@ const Routing = () => (
   <Provider store={store}>
     <BrowserRouter>
       <Switch>
-        <Route exact path="/home" component={App} />
+        <Route exact path="/home" component={Home} />
+        <Route exact path="/game" component={App} />
       </Switch>
     </BrowserRouter>
   </Provider>

@@ -7,6 +7,8 @@ const ChessFooter = props => (
     <Button bsStyle="primary" onClick={props.initBoard}>Start New Game</Button>
     <Button onClick={props.pickWhiteAsync}>Play as White</Button>
     <Button onClick={props.pickBlackAsync}>Play as Black</Button>
+    <a href="/logout" className="btn btn-warning btn">
+      <span className="fa fa-sign-out" /> Logout</a>
   </div>
 );
 

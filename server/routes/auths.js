@@ -10,7 +10,7 @@ router.route('/signup')
     res.render('signup.ejs', { message: req.flash('signupMessage') });
   })
   .post(middleware.passport.authenticate('local-signup', {
-    successRedirect: '/profile',
+    successRedirect: '/home',
     failureRedirect: '/signup',
   }));
 
@@ -19,7 +19,7 @@ router.route('/login')
     res.render('login.ejs', { message: req.flash('loginMessage') });
   })
   .post(middleware.passport.authenticate('local-login', {
-    successRedirect: '/profile',
+    successRedirect: '/home',
     failureRedirect: '/login',
   }));
 
@@ -28,7 +28,7 @@ router.route('/auth/facebook')
 
 router.route('/auth/facebook/callback')
   .get(middleware.passport.authenticate('facebook', {
-    successRedirect: '/profile',
+    successRedirect: '/home',
     failureRedirect: '/',
   }));
 
@@ -37,17 +37,18 @@ router.route('/auth/google')
 
 router.route('/auth/google/callback')
   .get(middleware.passport.authenticate('google', {
-    successRedirect: '/profile',
+    successRedirect: '/home',
     failureRedirect: '/',
   }));
 
 router.route('/profile')
-.get(authHelpers.isLoggedIn, (req, res) => {
-  res.render('profile.ejs', {
-    gameId: '',
-    user: req.user, // get the user out of session and pass to template
+  .get(authHelpers.isLoggedIn, (req, res) => {
+    // res.render('profile.ejs', {
+    //   gameId: '',
+    //   user: req.user, // get the user out of session and pass to template
+    // });
+    res.redirect('/home');
   });
-});
 
 router.route('/logout')
   .get((req, res) => {

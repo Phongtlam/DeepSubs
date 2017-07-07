@@ -1,4 +1,5 @@
 const express = require('express');
+const shortid = require('shortid');
 const authHelpers = require('../auths/helpers');
 const createIdController = require('../controllers').createId;
 
@@ -6,8 +7,9 @@ const router = express.Router();
 
 router.route('/')
   .get(authHelpers.isLoggedIn, (req, res) => {
-    const gameId = createIdController.createId(req.query.id);
-    res.redirect(`/home?gameId=${gameId}`);
+    // const gameId = shortid.generate();
+    console.log('gameid', gameId)
+    res.end(gameId);
   });
 
 router.route('/join')

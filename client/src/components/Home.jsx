@@ -1,9 +1,10 @@
 import React from 'react';
-import { connect } from 'react-redux';
 import propTypes from 'prop-types';
-import Chessboard from './Chessboard';
-import Chatterbox from './Chatterbox';
-import '../styles/app.scss';
+import { connect } from 'react-redux';
+import NavBar from './NavBar';
+import Spinner from './Spinner';
+import ProfilePage from './ProfilePage';
+import '../styles/home.scss';
 
 import {
   startNewGameAsync,
@@ -16,27 +17,40 @@ import {
   appendMsgAsync,
 } from '../redux/actions/index';
 
+class Home extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      isLoading: true,
+    };
+  }
 
-const App = props => (
-  <div>
-    <h1 className="page-header text-center">
-      <span className="fa fa-gamepad" /> Good luck!</h1>
-    <div className="container">
-      <div className="content">
-        <div className="chessboard">
-          <Chessboard {...props} />
-        </div>
-        <div className="chatterbox">
-          <Chatterbox {...props} />
-        </div>
+  componentWillMount() {
+    this.props.getProfileAsync();
+    setTimeout(() => {
+      this.setState({
+        isLoading: false,
+      });
+    }, 1000);
+  }
+
+  render() {
+    let condRender = (
+      <div>
+        <NavBar />
+        <ProfilePage />
       </div>
-      <div className="footer">
-      Copyright &copy; PhongLam 2017
-    </div>
-    </div>
-  </div>
-
-);
+    );
+    if (this.state.isLoading) {
+      condRender = <Spinner />;
+    }
+    return (
+      <div className="home">
+        {condRender}
+      </div>
+    );
+  }
+}
 
 const mapStateToProps = ({ board, room, profile, chatterbox }) => {
   const { boardState } = board;
@@ -63,16 +77,12 @@ export default connect(mapStateToProps,
     getProfileAsync,
     getInputAsync,
     appendMsgAsync,
-  })(App);
+  })(Home);
 
-App.propTypes = {
+Home.propTypes = {
   getProfileAsync: propTypes.func,
-  getGameIdAsync: propTypes.func,
-  profileData: propTypes.object,
 };
 
-App.defaultProps = {
+Home.defaultProps = {
   getProfileAsync: propTypes.func,
-  getGameIdAsync: propTypes.func,
-  profileData: {},
 };

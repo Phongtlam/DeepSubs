@@ -2,6 +2,7 @@ import axios from 'axios';
 import { newGame, updateBoard } from './boardAction';
 import { getGameId, pickWhite, pickBlack } from './roomAction';
 import { getProfile } from './profileAction';
+import { getInput, appendMsg } from './chatterboxAction';
 import SocketIo from '../../socket_io_client/index';
 
 // async action by Thunk
@@ -35,10 +36,18 @@ export const getProfileAsync = () => (dispatch) => {
   axios.get('/get-profile')
   .then((data) => {
     dispatch(getProfile(data.data));
-    return data.data.username;
-  })
-  .then((username) => {
-    SocketIo.emit('new-user', username);
-  })
-  .catch((err) => { console.log('err', err); });
+    // return data.data.username;
+  });
+  // .then((username) => {
+  //   SocketIo.emit('new-user', username);
+  // })
+  // .catch((err) => { console.log('err', err); });
+};
+
+export const getInputAsync = input => (dispatch) => {
+  dispatch(getInput(input));
+};
+
+export const appendMsgAsync = newMsg => (dispatch) => {
+  dispatch(appendMsg(newMsg));
 };

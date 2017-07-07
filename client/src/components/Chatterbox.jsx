@@ -29,13 +29,8 @@ const getUniqeId = (id) => {
 class Chatterbox extends React.Component {
   constructor(props) {
     super(props);
-    this.state = {
-      input: '',
-      messages: [],
-    };
     this._onChangeHandler = this._onChangeHandler.bind(this);
     this._onSubmitHandler = this._onSubmitHandler.bind(this);
-    this._onNewMessage = this._onNewMessage.bind(this);
     this._onReceiveMessage = this._onReceiveMessage.bind(this);
     SocketIo.on('receive-msg', this._onReceiveMessage);
   }
@@ -45,36 +40,31 @@ class Chatterbox extends React.Component {
   }
 
   _onChangeHandler(e) {
-    this.setState({ input: e.target.value });
+    e.preventDefault();
+    this.props.getInputAsync(e.target.value);
   }
 
   _onSubmitHandler(e) {
     e.preventDefault();
-    if (this.state.input !== '') {
+    if (this.props.input.length > 0) {
       const uniqueId = this.props.profileData.id + getUniqeId(this.props.profileData.id);
       const newMsg = {
         msgId: uniqueId,
         id: this.props.profileData.id,
         username: this.props.profileData.username,
         img_url: this.props.profileData.img_url,
-        message: this.state.input,
+        message: this.props.input,
         time: '',
       };
       SocketIo.emit('send-msg', newMsg);
     }
-    this.setState({ input: '' });
+    this.props.getInputAsync('');
   }
 
   _onReceiveMessage(newMsg) {
     const currentTime = getTime();
     newMsg.time = currentTime;
-    this._onNewMessage(newMsg);
-  }
-
-  _onNewMessage(newMsg) {
-    this.setState(prevState => ({
-      messages: prevState.messages.concat([newMsg]),
-    }));
+    this.props.appendMsgAsync(newMsg);
   }
 
   // this is a trick to scroll to bottom of page on new msg added
@@ -88,7 +78,7 @@ class Chatterbox extends React.Component {
       <div className="chat-window">
         <div className="chat-header">Welcome to React-Chat</div>
         <div className="msg_container">
-          <Message {...this.state} {...this.props} />
+          <Message {...this.props} />
           <div
             style={{ float: 'left', clear: 'both' }}
             ref={(el) => { this.messagesEnd = el; }}
@@ -103,7 +93,7 @@ class Chatterbox extends React.Component {
               className="message_input"
               placeholder="Type your message here..."
               onChange={this._onChangeHandler}
-              value={this.state.input}
+              value={this.props.input}
             />
           </div>
           <div className="send_message ">
@@ -123,8 +113,14 @@ export default Chatterbox;
 
 Chatterbox.propTypes = {
   profileData: propTypes.object,
+  input: propTypes.string,
+  getInputAsync: propTypes.func,
+  appendMsgAsync: propTypes.func,
 };
 
 Chatterbox.defaultProps = {
   profileData: {},
+  input: '',
+  getInputAsync: propTypes.func,
+  appendMsgAsync: propTypes.func,
 };
