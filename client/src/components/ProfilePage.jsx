@@ -7,15 +7,6 @@ import { LinkContainer } from 'react-router-bootstrap';
 import SocketIo from '../socket_io_client/index';
 import '../styles/profilepage.scss';
 
-import {
-  startNewGameAsync,
-  updateBoardAsync,
-  getGameIdAsync,
-  pickWhiteAsync,
-  pickBlackAsync,
-  getProfileAsync,
-} from '../redux/actions/index';
-
 class ProfilePage extends React.Component {
   constructor(props) {
     super(props);
@@ -37,7 +28,7 @@ class ProfilePage extends React.Component {
     SocketIo.emit('new-user', this.props.profileData.username, roomId);
   }
 
-  _joinGame(e) {
+  _joinGame() {
     SocketIo.emit('new-user', this.props.profileData.username, this.state.input);
   }
 
@@ -102,27 +93,12 @@ class ProfilePage extends React.Component {
   }
 }
 
-const mapStateToProps = ({ board, room, profile }) => {
-  const { boardState } = board;
-  const { gameId, side } = room;
+const mapStateToProps = ({ profile }) => {
   const { profileData } = profile;
-  return {
-    boardState,
-    gameId,
-    side,
-    profileData,
-  };
+  return { profileData };
 };
 
-
-export default connect(mapStateToProps,
-  { startNewGameAsync,
-    updateBoardAsync,
-    getGameIdAsync,
-    pickWhiteAsync,
-    pickBlackAsync,
-    getProfileAsync,
-  })(ProfilePage);
+export default connect(mapStateToProps)(ProfilePage);
 
 ProfilePage.propTypes = {
   profileData: propTypes.object,

@@ -6,16 +6,7 @@ import Spinner from './Spinner';
 import ProfilePage from './ProfilePage';
 import '../styles/home.scss';
 
-import {
-  startNewGameAsync,
-  updateBoardAsync,
-  getGameIdAsync,
-  pickWhiteAsync,
-  pickBlackAsync,
-  getProfileAsync,
-  getInputAsync,
-  appendMsgAsync,
-} from '../redux/actions/index';
+import { getProfileAsync } from '../redux/actions/index';
 
 class Home extends React.Component {
   constructor(props) {
@@ -52,32 +43,7 @@ class Home extends React.Component {
   }
 }
 
-const mapStateToProps = ({ board, room, profile, chatterbox }) => {
-  const { boardState } = board;
-  const { gameId, side } = room;
-  const { profileData } = profile;
-  const { input, messages } = chatterbox;
-  return {
-    boardState,
-    gameId,
-    side,
-    profileData,
-    input,
-    messages,
-  };
-};
-
-
-export default connect(mapStateToProps,
-  { startNewGameAsync,
-    updateBoardAsync,
-    getGameIdAsync,
-    pickWhiteAsync,
-    pickBlackAsync,
-    getProfileAsync,
-    getInputAsync,
-    appendMsgAsync,
-  })(Home);
+export default connect(null, { getProfileAsync })(Home);
 
 Home.propTypes = {
   getProfileAsync: propTypes.func,
