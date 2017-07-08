@@ -27,6 +27,7 @@ class Chessboard extends React.Component {
     this._initBoard = this._initBoard.bind(this);
     this._updateBoardListener = this._updateBoardListener.bind(this);
     this._onReconnect = this._onReconnect.bind(this);
+    this._checkStatus = this._checkStatus.bind(this);
     SocketIo.on('board-update', this._updateBoardListener);
     SocketIo.on('disconnect', this._onReconnect, () => {
       SocketIo.open();
@@ -35,11 +36,18 @@ class Chessboard extends React.Component {
 
   componentDidMount() {
     console.log('in did mount')
-    Engine = new Chess(this.props.boardState);
+    this._checkStatus();
   }
 
   componentWillUnmount() {
     Engine.clear();
+  }
+
+  _checkStatus() {
+    if (Engine) {
+      this.setState({ canMove: true });
+    }
+    Engine = new Chess(this.props.boardState);
   }
 
   _onMovePiece(piece, from, to) {
@@ -84,7 +92,7 @@ class Chessboard extends React.Component {
     return (
       <div>
         <Board
-          allowMoves={this.state.canMove}
+          // allowMoves={this.state.canMove}
           flip={this.props.side}
           fen={this.props.boardState}
           onMovePiece={this._onMovePiece}

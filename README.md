@@ -12,6 +12,7 @@ Link: https://deep-subs.herokuapp.com/
 
 # Overview:
 - Real time chess with friends!
+- Unique room ID per session
 - Move validation using Chess.js module
 - Utilize React/Redux for component's reusability (States are almost entirely in Redux store)
 - Build with Bootstrap and custom CSS for responsive front-end interface
