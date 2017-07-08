@@ -15,6 +15,7 @@ Link: https://deep-subs.herokuapp.com/
 - Move validation using Chess.js module
 - Utilize React/Redux for component's reusability (States are almost entirely in Redux store)
 - Build with Bootstrap and custom CSS for responsive front-end interface
+- Passport.JS for Oauth 2.0 authentication standard
 - Engineer SocketIo communication with Express.JS to achieve real time communication between client-server
 - PostgreSQL in conjunction with Knex.JS as the main DB storage mechanism
 - App is deployed on Heroku!
