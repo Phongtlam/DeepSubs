@@ -2,6 +2,8 @@
 
 Link: https://deep-subs.herokuapp.com/
 
+![screenshot](./gamescreen.png)
+
 # Steps to start:
 1. npm install to install dependencies.
 2. npm start: will run web-pack-dev server
@@ -10,7 +12,9 @@ Link: https://deep-subs.herokuapp.com/
 
 # Overview:
 - Real time chess with friends!
-- Utilized React and Bootstrap for front-end
+- Move validation using Chess.js module
+- Utilize React/Redux for component's reusability (States are almost entirely in Redux store)
+- Build with Bootstrap and custom CSS for responsive front-end interface
 - Engineer SocketIo communication with Express.JS to achieve real time communication between client-server
 - PostgreSQL in conjunction with Knex.JS as the main DB storage mechanism
 - App is deployed on Heroku!

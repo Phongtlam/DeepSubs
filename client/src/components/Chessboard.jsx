@@ -33,6 +33,15 @@ class Chessboard extends React.Component {
     });
   }
 
+  componentDidMount() {
+    console.log('in did mount')
+    Engine = new Chess(this.props.boardState);
+  }
+
+  componentWillUnmount() {
+    Engine.clear();
+  }
+
   _onMovePiece(piece, from, to) {
     const username = this.props.profileData.username;
     Engine.move({ piece, from, to });
