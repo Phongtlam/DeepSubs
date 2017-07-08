@@ -22,9 +22,7 @@ module.exports = (server) => {
     //   socket.join(user.roomId);
     // });
 
-
     socket.on('new-user', (username, roomId) => {
-      console.log('client ', username, ' with socket ', socket.id, ' join on room ', roomId)
       user.roomId = roomId;
       socket.join(user.roomId);
       deepSubs.msgId = getUniqeId();
