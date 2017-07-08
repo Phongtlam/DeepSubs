@@ -3,6 +3,7 @@ import { connect } from 'react-redux';
 import propTypes from 'prop-types';
 import Chessboard from './Chessboard';
 import Chatterbox from './Chatterbox';
+import NavBar from './NavBar';
 import '../styles/app.scss';
 
 import {
@@ -18,9 +19,8 @@ import {
 
 const App = props => (
   <div>
+    <NavBar />
     <div className="container">
-      <a href="/logout" className="logout btn btn-warning btn">
-        <span className="fa fa-sign-out" /> Logout</a>
       <div className="content">
         <div className="chessboard">
           <Chessboard {...props} />

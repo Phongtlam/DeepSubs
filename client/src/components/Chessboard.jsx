@@ -14,13 +14,15 @@ const styles = {
   },
 };
 
+let Engine;
+
 class Chessboard extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
       canMove: false,
     };
-    this.engine = null;
+    Engine = null;
     this._onMovePiece = this._onMovePiece.bind(this);
     this._initBoard = this._initBoard.bind(this);
     this._updateBoardListener = this._updateBoardListener.bind(this);
@@ -33,13 +35,13 @@ class Chessboard extends React.Component {
 
   _onMovePiece(piece, from, to) {
     const username = this.props.profileData.username;
-    this.engine.move({ piece, from, to });
-    const newBoard = this.engine.fen();
+    Engine.move({ piece, from, to });
+    const newBoard = Engine.fen();
     let isCheck = 'normal';
-    if (this.engine.in_check() === true) {
+    if (Engine.in_check() === true) {
       isCheck = 'check';
     }
-    if (this.engine.in_checkmate() === true) {
+    if (Engine.in_checkmate() === true) {
       isCheck = 'check_mate';
     }
     SocketIo.emit('announcer', from, to, username, isCheck);
@@ -48,22 +50,22 @@ class Chessboard extends React.Component {
   }
 
   _onReconnect() {
-    const newBoard = this.engine.fen();
-    this.engine.load(newBoard);
+    const newBoard = Engine.fen();
+    Engine.load(newBoard);
     this.props.updateBoardAsync(newBoard);
   }
 
   _updateBoardListener(newBoard) {
     // listen to changes
-    this.engine.load(newBoard);
+    Engine.load(newBoard);
     this.props.updateBoardAsync(newBoard);
   }
 
   _initBoard() {
-    if (!this.engine) {
-      this.engine = new Chess();
+    if (!Engine) {
+      Engine = new Chess();
     } else {
-      this.engine.reset();
+      Engine.reset();
     }
     this.setState({ canMove: true });
     this.props.startNewGameAsync();

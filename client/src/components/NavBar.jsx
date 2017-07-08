@@ -8,8 +8,8 @@ const NavBar = () => (
     <LinkContainer to="/home">
       <NavItem eventKey={1}>Profile Page</NavItem>
     </LinkContainer>
-    <LinkContainer to="/about">
-      <NavItem eventKey={2}>About Page</NavItem>
+    <LinkContainer to="/game">
+      <NavItem eventKey={2}>Game Page</NavItem>
     </LinkContainer>
   </Nav>
 );
