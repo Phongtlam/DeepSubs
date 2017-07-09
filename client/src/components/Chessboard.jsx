@@ -19,9 +19,6 @@ let Engine;
 class Chessboard extends React.Component {
   constructor(props) {
     super(props);
-    this.state = {
-      canMove: false,
-    };
     Engine = null;
     this._onMovePiece = this._onMovePiece.bind(this);
     this._initBoard = this._initBoard.bind(this);
@@ -35,7 +32,6 @@ class Chessboard extends React.Component {
   }
 
   componentWillMount() {
-    console.log('in did mount')
     this._checkStatus();
   }
 
@@ -45,7 +41,6 @@ class Chessboard extends React.Component {
 
   _checkStatus() {
     if (Engine && this.props.boardState.length > 0) {
-      // this.setState({ canMove: true });
       this.props.isMyTurnAsync();
     }
     Engine = new Chess(this.props.boardState);
@@ -63,8 +58,8 @@ class Chessboard extends React.Component {
       isCheck = 'check_mate';
     }
     SocketIo.emit('announcer', from, to, username, isCheck);
-    const fromMe = true;
-    this.props.updateBoardAsync(newBoard, fromMe);
+    this.props.isNotMyTurnAsync();
+    this.props.updateBoardAsync(newBoard, username);
   }
 
   _onReconnect() {
@@ -73,8 +68,11 @@ class Chessboard extends React.Component {
     this.props.updateBoardAsync(newBoard);
   }
 
-  _updateBoardListener(newBoard) {
+  _updateBoardListener(newBoard, username) {
     // listen to changes
+    if (username !== this.props.profileData.username) {
+      this.props.isMyTurnAsync();
+    }
     Engine.load(newBoard);
     this.props.updateBoardAsync(newBoard);
   }
@@ -85,7 +83,6 @@ class Chessboard extends React.Component {
     } else {
       Engine.reset();
     }
-    // this.setState({ canMove: true });
     this.props.isMyTurnAsync();
     this.props.startNewGameAsync();
   }
@@ -94,7 +91,7 @@ class Chessboard extends React.Component {
     return (
       <div>
         <Board
-          // allowMoves={this.props.isTurn}
+          allowMoves={this.props.isTurn}
           flip={this.props.side}
           fen={this.props.boardState}
           onMovePiece={this._onMovePiece}
@@ -115,14 +112,18 @@ export default Chessboard;
 
 Chessboard.propTypes = {
   boardState: propTypes.string,
+  isTurn: propTypes.bool,
   side: propTypes.bool,
+  isMyTurnAsync: propTypes.func,
   updateBoardAsync: propTypes.func,
   startNewGameAsync: propTypes.func,
   profileData: propTypes.object,
 };
 Chessboard.defaultProps = {
   boardState: '',
+  isTurn: true,
   side: false,
+  isMyTurnAsync: propTypes.func,
   updateBoardAsync: propTypes.func,
   startNewGameAsync: propTypes.func,
   profileData: {},

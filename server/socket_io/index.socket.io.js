@@ -32,8 +32,8 @@ module.exports = (server) => {
       io.to(socket.id).emit('receive-msg', deepSubs);
     });
 
-    socket.on('board-update', (newBoard) => {
-      io.in(user.roomId).emit('board-update', newBoard);
+    socket.on('board-update', (newBoard, username) => {
+      io.in(user.roomId).emit('board-update', newBoard, username);
     });
 
     socket.on('send-msg', (newMsg) => {
