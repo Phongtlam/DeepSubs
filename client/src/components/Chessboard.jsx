@@ -70,9 +70,10 @@ class Chessboard extends React.Component {
 
   _updateBoardListener(newBoard, username) {
     // listen to changes
-    if (username !== this.props.profileData.username) {
-      this.props.isMyTurnAsync();
-    }
+    console.log('username ', username, this.props.profileData.username)
+    // if (username !== this.props.profileData.username) {
+    // }
+    this.props.isMyTurnAsync();
     Engine.load(newBoard);
     this.props.updateBoardAsync(newBoard);
   }
@@ -91,7 +92,7 @@ class Chessboard extends React.Component {
     return (
       <div>
         <Board
-          allowMoves={this.props.isTurn}
+          // allowMoves={this.props.isTurn}
           flip={this.props.side}
           fen={this.props.boardState}
           onMovePiece={this._onMovePiece}

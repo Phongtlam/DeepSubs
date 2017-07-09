@@ -33,7 +33,8 @@ module.exports = (server) => {
     });
 
     socket.on('board-update', (newBoard, username) => {
-      io.in(user.roomId).emit('board-update', newBoard, username);
+      // io.in(user.roomId).emit('board-update', newBoard, username);
+      socket.broadcast.to(user.roomId).emit('board-update', newBoard, username)
     });
 
     socket.on('send-msg', (newMsg) => {
