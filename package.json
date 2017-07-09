@@ -1,10 +1,11 @@
 {
   "name": "DeepSubs",
   "version": "1.0.0",
-  "description": "",
+  "description": "Real time chess built with React",
   "main": "index.js",
   "scripts": {
     "start": "node -r dotenv/config server/index.js",
+    "test": "npm run build",
     "build": "NODE_ENV=production webpack --config ./webpack.prod.config.js --progress",
     "dev": "webpack-dev-server --progress --inline",
     "nodemon": "nodemon server/index.js",
