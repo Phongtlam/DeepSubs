@@ -1,7 +1,7 @@
 import axios from 'axios';
 import { newGame, updateBoard, isMyTurn, isNotMyTurn } from './boardAction';
 import { getGameId, pickWhite, pickBlack } from './roomAction';
-import { getProfile } from './profileAction';
+import { getProfile, needProfile } from './profileAction';
 import { getInput, appendMsg } from './chatterboxAction';
 import SocketIo from '../../socket_io_client/index';
 
@@ -50,6 +50,10 @@ export const getProfileAsync = () => (dispatch) => {
   //   SocketIo.emit('new-user', username);
   // })
   // .catch((err) => { console.log('err', err); });
+};
+
+export const needProfileAsync = () => (dispatch) => {
+  dispatch(needProfile());
 };
 
 export const getInputAsync = input => (dispatch) => {

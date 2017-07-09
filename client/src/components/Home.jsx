@@ -6,7 +6,7 @@ import Spinner from './Spinner';
 import ProfilePage from './ProfilePage';
 import '../styles/home.scss';
 
-import { getProfileAsync } from '../redux/actions/index';
+import { getProfileAsync, needProfileAsync } from '../redux/actions/index';
 
 class Home extends React.Component {
   constructor(props) {
@@ -17,12 +17,15 @@ class Home extends React.Component {
   }
 
   componentWillMount() {
-    this.props.getProfileAsync();
-    setTimeout(() => {
-      this.setState({
-        isLoading: false,
-      });
-    }, 1000);
+    if (this.props.needProfile) {
+      this.props.getProfileAsync();
+      setTimeout(() => {
+        // this.setState({
+        //   isLoading: false,
+        // });
+        this.props.needProfileAsync();
+      }, 1000);
+    }
   }
 
   render() {
@@ -32,7 +35,7 @@ class Home extends React.Component {
         <ProfilePage />
       </div>
     );
-    if (this.state.isLoading) {
+    if (this.props.needProfile) {
       condRender = <Spinner />;
     }
     return (
@@ -43,7 +46,12 @@ class Home extends React.Component {
   }
 }
 
-export default connect(null, { getProfileAsync })(Home);
+const mapStateToProps = ({ profile }) => {
+  const { needProfile } = profile;
+  return { needProfile };
+};
+
+export default connect(mapStateToProps, { getProfileAsync, needProfileAsync })(Home);
 
 Home.propTypes = {
   getProfileAsync: propTypes.func,
