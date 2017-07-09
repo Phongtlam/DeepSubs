@@ -6,3 +6,5 @@ export const PICK_BLACK = 'pick_black';
 export const GET_PROFILE = 'get_profile';
 export const WRITE_MSG = 'write_msg';
 export const APPEND_MSG = 'append_msg';
+export const MY_TURN = 'my_turn';
+export const NOT_MY_TURN = 'not_my_turn';

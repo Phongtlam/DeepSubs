@@ -1,5 +1,5 @@
 import axios from 'axios';
-import { newGame, updateBoard } from './boardAction';
+import { newGame, updateBoard, isMyTurn, isNotMyTurn } from './boardAction';
 import { getGameId, pickWhite, pickBlack } from './roomAction';
 import { getProfile } from './profileAction';
 import { getInput, appendMsg } from './chatterboxAction';
@@ -17,6 +17,14 @@ export const updateBoardAsync = (boardState, fromMe) => (dispatch) => {
     SocketIo.emit('board-update', boardState);
   }
   dispatch(updateBoard(boardState));
+};
+
+export const isMyTurnAsync = () => (dispatch) => {
+  dispatch(isMyTurn());
+};
+
+export const isNotMyTurnAsync = () => (dispatch) => {
+  dispatch(isNotMyTurn());
 };
 
 export const getGameIdAsync = roomId => (dispatch) => {

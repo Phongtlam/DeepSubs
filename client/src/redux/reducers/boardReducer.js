@@ -1,6 +1,9 @@
-import { START_GAME, UPDATE_BOARD } from '../actions/type';
+import { START_GAME, UPDATE_BOARD, MY_TURN, NOT_MY_TURN } from '../actions/type';
 
-const INITIAL_STATE = '';
+const INITIAL_STATE = {
+  boardState: '',
+  isTurn: false,
+};
 
 const board = (state = INITIAL_STATE, { type, boardState }) => {
   switch (type) {
@@ -13,6 +16,16 @@ const board = (state = INITIAL_STATE, { type, boardState }) => {
       return {
         ...state,
         boardState,
+      };
+    case MY_TURN:
+      return {
+        ...state,
+        isTurn: true,
+      };
+    case NOT_MY_TURN:
+      return {
+        ...state,
+        isTurn: false,
       };
     default:
       return state;

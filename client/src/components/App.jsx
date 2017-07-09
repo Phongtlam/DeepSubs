@@ -9,6 +9,8 @@ import '../styles/app.scss';
 import {
   startNewGameAsync,
   updateBoardAsync,
+  isMyTurnAsync,
+  isNotMyTurnAsync,
   getGameIdAsync,
   pickWhiteAsync,
   pickBlackAsync,
@@ -38,12 +40,13 @@ const App = props => (
 );
 
 const mapStateToProps = ({ board, room, profile, chatterbox }) => {
-  const { boardState } = board;
+  const { boardState, isTurn } = board;
   const { gameId, side } = room;
   const { profileData } = profile;
   const { input, messages } = chatterbox;
   return {
     boardState,
+    isTurn,
     gameId,
     side,
     profileData,
@@ -56,6 +59,8 @@ const mapStateToProps = ({ board, room, profile, chatterbox }) => {
 export default connect(mapStateToProps,
   { startNewGameAsync,
     updateBoardAsync,
+    isMyTurnAsync,
+    isNotMyTurnAsync,
     getGameIdAsync,
     pickWhiteAsync,
     pickBlackAsync,

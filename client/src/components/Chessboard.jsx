@@ -34,7 +34,7 @@ class Chessboard extends React.Component {
     });
   }
 
-  componentDidMount() {
+  componentWillMount() {
     console.log('in did mount')
     this._checkStatus();
   }
@@ -44,8 +44,9 @@ class Chessboard extends React.Component {
   }
 
   _checkStatus() {
-    if (Engine) {
-      this.setState({ canMove: true });
+    if (Engine && this.props.boardState.length > 0) {
+      // this.setState({ canMove: true });
+      this.props.isMyTurnAsync();
     }
     Engine = new Chess(this.props.boardState);
   }
@@ -84,7 +85,8 @@ class Chessboard extends React.Component {
     } else {
       Engine.reset();
     }
-    this.setState({ canMove: true });
+    // this.setState({ canMove: true });
+    this.props.isMyTurnAsync();
     this.props.startNewGameAsync();
   }
 
@@ -92,7 +94,7 @@ class Chessboard extends React.Component {
     return (
       <div>
         <Board
-          // allowMoves={this.state.canMove}
+          // allowMoves={this.props.isTurn}
           flip={this.props.side}
           fen={this.props.boardState}
           onMovePiece={this._onMovePiece}
