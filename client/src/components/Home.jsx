@@ -9,20 +9,11 @@ import '../styles/home.scss';
 import { getProfileAsync, needProfileAsync } from '../redux/actions/index';
 
 class Home extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      isLoading: true,
-    };
-  }
 
   componentWillMount() {
     if (this.props.needProfile) {
       this.props.getProfileAsync();
       setTimeout(() => {
-        // this.setState({
-        //   isLoading: false,
-        // });
         this.props.needProfileAsync();
       }, 1000);
     }
@@ -55,8 +46,12 @@ export default connect(mapStateToProps, { getProfileAsync, needProfileAsync })(H
 
 Home.propTypes = {
   getProfileAsync: propTypes.func,
+  needProfileAsync: propTypes.func,
+  needProfile: propTypes.bool,
 };
 
 Home.defaultProps = {
   getProfileAsync: propTypes.func,
+  needProfileAsync: propTypes.func,
+  needProfile: true,
 };
