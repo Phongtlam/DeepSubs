@@ -62,9 +62,9 @@ class Chessboard extends React.Component {
     if (this.props.boardState !== newBoard) {
       console.log('is true');
       this.props.isNotMyTurnAsync();
+      this.props.updateBoardAsync(newBoard, username);
+      SocketIo.emit('announcer', from, to, username, isCheck);
     }
-    SocketIo.emit('announcer', from, to, username, isCheck);
-    this.props.updateBoardAsync(newBoard, username);
   }
 
   _onReconnect() {
