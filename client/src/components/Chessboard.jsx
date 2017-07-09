@@ -48,8 +48,10 @@ class Chessboard extends React.Component {
 
   _onMovePiece(piece, from, to) {
     const username = this.props.profileData.username;
-    Engine.move({ piece, from, to });
+    // Engine.move({ piece, from, to });
+    Engine.move({ from, to });
     const newBoard = Engine.fen();
+    console.log('new board is', newBoard)
     let isCheck = 'normal';
     if (Engine.in_check() === true) {
       isCheck = 'check';
@@ -57,8 +59,11 @@ class Chessboard extends React.Component {
     if (Engine.in_checkmate() === true) {
       isCheck = 'check_mate';
     }
+    if (this.props.boardState !== newBoard) {
+      console.log('is true');
+      this.props.isNotMyTurnAsync();
+    }
     SocketIo.emit('announcer', from, to, username, isCheck);
-    this.props.isNotMyTurnAsync();
     this.props.updateBoardAsync(newBoard, username);
   }
 
@@ -68,11 +73,8 @@ class Chessboard extends React.Component {
     this.props.updateBoardAsync(newBoard);
   }
 
-  _updateBoardListener(newBoard, username) {
+  _updateBoardListener(newBoard) {
     // listen to changes
-    console.log('username ', username, this.props.profileData.username)
-    // if (username !== this.props.profileData.username) {
-    // }
     this.props.isMyTurnAsync();
     Engine.load(newBoard);
     this.props.updateBoardAsync(newBoard);
@@ -92,7 +94,7 @@ class Chessboard extends React.Component {
     return (
       <div>
         <Board
-          // allowMoves={this.props.isTurn}
+          allowMoves={this.props.isTurn}
           flip={this.props.side}
           fen={this.props.boardState}
           onMovePiece={this._onMovePiece}
@@ -116,6 +118,7 @@ Chessboard.propTypes = {
   isTurn: propTypes.bool,
   side: propTypes.bool,
   isMyTurnAsync: propTypes.func,
+  isNotMyTurnAsync: propTypes.func,
   updateBoardAsync: propTypes.func,
   startNewGameAsync: propTypes.func,
   profileData: propTypes.object,
@@ -125,6 +128,7 @@ Chessboard.defaultProps = {
   isTurn: true,
   side: false,
   isMyTurnAsync: propTypes.func,
+  isNotMyTurnAsync: propTypes.func,
   updateBoardAsync: propTypes.func,
   startNewGameAsync: propTypes.func,
   profileData: {},
