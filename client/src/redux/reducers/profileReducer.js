@@ -20,7 +20,7 @@ const INITIAL_STATE = {
 
 const profile = (state = INITIAL_STATE, { type, data }) => {
   switch (type) {
-    case GET_PROFILE:
+    case GET_PROFILE: {
       const newState = { ...state };
       newState.profileData.id = data.id;
       newState.profileData.username = data.username;
@@ -37,6 +37,7 @@ const profile = (state = INITIAL_STATE, { type, data }) => {
         ...state,
         newState,
       };
+    }
     default:
       return state;
   }
