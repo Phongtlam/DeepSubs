@@ -25,7 +25,11 @@ class Chessboard extends React.Component {
     this._updateBoardListener = this._updateBoardListener.bind(this);
     this._onReconnect = this._onReconnect.bind(this);
     this._checkStatus = this._checkStatus.bind(this);
+    this._pickWhite = this._pickWhite.bind(this);
+    this._pickBlack = this._pickBlack.bind(this);
+    this._pickSideListender = this._pickSideListender.bind(this);
     SocketIo.on('board-update', this._updateBoardListener);
+    SocketIo.on('pick-side', this._pickSideListender)
     SocketIo.on('disconnect', this._onReconnect, () => {
       SocketIo.open();
     });
@@ -37,6 +41,27 @@ class Chessboard extends React.Component {
 
   componentWillUnmount() {
     Engine.clear();
+  }
+
+  _pickWhite() {
+    console.log('in pick white')
+    SocketIo.emit('pick-side', true);
+    this.props.pickWhiteAsync();
+  }
+
+  _pickBlack() {
+    console.log('in pick black')
+    SocketIo.emit('pick-side', false);
+    this.props.pickBlackAsync();
+  }
+
+  _pickSideListender(side) {
+    console.log('inside', side)
+    if (side) {
+      this.props.pickBlackAsync();
+    } else {
+      this.props.pickWhiteAsync();
+    }
   }
 
   _checkStatus() {
@@ -51,7 +76,6 @@ class Chessboard extends React.Component {
     // Engine.move({ piece, from, to });
     Engine.move({ from, to });
     const newBoard = Engine.fen();
-    console.log('new board is', newBoard)
     let isCheck = 'normal';
     if (Engine.in_check() === true) {
       isCheck = 'check';
@@ -60,7 +84,6 @@ class Chessboard extends React.Component {
       isCheck = 'check_mate';
     }
     if (this.props.boardState !== newBoard) {
-      console.log('is true');
       this.props.isNotMyTurnAsync();
       this.props.updateBoardAsync(newBoard, username);
       SocketIo.emit('announcer', from, to, username, isCheck);
@@ -104,6 +127,8 @@ class Chessboard extends React.Component {
         />
         <ChessFooter
           {...this.props}
+          pickWhite={this._pickWhite}
+          pickBlack={this._pickBlack}
           initBoard={this._initBoard}
         />
       </div>

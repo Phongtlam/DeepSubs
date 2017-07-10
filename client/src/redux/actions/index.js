@@ -44,12 +44,7 @@ export const getProfileAsync = () => (dispatch) => {
   axios.get('/get-profile')
   .then((data) => {
     dispatch(getProfile(data.data));
-    // return data.data.username;
   });
-  // .then((username) => {
-  //   SocketIo.emit('new-user', username);
-  // })
-  // .catch((err) => { console.log('err', err); });
 };
 
 export const needProfileAsync = () => (dispatch) => {

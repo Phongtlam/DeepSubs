@@ -1,4 +1,4 @@
-[![Build Status](https://travis-ci.org/Phongtlam/DeepSubs.svg?branch=master)
+[![Build Status](https://travis-ci.org/Phongtlam/DeepSubs.svg?branch=master)](https://travis-ci.org/Phongtlam/DeepSubs)
 
 ## React-Chess with Phong
 

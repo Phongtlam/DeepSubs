@@ -37,6 +37,10 @@ module.exports = (server) => {
       socket.broadcast.to(user.roomId).emit('board-update', newBoard, username);
     });
 
+    socket.on('pick-side', (side) => {
+      socket.broadcast.to(user.roomId).emit('pick-side', side);
+    });
+
     socket.on('send-msg', (newMsg) => {
       io.to(user.roomId).emit('receive-msg', newMsg);
     });
