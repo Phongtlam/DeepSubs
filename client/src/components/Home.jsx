@@ -4,7 +4,6 @@ import { connect } from 'react-redux';
 import NavBar from './NavBar';
 import Spinner from './Spinner';
 import ProfilePage from './ProfilePage';
-import '../styles/home.scss';
 
 import { getProfileAsync } from '../redux/actions/index';
 

@@ -56,35 +56,35 @@ class ProfilePage extends React.Component {
             ><span className="fa fa-sign-out" /> Logout</Button>
           </ButtonToolbar>
         </div>
-          <div className="col-lg-1 col-centered">
-            <div className="form-group">
-              <div className="inputid">
-                <input
-                  onChange={this._handleOnChange}
-                  type="text"
-                  value={this.state.input}
-                  className="form-control"
-                  placeholder="Put your friend's ID code here"
-                />
-              </div>
-            </div>
-            <LinkContainer to="/game">
-              <Button
-                bsStyle="primary"
-                onClick={this._joinGame}
-              ><span className="fa fa-handshake-o" /> Join game ID
-              </Button>
-            </LinkContainer>
-
-            <div className="well profile">
-              <h3><span className="fa fa-user" /> Your Profile</h3>
-              {userImg}
-              <strong>name</strong>: {profile.first_name} {profile.last_name}<br />
-              <strong>total games</strong>: {profile.total_games}<br />
-              <strong>win/loss</strong>: {profile.win} / {profile.loss}<br />
-              <strong>email</strong>: {profile.email}
+        <div className="col-lg-1 col-centered">
+          <div className="form-group">
+            <div className="inputid">
+              <input
+                onChange={this._handleOnChange}
+                type="text"
+                value={this.state.input}
+                className="form-control"
+                placeholder="Put your friend's ID code here"
+              />
             </div>
           </div>
+          <LinkContainer to="/game">
+            <Button
+              bsStyle="primary"
+              onClick={this._joinGame}
+            ><span className="fa fa-handshake-o" /> Join game ID
+            </Button>
+          </LinkContainer>
+
+          <div className="well profile">
+            <h3><span className="fa fa-user" /> Your Profile</h3>
+            {userImg}
+            <strong>name</strong>: {profile.first_name} {profile.last_name}<br />
+            <strong>total games</strong>: {profile.total_games}<br />
+            <strong>win/loss</strong>: {profile.win} / {profile.loss}<br />
+            <strong>email</strong>: {profile.email}
+          </div>
+        </div>
         <div className="footer">
           Copyright &copy; PhongLam 2017
         </div>

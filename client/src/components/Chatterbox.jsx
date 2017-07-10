@@ -96,7 +96,7 @@ class Chatterbox extends React.Component {
               value={this.props.input}
             />
           </div>
-          <div className="send_message ">
+          <div className="send_message">
             <div
               onClick={this._onSubmitHandler}
               className="fa fa-paper-plane-o text"

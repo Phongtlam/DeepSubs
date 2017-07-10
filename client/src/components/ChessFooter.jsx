@@ -1,40 +1,33 @@
 import React from 'react';
 import propTypes from 'prop-types';
-import { Button, ButtonToolbar } from 'react-bootstrap';
-import '../styles/app.scss';
-
-const styles = {
-  marginLeft: '100px',
-};
+import '../styles/chessfooter.scss';
 
 const ChessFooter = (props) => {
-  let condRender = <Button bsStyle="primary" onClick={props.initBoard}>Start New Game</Button>;
+  let condRender = <button className="btn btn-primary" onClick={props.initBoard}>Start New Game</button>;
   if (props.isPicking) {
     condRender = (
       <div>
-        <Button onClick={props.pickWhite}>Play as White</Button>
-        <Button onClick={props.pickBlack}>Play as Black</Button>
+        <button className="btn pick-white" onClick={props.pickWhite}>Play as White</button>
+        <button className="btn pick-black" onClick={props.pickBlack}>Play as Black</button>
       </div>
     );
   } else if (props.boardState !== '' && props.boardState !== 'rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1') {
     condRender = (!props.isTurn) ?
       (
         <div>
-          <Button bsStyle="primary" onClick={props.initBoard}>Start New Game</Button>
+          <button className="btn btn-primary" onClick={props.initBoard}>Start New Game</button>
           <div className="turn-no">Not your turn</div>
         </div>
       ) : (
-        <div>
-          <Button bsStyle="primary" onClick={props.initBoard}>Start New Game</Button>
+        <div >
+          <button className="btn btn-primary" onClick={props.initBoard}>Start New Game</button>
           <div className="turn-yes">Your turn</div>
         </div>
       );
   }
   return (
-    <div>
-      <ButtonToolbar style={styles}>
-        {condRender}
-      </ButtonToolbar>
+    <div className="text-center">
+      {condRender}
     </div>
   );
 };

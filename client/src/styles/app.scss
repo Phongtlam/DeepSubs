@@ -13,12 +13,6 @@
   margin-bottom: 0;
 }
 
-// .content {
-//   margin-top: 0;
-//   margin-bottom: 0;
-//   display: flex;
-// }
-
 .chessboard {
   padding: 20px 20px 20px 30px;
   float: left;
@@ -42,34 +36,4 @@
   display: inline-block;
   left: 50%;
   transform: translateX(-50%);
-}
-
-.turn-no {
-  display: inline-block;
-  height: 34px;
-  background-color: #d9534f;
-  border: 2px solid #d9534f;
-  text-align: center;
-  color: #fff;
-  border-radius: 10px;
-  width: auto;
-  position: relative;
-  padding: 5px 10px;
-  margin-left: 10px;
-  width: 110px;
-}
-
-.turn-yes {
-  display: inline-block;
-  height: 34px;
-  background-color: #5cb85c;
-  border: 2px solid #5cb85c;
-  text-align: center;
-  color: #fff;
-  border-radius: 10px;
-  width: auto;
-  position: relative;
-  padding: 5px 10px;
-  margin-left: 10px;
-  width: 110px;
 }
