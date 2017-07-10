@@ -14,7 +14,7 @@ export const startNewGameAsync = () => (dispatch) => {
 
 export const updateBoardAsync = (boardState, username) => (dispatch) => {
   if (username) {
-    SocketIo.emit('board-update', boardState, username);
+    SocketIo.emit('board-update', boardState);
   }
   dispatch(updateBoard(boardState));
 };

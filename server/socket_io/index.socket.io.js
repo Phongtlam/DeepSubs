@@ -32,9 +32,9 @@ module.exports = (server) => {
       io.to(socket.id).emit('receive-msg', deepSubs);
     });
 
-    socket.on('board-update', (newBoard, username) => {
+    socket.on('board-update', (newBoard) => {
       // io.in(user.roomId).emit('board-update', newBoard, username);
-      socket.broadcast.to(user.roomId).emit('board-update', newBoard, username);
+      socket.broadcast.to(user.roomId).emit('board-update', newBoard);
     });
 
     socket.on('pick-side', (side) => {
