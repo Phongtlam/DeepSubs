@@ -1,5 +1,5 @@
 import axios from 'axios';
-import { newGame, updateBoard, isMyTurn, isNotMyTurn } from './boardAction';
+import { newGame, updateBoard, isMyTurn, isNotMyTurn, startPick, endPick } from './boardAction';
 import { getGameId, pickWhite, pickBlack } from './roomAction';
 import { getProfile, needProfile } from './profileAction';
 import { getInput, appendMsg } from './chatterboxAction';
@@ -25,6 +25,14 @@ export const isMyTurnAsync = () => (dispatch) => {
 
 export const isNotMyTurnAsync = () => (dispatch) => {
   dispatch(isNotMyTurn());
+};
+
+export const startPickAsync = () => (dispatch) => {
+  dispatch(startPick());
+};
+
+export const endPickAsync = () => (dispatch) => {
+  dispatch(endPick());
 };
 
 export const getGameIdAsync = roomId => (dispatch) => {

@@ -1,8 +1,9 @@
-import { START_GAME, UPDATE_BOARD, MY_TURN, NOT_MY_TURN } from '../actions/type';
+import { START_GAME, UPDATE_BOARD, MY_TURN, NOT_MY_TURN, START_PICK, END_PICK } from '../actions/type';
 
 const INITIAL_STATE = {
   boardState: '',
   isTurn: false,
+  isPicking: false,
 };
 
 const board = (state = INITIAL_STATE, { type, boardState }) => {
@@ -11,6 +12,7 @@ const board = (state = INITIAL_STATE, { type, boardState }) => {
       return {
         ...state,
         boardState: 'rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1',
+        isPicking: true,
       };
     case UPDATE_BOARD:
       return {
@@ -26,6 +28,16 @@ const board = (state = INITIAL_STATE, { type, boardState }) => {
       return {
         ...state,
         isTurn: false,
+      };
+    case START_PICK:
+      return {
+        ...state,
+        isPicking: true,
+      };
+    case END_PICK:
+      return {
+        ...state,
+        isPicking: false,
       };
     default:
       return state;

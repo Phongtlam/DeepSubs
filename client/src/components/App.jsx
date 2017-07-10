@@ -17,6 +17,8 @@ import {
   getProfileAsync,
   getInputAsync,
   appendMsgAsync,
+  startPickAsync,
+  endPickAsync,
 } from '../redux/actions/index';
 
 const App = props => (
@@ -40,13 +42,14 @@ const App = props => (
 );
 
 const mapStateToProps = ({ board, room, profile, chatterbox }) => {
-  const { boardState, isTurn } = board;
+  const { boardState, isTurn, isPicking } = board;
   const { gameId, side } = room;
   const { profileData } = profile;
   const { input, messages } = chatterbox;
   return {
     boardState,
     isTurn,
+    isPicking,
     gameId,
     side,
     profileData,
@@ -67,6 +70,8 @@ export default connect(mapStateToProps,
     getProfileAsync,
     getInputAsync,
     appendMsgAsync,
+    startPickAsync,
+    endPickAsync,
   })(App);
 
 App.propTypes = {

@@ -56,7 +56,6 @@ class Chessboard extends React.Component {
   }
 
   _pickSideListender(side) {
-    console.log('inside', side)
     if (side) {
       this.props.pickBlackAsync();
     } else {
@@ -72,6 +71,9 @@ class Chessboard extends React.Component {
   }
 
   _onMovePiece(piece, from, to) {
+    if (this.props.isPicking) {
+      this.props.endPickAsync();
+    }
     const username = this.props.profileData.username;
     // Engine.move({ piece, from, to });
     Engine.move({ from, to });
@@ -147,14 +149,18 @@ Chessboard.propTypes = {
   pickBlackAsync: propTypes.func,
   updateBoardAsync: propTypes.func,
   startNewGameAsync: propTypes.func,
+  endPickAsync: propTypes.func,
+  isPicking: propTypes.bool,
   profileData: propTypes.object,
 };
 Chessboard.defaultProps = {
   boardState: '',
   isTurn: false,
   side: false,
+  isPicking: false,
   isMyTurnAsync: propTypes.func,
   isNotMyTurnAsync: propTypes.func,
+  endPickAsync: propTypes.func,
   pickWhiteAsync: propTypes.func,
   pickBlackAsync: propTypes.func,
   updateBoardAsync: propTypes.func,

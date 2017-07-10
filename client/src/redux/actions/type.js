@@ -9,3 +9,5 @@ export const WRITE_MSG = 'write_msg';
 export const APPEND_MSG = 'append_msg';
 export const MY_TURN = 'my_turn';
 export const NOT_MY_TURN = 'not_my_turn';
+export const START_PICK = 'start_pick';
+export const END_PICK = 'end_pick';
