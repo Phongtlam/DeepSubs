@@ -2,7 +2,7 @@ import { START_GAME, UPDATE_BOARD, MY_TURN, NOT_MY_TURN } from '../actions/type'
 
 const INITIAL_STATE = {
   boardState: '',
-  isTurn: true,
+  isTurn: false,
 };
 
 const board = (state = INITIAL_STATE, { type, boardState }) => {

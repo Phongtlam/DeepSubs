@@ -29,7 +29,7 @@ class Chessboard extends React.Component {
     this._pickBlack = this._pickBlack.bind(this);
     this._pickSideListender = this._pickSideListender.bind(this);
     SocketIo.on('board-update', this._updateBoardListener);
-    SocketIo.on('pick-side', this._pickSideListender)
+    SocketIo.on('pick-side', this._pickSideListender);
     SocketIo.on('disconnect', this._onReconnect, () => {
       SocketIo.open();
     });
@@ -44,14 +44,14 @@ class Chessboard extends React.Component {
   }
 
   _pickWhite() {
-    console.log('in pick white')
     SocketIo.emit('pick-side', true);
+    this.props.isMyTurnAsync();
     this.props.pickWhiteAsync();
   }
 
   _pickBlack() {
-    console.log('in pick black')
     SocketIo.emit('pick-side', false);
+    this.props.isMyTurnAsync();
     this.props.pickBlackAsync();
   }
 
@@ -109,7 +109,6 @@ class Chessboard extends React.Component {
     } else {
       Engine.reset();
     }
-    this.props.isMyTurnAsync();
     this.props.startNewGameAsync();
   }
 
@@ -144,16 +143,20 @@ Chessboard.propTypes = {
   side: propTypes.bool,
   isMyTurnAsync: propTypes.func,
   isNotMyTurnAsync: propTypes.func,
+  pickWhiteAsync: propTypes.func,
+  pickBlackAsync: propTypes.func,
   updateBoardAsync: propTypes.func,
   startNewGameAsync: propTypes.func,
   profileData: propTypes.object,
 };
 Chessboard.defaultProps = {
   boardState: '',
-  isTurn: true,
+  isTurn: false,
   side: false,
   isMyTurnAsync: propTypes.func,
   isNotMyTurnAsync: propTypes.func,
+  pickWhiteAsync: propTypes.func,
+  pickBlackAsync: propTypes.func,
   updateBoardAsync: propTypes.func,
   startNewGameAsync: propTypes.func,
   profileData: {},
