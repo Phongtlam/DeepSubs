@@ -89,6 +89,7 @@
   border: 2px solid #000;
 }
 
+button:focus {outline:0;}
 
 @keyframes flash {
   0% { opacity: 1.0; }
@@ -97,13 +98,13 @@
 }
 
 @-webkit-keyframes flash {
-    0% { opacity: 1.0; }
-    50% { opacity: 0.5; }
-    100% { opacity: 1.0; }
+  0% { opacity: 1.0; }
+  50% { opacity: 0.5; }
+  100% { opacity: 1.0; }
 }
 
 @-moz-keyframes flash {
-    0% { opacity: 1.0; }
-    50% { opacity: 0.5; }
-    100% { opacity: 1.0; }
+  0% { opacity: 1.0; }
+  50% { opacity: 0.5; }
+  100% { opacity: 1.0; }
 }
