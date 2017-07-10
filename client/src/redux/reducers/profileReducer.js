@@ -1,7 +1,6 @@
 import { GET_PROFILE, NEED_PROFILE } from '../actions/type';
 
 const INITIAL_STATE = {
-  needProfile: true,
   profileData: {
     id: null,
     username: '',
@@ -39,11 +38,6 @@ const profile = (state = INITIAL_STATE, { type, data }) => {
         newState,
       };
     }
-    case NEED_PROFILE:
-      return {
-        ...state,
-        needProfile: false,
-      };
     default:
       return state;
   }

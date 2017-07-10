@@ -1,7 +1,7 @@
 import axios from 'axios';
 import { newGame, updateBoard, isMyTurn, isNotMyTurn, startPick, endPick } from './boardAction';
 import { getGameId, pickWhite, pickBlack } from './roomAction';
-import { getProfile, needProfile } from './profileAction';
+import { getProfile } from './profileAction';
 import { getInput, appendMsg } from './chatterboxAction';
 import SocketIo from '../../socket_io_client/index';
 
