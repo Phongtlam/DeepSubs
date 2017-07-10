@@ -6,15 +6,22 @@ import Spinner from './Spinner';
 import ProfilePage from './ProfilePage';
 import '../styles/home.scss';
 
-import { getProfileAsync, needProfileAsync } from '../redux/actions/index';
+import { getProfileAsync } from '../redux/actions/index';
 
 class Home extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      isLoading: false,
+    };
+  }
 
   componentWillMount() {
-    if (this.props.needProfile) {
+    if (this.props.profileData.username === '') {
+      this.setState({ isLoading: true });
       this.props.getProfileAsync();
       setTimeout(() => {
-        this.props.needProfileAsync();
+        this.setState({ isLoading: false });
       }, 1000);
     }
   }
@@ -26,7 +33,7 @@ class Home extends React.Component {
         <ProfilePage />
       </div>
     );
-    if (this.props.needProfile) {
+    if (this.state.isLoading) {
       condRender = <Spinner />;
     }
     return (
@@ -38,20 +45,18 @@ class Home extends React.Component {
 }
 
 const mapStateToProps = ({ profile }) => {
-  const { needProfile } = profile;
-  return { needProfile };
+  const { profileData } = profile;
+  return { profileData };
 };
 
-export default connect(mapStateToProps, { getProfileAsync, needProfileAsync })(Home);
+export default connect(mapStateToProps, { getProfileAsync })(Home);
 
 Home.propTypes = {
+  profileData: propTypes.object,
   getProfileAsync: propTypes.func,
-  needProfileAsync: propTypes.func,
-  needProfile: propTypes.bool,
 };
 
 Home.defaultProps = {
+  profileData: {},
   getProfileAsync: propTypes.func,
-  needProfileAsync: propTypes.func,
-  needProfile: true,
 };

@@ -37,8 +37,7 @@ const ChessFooter = (props) => {
       </ButtonToolbar>
     </div>
   );
-}
-
+};
 
 
 export default ChessFooter;
