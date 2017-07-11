@@ -7,7 +7,7 @@ const ChessFooter = (props) => {
     <button className="btn start" onClick={props.initBoard}>Start New Game</button></div>);
   if (props.isPicking) {
     condRender = (
-      <div className="text-center picking-container">
+      <div className="picking-container">
         <button className="pick-white" onClick={props.pickWhite}>Play as White</button>
         <button className="pick-black" onClick={props.pickBlack}>Play as Black</button>
       </div>
