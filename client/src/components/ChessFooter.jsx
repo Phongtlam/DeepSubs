@@ -3,7 +3,7 @@ import propTypes from 'prop-types';
 import '../styles/chessfooter.scss';
 
 const ChessFooter = (props) => {
-  let condRender = (<div className="text-center">
+  let condRender = (<div className="picking-container">
     <button className="btn start" onClick={props.initBoard}>Start New Game</button></div>);
   if (props.isPicking) {
     condRender = (
