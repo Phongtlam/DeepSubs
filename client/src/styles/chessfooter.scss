@@ -22,8 +22,8 @@
 .turn-no {
   display: inline-block;
   height: 34px;
-  background-color: #d9534f;
-  border: 2px solid #d9534f;
+  background-color: #B20000;
+  border: 2px solid #B20000;
   text-align: center;
   color: #fff;
   border-radius: 10px;
@@ -31,6 +31,10 @@
   padding: 5px 10px;
   margin-left: 10px;
   width: 110px;
+  animation-name: glowing-no;
+  animation-duration: 1s;
+	animation-timing-function: 1500ms;
+	animation-iteration-count: infinite;
 }
 
 .turn-yes {
@@ -45,6 +49,10 @@
   padding: 5px 10px;
   margin-left: 10px;
   width: 110px;
+  animation-name: glowing-yes;
+  animation-duration: 1s;
+	animation-timing-function: 1500ms;
+	animation-iteration-count: infinite;
 }
 
 .picking-container {
@@ -134,17 +142,14 @@ button:focus {
   }
 }
 
-@keyframes king-grow {
-  0% {
-    opacity: 0.5;
-    transform: scale(1.1, 1.1);
-  }
-  50% {
-    opacity: 1;
-    transform: scale(2.2, 2.2);
-  }
-  100% {
-    opacity: 0.5;
-    transform: scale(1, 1);
-  }
+@keyframes glowing-no {
+  0% { background-color: #B20000; box-shadow: 0 0 3px #B20000; }
+  50% { background-color: #FF0000; box-shadow: 0 0 40px #FF0000; }
+  100% { background-color: #B20000; box-shadow: 0 0 3px #B20000; }
+}
+
+@keyframes glowing-yes {
+  0% { background-color: #5cb85c; box-shadow: 0 0 3px #5cb85c; }
+  50% { background-color: #70ff00; box-shadow: 0 0 40px #70ff00; }
+  100% { background-color: #5cb85c; box-shadow: 0 0 3px #5cb85c; }
 }
