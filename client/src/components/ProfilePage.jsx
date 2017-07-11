@@ -12,6 +12,7 @@ class ProfilePage extends React.Component {
     super(props);
     this.state = {
       input: '',
+      warning: false,
     };
     this._createGame = this._createGame.bind(this);
     this._joinGame = this._joinGame.bind(this);
@@ -29,10 +30,11 @@ class ProfilePage extends React.Component {
   }
 
   _joinGame() {
-    console.log('in join')
     if (this.state.input !== '') {
-      console.log('in input')
+      this.setState({ warning: false });
       SocketIo.emit('new-user', this.props.profileData.username, this.state.input);
+    } else {
+      this.setState({ warning: true });
     }
   }
 
@@ -62,6 +64,11 @@ class ProfilePage extends React.Component {
           </ButtonToolbar>
         </div>
         <div className="col-lg-1 col-centered">
+          {this.state.warning ? (
+            <span className="join warning"><strong>Need to provide an ID</strong></span>
+          ) : (
+            <span className="join"><strong>Join now</strong></span>
+          )}
           <div className="form-group">
             <div className="inputid">
               <input
