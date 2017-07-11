@@ -3,12 +3,12 @@
   background-color: #428bca;
   color: #fff;
   width: 200px;
-  height: 40px;
+  height: 35px;
   border-radius: 10px;
   border: 2px solid #428bca;
   margin-top: 0;
   margin-bottom: 0;
-  animation-name: flash;
+  animation-name: flash, grow;
 	animation-duration: 1s;
 	animation-timing-function: linear;
 	animation-iteration-count: infinite;
@@ -47,50 +47,58 @@
   width: 110px;
 }
 
+.picking-container {
+  margin-left: 55px;
+}
+
 .pick-white {
-  margin-right: 10px;
+  margin-right: 20px;
+  font-size: 20px;
+  font-weight: bold;
   background-color: #FFF;
   width: 200px;
-  height: 40px;
+  height: 35px;
   border-radius: 10px;
   border: 2px solid #FFF;
   margin-top: 0;
   margin-bottom: 0;
-  animation-name: flash;
-	animation-duration: 1s;
-	animation-timing-function: linear;
-	animation-iteration-count: infinite;
 }
 
 .pick-black {
+  margin-left: 20px;
   color: #FFF;
+  font-size: 20px;
+  font-weight: bold;
+  text-align: center;
   background-color: #000000;
   width: 200px;
-  height: 40px;
+  height: 35px;
   border-radius: 10px;
   border: 2px solid #000000;
   margin-top: 0;
   margin-bottom: 0;
-  animation-name: flash;
+}
+
+.pick-white:hover {
+  animation-name: flash, grow;
 	animation-duration: 1s;
 	animation-timing-function: linear;
 	animation-iteration-count: infinite;
 }
 
-.pick-white:hover {
-  color: #fff;
-  background-color: #428bca;
-  border: 2px solid #000;
-}
-
 .pick-black:hover {
-  color: #fff;
-  background-color: #428bca;
-  border: 2px solid #000;
+  animation-name: flash, grow;
+	animation-duration: 1s;
+	animation-timing-function: linear;
+	animation-iteration-count: infinite;
 }
 
 .btn:focus,.btn:active {
-   outline: none !important;
+  outline: none !important;
+}
+
+button:focus {
+  outline: none;
 }
 
 @keyframes flash {
@@ -109,4 +117,34 @@
   0% { opacity: 1.0; }
   50% { opacity: 0.5; }
   100% { opacity: 1.0; }
+}
+
+@keyframes grow {
+  0% {
+    opacity: 0.5;
+    transform: scale(0.9, 0.9);
+  }
+  50% {
+    opacity: 1;
+    transform: scale(1.1, 1.1);
+  }
+  100% {
+    opacity: 0.5;
+    transform: scale(0.9, 0.9);
+  }
+}
+
+@keyframes king-grow {
+  0% {
+    opacity: 0.5;
+    transform: scale(1, 1);
+  }
+  50% {
+    opacity: 1;
+    transform: scale(2, 2);
+  }
+  100% {
+    opacity: 0.5;
+    transform: scale(1, 1);
+  }
 }
