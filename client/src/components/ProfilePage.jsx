@@ -39,7 +39,7 @@ class ProfilePage extends React.Component {
       userImg = <div className="image"><img src={profile.img_url} alt="profile" /><br /></div>;
     }
     return (
-      <div>
+      <div className="container">
         <div className="page-header text-center">
           <h1><span className="fa fa-anchor" /> Welcome {profile.username} !</h1>
           <ButtonToolbar className="navigation">
