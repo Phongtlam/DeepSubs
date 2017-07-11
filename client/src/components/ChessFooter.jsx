@@ -15,12 +15,12 @@ const ChessFooter = (props) => {
   } else if (props.boardState !== '' && props.boardState !== 'rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1') {
     condRender = (!props.isTurn) ?
       (
-        <div className="text-center">
+        <div className="picking-container">
           <button className="btn btn-primary" onClick={props.initBoard}>Start New Game</button>
           <div className="turn-no">Not your turn</div>
         </div>
       ) : (
-        <div className="text-center">
+        <div className="picking-container">
           <button className="btn btn-primary" onClick={props.initBoard}>Start New Game</button>
           <div className="turn-yes">Your turn</div>
         </div>
