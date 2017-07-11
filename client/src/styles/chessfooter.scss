@@ -143,13 +143,33 @@ button:focus {
 }
 
 @keyframes glowing-no {
-  0% { background-color: #B20000; box-shadow: 0 0 3px #B20000; }
-  50% { background-color: #FF0000; box-shadow: 0 0 40px #FF0000; }
-  100% { background-color: #B20000; box-shadow: 0 0 3px #B20000; }
+  0% {
+    background-color: #B20000;
+    box-shadow: 0 0 3px #B20000;
+  }
+  50% {
+    background-color: #FF0000;
+    box-shadow: 0 0 40px #FF0000;
+    border: 2px solid #FF0000
+  }
+  100% {
+    background-color: #B20000;
+    box-shadow: 0 0 3px #B20000;
+  }
 }
 
 @keyframes glowing-yes {
-  0% { background-color: #5cb85c; box-shadow: 0 0 3px #5cb85c; }
-  50% { background-color: #70ff00; box-shadow: 0 0 40px #70ff00; }
-  100% { background-color: #5cb85c; box-shadow: 0 0 3px #5cb85c; }
+  0% {
+    background-color: #5cb85c;
+    box-shadow: 0 0 3px #5cb85c;
+  }
+  50% {
+    background-color: #70ff00;
+    box-shadow: 0 0 40px #70ff00;
+    border: 2px solid #70ff00
+  }
+  100% {
+    background-color: #5cb85c;
+    box-shadow: 0 0 3px #5cb85c;
+  }
 }
