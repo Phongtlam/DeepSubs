@@ -29,7 +29,11 @@ class ProfilePage extends React.Component {
   }
 
   _joinGame() {
-    SocketIo.emit('new-user', this.props.profileData.username, this.state.input);
+    console.log('in join')
+    if (this.state.input !== '') {
+      console.log('in input')
+      SocketIo.emit('new-user', this.props.profileData.username, this.state.input);
+    }
   }
 
   render() {
@@ -38,6 +42,7 @@ class ProfilePage extends React.Component {
     if (profile.img_url) {
       userImg = <div className="image"><img src={profile.img_url} alt="profile" /><br /></div>;
     }
+    const joinGame = (this.state.input !== '') ? '/game' : '/home';
     return (
       <div className="container">
         <div className="page-header text-center">
@@ -68,7 +73,7 @@ class ProfilePage extends React.Component {
               />
             </div>
           </div>
-          <LinkContainer to="/game">
+          <LinkContainer to={joinGame}>
             <Button
               bsStyle="primary"
               onClick={this._joinGame}
