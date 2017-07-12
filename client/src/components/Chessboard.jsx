@@ -1,5 +1,6 @@
 import React from 'react';
 import Board from 'react-chessdiagram';
+import ReactDOM from 'react-dom';
 import propTypes from 'prop-types';
 import Chess from 'chess.js';
 import SocketIo from '../socket_io_client/index';
@@ -27,6 +28,8 @@ class Chessboard extends React.Component {
     this._checkStatus = this._checkStatus.bind(this);
     this._pickWhite = this._pickWhite.bind(this);
     this._pickBlack = this._pickBlack.bind(this);
+    this._addHighlights = this._addHighlights.bind(this);
+    this._onSelectSquare = this._onSelectSquare.bind(this);
     SocketIo.on('board-update', this._updateBoardListener);
     SocketIo.on('disconnect', this._onReconnect, () => {
       SocketIo.open();
@@ -37,8 +40,30 @@ class Chessboard extends React.Component {
     this._checkStatus();
   }
 
+  componentDidMount() {
+    this.boardNode.addEventListener('click', this._addHighlights);
+  }
+
   componentWillUnmount() {
     Engine.clear();
+    this.boardNode.removeEventListener('click', this._addHighlights);
+  }
+
+  _onSelectSquare(sqName) {
+    // this._addHighlights(event);
+
+  }
+
+  _addHighlights(event) {
+    const elem = this.boardNode;
+    const elemLeft = elem.offsetLeft;
+    const elemTop = elem.offsetTop;
+    const x = event.pageX - elemLeft;
+    const y = event.pageY - elemTop;
+    console.log('x and y is', x, y);
+    // Collision detection between clicked offset and element.
+    // const elements = [];
+    // var imageData = this.boardNode.getImageData(x, y, 1, 1).data;
   }
 
   _pickWhite() {
@@ -116,15 +141,18 @@ class Chessboard extends React.Component {
   render() {
     return (
       <div>
-        <Board
-          allowMoves={this.props.isTurn}
-          flip={this.props.side}
-          fen={this.props.boardState}
-          onMovePiece={this._onMovePiece}
-          squareSize={styles.board.size}
-          lightSquareColor={styles.board.light}
-          darkSquareColor={styles.board.dark}
-        />
+        <div ref={(node) => { this.boardNode = node; }}>
+          <Board
+            onSelectSquare={this._onSelectSquare}
+            allowMoves={this.props.isTurn}
+            flip={this.props.side}
+            fen={this.props.boardState}
+            onMovePiece={this._onMovePiece}
+            squareSize={styles.board.size}
+            lightSquareColor={styles.board.light}
+            darkSquareColor={styles.board.dark}
+          />
+        </div>
         <ChessFooter
           {...this.props}
           pickWhite={this._pickWhite}
