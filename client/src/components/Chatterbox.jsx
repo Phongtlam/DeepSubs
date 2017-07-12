@@ -1,5 +1,4 @@
 import React from 'react';
-import ReactDOM from 'react-dom';
 import propTypes from 'prop-types';
 import Message from './Message';
 import SocketIo from '../socket_io_client/index';

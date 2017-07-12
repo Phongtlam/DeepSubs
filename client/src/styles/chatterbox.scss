@@ -22,8 +22,7 @@
   position: relative;
   width: 100%;
   background-color: #fff;
-  padding: 10px 10px;
-  top: 10px;
+  padding: 15px 10px 9px 15px;
 }
 .bottom_wrapper .message_input_wrapper {
   display: inline-block;
@@ -32,7 +31,7 @@
   border: 1px solid #bcbdc0;
   width: 300px;
   position: relative;
-  padding: 0 20px;
+  padding: 0 20px 0 20px;
 }
 
 .bottom_wrapper .message_input_wrapper .message_input {
@@ -57,6 +56,7 @@
   transition: all 0.2s linear;
   text-align: center;
   float: right;
+  margin-right: 20px;
 }
 .bottom_wrapper .send_message:hover {
   color: #5cb85c;
