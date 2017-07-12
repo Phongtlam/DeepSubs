@@ -36,7 +36,7 @@ class Chatterbox extends React.Component {
   }
 
   componentDidUpdate() {
-    this._scrollToBottom();
+    this.messagesEnd.scrollIntoView({ behavior: 'smooth' });
   }
 
   _onChangeHandler(e) {
@@ -67,12 +67,6 @@ class Chatterbox extends React.Component {
     this.props.appendMsgAsync(newMsg);
   }
 
-  // this is a trick to scroll to bottom of page on new msg added
-  _scrollToBottom() {
-    const node = ReactDOM.findDOMNode(this.messagesEnd);
-    node.scrollIntoView({ behavior: 'smooth' });
-  }
-
   render() {
     return (
       <div className="chat-window">
@@ -81,7 +75,7 @@ class Chatterbox extends React.Component {
           <Message {...this.props} />
           <div
             style={{ float: 'left', clear: 'both' }}
-            ref={(el) => { this.messagesEnd = el; }}
+            ref={(node) => { this.messagesEnd = node; }}
           />
         </div>
         <form

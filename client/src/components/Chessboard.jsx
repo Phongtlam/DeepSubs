@@ -27,9 +27,7 @@ class Chessboard extends React.Component {
     this._checkStatus = this._checkStatus.bind(this);
     this._pickWhite = this._pickWhite.bind(this);
     this._pickBlack = this._pickBlack.bind(this);
-    // this._pickSideListender = this._pickSideListender.bind(this);
     SocketIo.on('board-update', this._updateBoardListener);
-    // SocketIo.on('pick-side', this._pickSideListender);
     SocketIo.on('disconnect', this._onReconnect, () => {
       SocketIo.open();
     });
