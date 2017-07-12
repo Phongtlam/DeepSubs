@@ -40,9 +40,10 @@ class ProfilePage extends React.Component {
 
   render() {
     const profile = this.props.profileData;
-    let userImg = <div className="image"><img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTdeCBydLKH1OtzaPNFRiqTlwaAEjHruFxxVzsshdqFlQe0_7R8" alt="profile" /><br /></div>;
+    let userImg = <div className="image"><img className="image-profile" src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTdeCBydLKH1OtzaPNFRiqTlwaAEjHruFxxVzsshdqFlQe0_7R8" alt="profile" /><br /></div>;
     if (profile.img_url) {
-      userImg = <div className="image"><img src={profile.img_url} alt="profile" /><br /></div>;
+      userImg = (<div className="image">
+        <img className="image-profile" src={profile.img_url} alt="profile" /><br /></div>);
     }
     const joinGame = (this.state.input !== '') ? '/game' : '/home';
     return (
