@@ -27,9 +27,9 @@ class Chessboard extends React.Component {
     this._checkStatus = this._checkStatus.bind(this);
     this._pickWhite = this._pickWhite.bind(this);
     this._pickBlack = this._pickBlack.bind(this);
-    this._pickSideListender = this._pickSideListender.bind(this);
+    // this._pickSideListender = this._pickSideListender.bind(this);
     SocketIo.on('board-update', this._updateBoardListener);
-    SocketIo.on('pick-side', this._pickSideListender);
+    // SocketIo.on('pick-side', this._pickSideListender);
     SocketIo.on('disconnect', this._onReconnect, () => {
       SocketIo.open();
     });
@@ -44,24 +44,24 @@ class Chessboard extends React.Component {
   }
 
   _pickWhite() {
-    SocketIo.emit('pick-side', true);
+    SocketIo.emit('board-update', null, 'white');
     this.props.isMyTurnAsync();
     this.props.pickWhiteAsync();
   }
 
   _pickBlack() {
-    SocketIo.emit('pick-side', false);
+    SocketIo.emit('board-update', null, 'black');
     this.props.isMyTurnAsync();
     this.props.pickBlackAsync();
   }
 
-  _pickSideListender(side) {
-    if (side) {
-      this.props.pickBlackAsync();
-    } else {
-      this.props.pickWhiteAsync();
-    }
-  }
+  // _pickSideListender(side) {
+  //   if (side) {
+  //     this.props.pickBlackAsync();
+  //   } else {
+  //     this.props.pickWhiteAsync();
+  //   }
+  // }
 
   _checkStatus() {
     if (Engine && this.props.boardState.length > 0) {
@@ -98,11 +98,19 @@ class Chessboard extends React.Component {
     this.props.updateBoardAsync(newBoard);
   }
 
-  _updateBoardListener(newBoard) {
+  _updateBoardListener(newBoard, side) {
     // listen to changes
-    this.props.isMyTurnAsync();
-    Engine.load(newBoard);
-    this.props.updateBoardAsync(newBoard);
+    console.log(newBoard, side)
+    if (newBoard) {
+      this.props.isMyTurnAsync();
+      Engine.load(newBoard);
+      this.props.updateBoardAsync(newBoard);
+    }
+    if (side === 'white') {
+      this.props.pickBlackAsync();
+    } else if (side === 'black') {
+      this.props.pickWhiteAsync();
+    }
   }
 
   _initBoard() {
