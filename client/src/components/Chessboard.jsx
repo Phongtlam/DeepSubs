@@ -55,14 +55,6 @@ class Chessboard extends React.Component {
     this.props.pickBlackAsync();
   }
 
-  // _pickSideListender(side) {
-  //   if (side) {
-  //     this.props.pickBlackAsync();
-  //   } else {
-  //     this.props.pickWhiteAsync();
-  //   }
-  // }
-
   _checkStatus() {
     if (Engine && this.props.boardState.length > 0) {
       this.props.isMyTurnAsync();
@@ -100,7 +92,6 @@ class Chessboard extends React.Component {
 
   _updateBoardListener(newBoard, side) {
     // listen to changes
-    console.log(newBoard, side)
     if (newBoard) {
       this.props.isMyTurnAsync();
       Engine.load(newBoard);
@@ -108,8 +99,10 @@ class Chessboard extends React.Component {
     }
     if (side === 'white') {
       this.props.pickBlackAsync();
+      this.props.startNewGameAsync();
     } else if (side === 'black') {
       this.props.pickWhiteAsync();
+      this.props.startNewGameAsync();
     }
   }
 
