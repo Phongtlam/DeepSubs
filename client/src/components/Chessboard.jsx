@@ -36,10 +36,10 @@ class Chessboard extends React.Component {
   }
 
   componentWillMount() {
-    this._checkStatus();
   }
 
   componentDidMount() {
+    this._checkStatus();
     // this.boardNode.addEventListener('click', this._addHighlights);
   }
 
