@@ -13,10 +13,28 @@ const ChessFooterAi = (props) => {
       </div>
     );
   } else if (props.boardState !== '' && props.boardState !== 'rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1') {
-    condRender =
+    // condRender =
+      // (<div className="picking-container">
+      //   <button className="btn btn-primary" onClick={props.initBoard}>Restart Game</button>
+      // </div>);
+    if (props.isCheck) {
+      condRender =
       (<div className="picking-container">
         <button className="btn btn-primary" onClick={props.initBoard}>Restart Game</button>
+        <div className="turn-no">Checked!</div>
       </div>);
+    } else if (props.isCheckMate) {
+      condRender =
+      (<div className="picking-container">
+        <button className="btn btn-primary" onClick={props.initBoard}>Restart Game</button>
+        <div className="turn-no">You lose!</div>
+      </div>);
+    } else {
+      condRender =
+        (<div className="picking-container">
+          <button className="btn btn-primary" onClick={props.initBoard}>Restart Game</button>
+        </div>);
+    }
   }
   return (
     <div>
@@ -35,10 +53,14 @@ ChessFooterAi.propTypes = {
   initBoard: propTypes.func,
   pickWhite: propTypes.func,
   pickBlack: propTypes.func,
+  isCheck: propTypes.bool,
+  isCheckMate: propTypes.bool,
 };
 
 ChessFooterAi.defaultProps = {
   boardState: '',
+  isCheck: false,
+  isCheckMate: false,
   isTurn: true,
   isPicking: false,
   initBoard: propTypes.func,

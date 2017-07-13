@@ -19,6 +19,10 @@ let Engine;
 class ChessboardAi extends React.Component {
   constructor(props) {
     super(props);
+    this.state = {
+      isCheck: false,
+      isCheckMate: false,
+    };
     this._onMovePiece = this._onMovePiece.bind(this);
     this._initBoard = this._initBoard.bind(this);
     this._checkStatus = this._checkStatus.bind(this);
@@ -67,8 +71,21 @@ class ChessboardAi extends React.Component {
     //   return;
     // }
       const bestMove = YellowSubsAction(Engine);
+      this.setState({
+        isCheck: false,
+      });
       Engine.move(bestMove);
       const newBoard = Engine.fen();
+      if (Engine.in_check() === true) {
+        this.setState({ isCheck: true });
+      } else if (Engine.in_checkmate() === true) {
+        this.setState({
+          isCheck: false,
+          isCheckMate: true,
+        });
+      } else if (Engine.in_check() === false) {
+        this.setState({ isCheck: false });
+      }
       this.props.updateBoardAsync(newBoard, 'yellow-subs');
     }
   }
@@ -79,6 +96,10 @@ class ChessboardAi extends React.Component {
     } else {
       Engine.reset();
     }
+    this.setState({
+      isCheck: false,
+      isCheckMate: false,
+    });
     this.props.startNewGameAsync();
   }
 
@@ -107,6 +128,8 @@ class ChessboardAi extends React.Component {
           pickWhite={this._pickWhite}
           pickBlack={this._pickBlack}
           initBoard={this._initBoard}
+          isCheck={this.state.isCheck}
+          isCheckMate={this.state.isCheckMate}
         />
       </div>
     );
