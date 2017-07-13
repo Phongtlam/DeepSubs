@@ -1,6 +1,5 @@
 import React from 'react';
 import Board from 'react-chessdiagram';
-import ReactDOM from 'react-dom';
 import propTypes from 'prop-types';
 import Chess from 'chess.js';
 import SocketIo from '../socket_io_client/index';
