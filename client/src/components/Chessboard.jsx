@@ -27,8 +27,8 @@ class Chessboard extends React.Component {
     this._checkStatus = this._checkStatus.bind(this);
     this._pickWhite = this._pickWhite.bind(this);
     this._pickBlack = this._pickBlack.bind(this);
-    this._addHighlights = this._addHighlights.bind(this);
-    this._onSelectSquare = this._onSelectSquare.bind(this);
+    // this._addHighlights = this._addHighlights.bind(this);
+    // this._onSelectSquare = this._onSelectSquare.bind(this);
     SocketIo.on('board-update', this._updateBoardListener);
     SocketIo.on('disconnect', this._onReconnect, () => {
       SocketIo.open();
@@ -48,22 +48,22 @@ class Chessboard extends React.Component {
     this.boardNode.removeEventListener('click', this._addHighlights);
   }
 
-  _onSelectSquare(sqName) {
-    // this._addHighlights(event);
+  // _onSelectSquare(sqName) {
+  //   // this._addHighlights(event);
+  //
+  // }
 
-  }
-
-  _addHighlights(event) {
-    const elem = this.boardNode;
-    const elemLeft = elem.offsetLeft;
-    const elemTop = elem.offsetTop;
-    const x = event.pageX - elemLeft;
-    const y = event.pageY - elemTop;
-    console.log('x and y is', x, y);
-    // Collision detection between clicked offset and element.
-    // const elements = [];
-    // var imageData = this.boardNode.getImageData(x, y, 1, 1).data;
-  }
+  // _addHighlights(event) {
+  //   const elem = this.boardNode;
+  //   const elemLeft = elem.offsetLeft;
+  //   const elemTop = elem.offsetTop;
+  //   const x = event.pageX - elemLeft;
+  //   const y = event.pageY - elemTop;
+  //   console.log('x and y is', x, y);
+  //   // Collision detection between clicked offset and element.
+  //   // const elements = [];
+  //   // var imageData = this.boardNode.getImageData(x, y, 1, 1).data;
+  // }
 
   _pickWhite() {
     SocketIo.emit('board-update', null, 'white');
@@ -121,9 +121,9 @@ class Chessboard extends React.Component {
     }
     if (side === 'white') {
       this.props.pickBlackAsync();
-      this.props.startNewGameAsync();
     } else if (side === 'black') {
       this.props.pickWhiteAsync();
+    } else if (side === 'new game') {
       this.props.startNewGameAsync();
     }
   }
@@ -134,6 +134,7 @@ class Chessboard extends React.Component {
     } else {
       Engine.reset();
     }
+    SocketIo.emit('board-update', null, 'new game');
     this.props.startNewGameAsync();
   }
 
@@ -142,7 +143,7 @@ class Chessboard extends React.Component {
       <div>
         <div ref={(node) => { this.boardNode = node; }}>
           <Board
-            onSelectSquare={this._onSelectSquare}
+            // onSelectSquare={this._onSelectSquare}
             allowMoves={this.props.isTurn}
             flip={this.props.side}
             fen={this.props.boardState}
