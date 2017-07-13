@@ -7,6 +7,8 @@ import { LinkContainer } from 'react-router-bootstrap';
 import SocketIo from '../socket_io_client/index';
 import '../styles/profilepage.scss';
 
+import { playHumanAsync, playAiAsync } from '../redux/actions/index';
+
 class ProfilePage extends React.Component {
   constructor(props) {
     super(props);
@@ -26,6 +28,7 @@ class ProfilePage extends React.Component {
 
   _createGame() {
     const roomId = shortid.generate();
+    this.props.playHumanAsync();
     SocketIo.emit('new-user', this.props.profileData.username, roomId);
   }
 
@@ -56,6 +59,13 @@ class ProfilePage extends React.Component {
                 onClick={this._createGame}
                 bsStyle="primary"
               >Make a new game
+              </Button>
+            </LinkContainer>
+            <LinkContainer to="/game">
+              <Button
+                onClick={this.props.playAiAsync}
+                bsStyle="primary"
+              >Play VS. AI
               </Button>
             </LinkContainer>
             <Button
@@ -106,17 +116,22 @@ class ProfilePage extends React.Component {
   }
 }
 
-const mapStateToProps = ({ profile }) => {
+const mapStateToProps = ({ profile, board }) => {
   const { profileData } = profile;
-  return { profileData };
+  const { isHuman, isAi } = board;
+  return { profileData, isHuman, isAi };
 };
 
-export default connect(mapStateToProps)(ProfilePage);
+export default connect(mapStateToProps, { playHumanAsync, playAiAsync })(ProfilePage);
 
 ProfilePage.propTypes = {
   profileData: propTypes.object,
+  playHumanAsync: propTypes.func,
+  playAiAsync: propTypes.func,
 };
 
 ProfilePage.defaultProps = {
   profileData: {},
+  playHumanAsync: propTypes.func,
+  playAiAsync: propTypes.func,
 };

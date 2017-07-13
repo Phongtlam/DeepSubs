@@ -2,6 +2,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 import propTypes from 'prop-types';
 import Chessboard from './Chessboard';
+import ChessboardAi from './AI/Chessboard_ai';
 import Chatterbox from './Chatterbox';
 import NavBar from './NavBar';
 import '../styles/app.scss';
@@ -21,28 +22,33 @@ import {
   endPickAsync,
 } from '../redux/actions/index';
 
-const App = props => (
-  <div>
-    <NavBar />
-    <div className="container">
-      <div className="content">
-        <div className="chessboard">
-          <Chessboard {...props} />
+const App = (props) => {
+  const condRender = (props.isHuman) ?
+    <Chessboard {...props} /> :
+    <ChessboardAi {...props} />;
+
+  return (
+    <div>
+      <NavBar />
+      <div className="container">
+        <div className="content">
+          <div className="chessboard">
+            {condRender}
+          </div>
+          <div className="chatterbox">
+            <Chatterbox {...props} />
+          </div>
         </div>
-        <div className="chatterbox">
-          <Chatterbox {...props} />
+        <div className="footer">
+          Copyright &copy; PhongLam 2017
         </div>
       </div>
-      <div className="footer">
-      Copyright &copy; PhongLam 2017
     </div>
-    </div>
-  </div>
-
-);
+  );
+};
 
 const mapStateToProps = ({ board, room, profile, chatterbox }) => {
-  const { boardState, isTurn, isPicking } = board;
+  const { boardState, isTurn, isPicking, isHuman, isAi } = board;
   const { gameId, side } = room;
   const { profileData } = profile;
   const { input, messages } = chatterbox;
@@ -55,6 +61,8 @@ const mapStateToProps = ({ board, room, profile, chatterbox }) => {
     profileData,
     input,
     messages,
+    isHuman,
+    isAi,
   };
 };
 
@@ -75,13 +83,13 @@ export default connect(mapStateToProps,
   })(App);
 
 App.propTypes = {
-  getProfileAsync: propTypes.func,
-  getGameIdAsync: propTypes.func,
   profileData: propTypes.object,
+  isHuman: propTypes.bool,
+  isAi: propTypes.bool,
 };
 
 App.defaultProps = {
-  getProfileAsync: propTypes.func,
-  getGameIdAsync: propTypes.func,
   profileData: {},
+  isHuman: true,
+  isAi: propTypes.bool,
 };

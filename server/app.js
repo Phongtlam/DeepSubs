@@ -35,7 +35,7 @@ if (process.env.NODE_ENV !== 'production') {
 }
 
 app.use('/', routes.auths);
-app.use('/game', routes.game);
+// app.use('/game', routes.game);
 app.use('/get-profile', routes.profile);
 // prod environment
 app.use('/public', publicPath);

@@ -1,4 +1,13 @@
-import { START_GAME, UPDATE_BOARD, MY_TURN, NOT_MY_TURN, START_PICK, END_PICK } from './type';
+import {
+  START_GAME,
+  UPDATE_BOARD,
+  MY_TURN,
+  NOT_MY_TURN,
+  START_PICK,
+  END_PICK,
+  PLAY_HUMAN,
+  PLAY_AI,
+} from './type';
 
 export const newGame = () => ({
   type: START_GAME,
@@ -23,4 +32,12 @@ export const startPick = () => ({
 
 export const endPick = () => ({
   type: END_PICK,
+});
+
+export const playHuman = () => ({
+  type: PLAY_HUMAN,
+});
+
+export const playAi = () => ({
+  type: PLAY_AI,
 });

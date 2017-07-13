@@ -11,3 +11,5 @@ export const MY_TURN = 'my_turn';
 export const NOT_MY_TURN = 'not_my_turn';
 export const START_PICK = 'start_pick';
 export const END_PICK = 'end_pick';
+export const PLAY_HUMAN = 'play_human';
+export const PLAY_AI = 'play_ai';

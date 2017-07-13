@@ -1,9 +1,20 @@
-import { START_GAME, UPDATE_BOARD, MY_TURN, NOT_MY_TURN, START_PICK, END_PICK } from '../actions/type';
+import {
+  START_GAME,
+  UPDATE_BOARD,
+  MY_TURN,
+  NOT_MY_TURN,
+  START_PICK,
+  END_PICK,
+  PLAY_HUMAN,
+  PLAY_AI,
+} from '../actions/type';
 
 const INITIAL_STATE = {
   boardState: '',
   isTurn: true,
   isPicking: false,
+  isAi: false,
+  isHuman: true,
 };
 
 const board = (state = INITIAL_STATE, { type, boardState }) => {
@@ -38,6 +49,18 @@ const board = (state = INITIAL_STATE, { type, boardState }) => {
       return {
         ...state,
         isPicking: false,
+      };
+    case PLAY_HUMAN:
+      return {
+        ...state,
+        isAi: false,
+        isHuman: true,
+      };
+    case PLAY_AI:
+      return {
+        ...state,
+        isAi: true,
+        isHuman: false,
       };
     default:
       return state;

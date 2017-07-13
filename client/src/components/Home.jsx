@@ -43,7 +43,7 @@ class Home extends React.Component {
   }
 }
 
-const mapStateToProps = ({ profile }) => {
+const mapStateToProps = ({ profile, board }) => {
   const { profileData } = profile;
   return { profileData };
 };

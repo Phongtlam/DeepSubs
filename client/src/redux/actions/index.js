@@ -1,5 +1,5 @@
 import axios from 'axios';
-import { newGame, updateBoard, isMyTurn, isNotMyTurn, startPick, endPick } from './boardAction';
+import { newGame, updateBoard, isMyTurn, isNotMyTurn, startPick, endPick, playHuman, playAi } from './boardAction';
 import { getGameId, pickWhite, pickBlack } from './roomAction';
 import { getProfile } from './profileAction';
 import { getInput, appendMsg } from './chatterboxAction';
@@ -65,4 +65,12 @@ export const getInputAsync = input => (dispatch) => {
 
 export const appendMsgAsync = newMsg => (dispatch) => {
   dispatch(appendMsg(newMsg));
+};
+
+export const playHumanAsync = () => (dispatch) => {
+  dispatch(playHuman());
+};
+
+export const playAiAsync = () => (dispatch) => {
+  dispatch(playAi());
 };

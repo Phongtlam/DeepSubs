@@ -1,7 +1,7 @@
 import React from 'react';
 import Board from 'react-chessdiagram';
 import propTypes from 'prop-types';
-import Chess from 'chess.js';
+import Chess from './AI/chess';
 import SocketIo from '../socket_io_client/index';
 
 import ChessFooter from './ChessFooter';
