@@ -3,7 +3,7 @@ import Board from 'react-chessdiagram';
 import propTypes from 'prop-types';
 import Chess from './chess';
 import SocketIo from '../../socket_io_client/index';
-import { YellowSubsAction } from './yellowsub_ai';
+import { YellowSubsAction } from './yellowsub_ai_v2';
 import ChessFooterAi from './ChessFooter_ai';
 
 const styles = {
@@ -15,6 +15,7 @@ const styles = {
 };
 
 let Engine;
+let positionCount = 0;
 
 class ChessboardAi extends React.Component {
   constructor(props) {
@@ -57,10 +58,16 @@ class ChessboardAi extends React.Component {
   }
 
   _onMovePiece(piece, from, to) {
+    this.setState({
+      isCheck: false,
+    });
     this.props.endPickAsync();
     Engine.move({ from, to });
     const newBoard = Engine.fen();
     this.props.updateBoardAsync(newBoard, this.props.profileData.username);
+    setTimeout(() => {
+      this._deepSubsMove();
+    }, 500);
     this._deepSubsMove();
   }
 
@@ -70,20 +77,17 @@ class ChessboardAi extends React.Component {
     //   updateStatus();
     //   return;
     // }
-      const bestMove = YellowSubsAction(Engine);
-      this.setState({
-        isCheck: false,
-      });
+      const bestMove = YellowSubsAction(3, Engine, true, positionCount);
       Engine.move(bestMove);
       const newBoard = Engine.fen();
-      if (Engine.in_check() === true) {
+      if (Engine.in_check()) {
         this.setState({ isCheck: true });
-      } else if (Engine.in_checkmate() === true) {
+      } else if (Engine.in_checkmate()) {
         this.setState({
           isCheck: false,
           isCheckMate: true,
         });
-      } else if (Engine.in_check() === false) {
+      } else if (!Engine.in_check()) {
         this.setState({ isCheck: false });
       }
       this.props.updateBoardAsync(newBoard, 'yellow-subs');
