@@ -40,12 +40,12 @@ class Chessboard extends React.Component {
   }
 
   componentDidMount() {
-    this.boardNode.addEventListener('click', this._addHighlights);
+    // this.boardNode.addEventListener('click', this._addHighlights);
   }
 
   componentWillUnmount() {
     Engine.clear();
-    this.boardNode.removeEventListener('click', this._addHighlights);
+    // this.boardNode.removeEventListener('click', this._addHighlights);
   }
 
   // _onSelectSquare(sqName) {
@@ -141,7 +141,8 @@ class Chessboard extends React.Component {
   render() {
     return (
       <div>
-        <div ref={(node) => { this.boardNode = node; }}>
+        {/* <div ref={(node) => { this.boardNode = node; }}> */}
+        <div>
           <Board
             // onSelectSquare={this._onSelectSquare}
             allowMoves={this.props.isTurn}
