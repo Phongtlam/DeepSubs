@@ -67,13 +67,11 @@ class Chessboard extends React.Component {
 
   _pickWhite() {
     SocketIo.emit('board-update', null, 'white');
-    this.props.isMyTurnAsync();
     this.props.pickWhiteAsync();
   }
 
   _pickBlack() {
     SocketIo.emit('board-update', null, 'black');
-    this.props.isMyTurnAsync();
     this.props.pickBlackAsync();
   }
 
@@ -136,6 +134,7 @@ class Chessboard extends React.Component {
     }
     SocketIo.emit('board-update', null, 'new game');
     this.props.startNewGameAsync();
+    // this.props.isMyTurnAsync();
   }
 
   render() {
@@ -183,7 +182,7 @@ Chessboard.propTypes = {
 };
 Chessboard.defaultProps = {
   boardState: '',
-  isTurn: false,
+  isTurn: true,
   side: false,
   isPicking: false,
   isMyTurnAsync: propTypes.func,

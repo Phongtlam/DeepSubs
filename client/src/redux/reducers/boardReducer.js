@@ -2,7 +2,7 @@ import { START_GAME, UPDATE_BOARD, MY_TURN, NOT_MY_TURN, START_PICK, END_PICK } 
 
 const INITIAL_STATE = {
   boardState: '',
-  isTurn: false,
+  isTurn: true,
   isPicking: false,
 };
 
