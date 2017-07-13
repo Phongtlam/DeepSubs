@@ -13,10 +13,6 @@ const ChessFooterAi = (props) => {
       </div>
     );
   } else if (props.boardState !== '' && props.boardState !== 'rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1') {
-    // condRender =
-      // (<div className="picking-container">
-      //   <button className="btn btn-primary" onClick={props.initBoard}>Restart Game</button>
-      // </div>);
     if (props.isCheck) {
       condRender =
       (<div className="picking-container">
