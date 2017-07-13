@@ -67,7 +67,7 @@ class ChessboardAi extends React.Component {
     this.props.updateBoardAsync(newBoard, this.props.profileData.username);
     setTimeout(() => {
       this._deepSubsMove();
-    }, 500);
+    }, 1000);
     this._deepSubsMove();
   }
 
