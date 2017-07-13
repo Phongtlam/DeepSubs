@@ -122,6 +122,7 @@ class Chessboard extends React.Component {
     } else if (side === 'black') {
       this.props.pickWhiteAsync();
     } else if (side === 'new game') {
+      Engine.reset();
       this.props.startNewGameAsync();
     }
   }

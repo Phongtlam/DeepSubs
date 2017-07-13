@@ -84,7 +84,6 @@ class ChessboardAi extends React.Component {
 
   _updateBoardListener(newBoard) {
     // listen to changes
-    console.log('in update', newBoard)
     if (newBoard) {
       this.props.updateBoardAsync(newBoard);
     }
