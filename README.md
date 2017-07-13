@@ -17,6 +17,7 @@ Link: https://deep-subs.herokuapp.com/
 - Unique room ID per session
 - Chessboard rendered using React-Chessdiagram module
 - Move validation using Chess.js module
+- Basic AI implemented using minmax algorithm
 - Utilize React/Redux for component's reusability (States are almost entirely in Redux store)
 - Build with Bootstrap and custom CSS for responsive front-end interface
 - front-end routing using React Router Dom V.4
@@ -27,5 +28,6 @@ Link: https://deep-subs.herokuapp.com/
 
 ## Things to do:
 - Improve UI interface
-- Chess AI engine
+- Chess AI engine(done!)
+- Improve chess AI further
 - Ability to invite friends through social media
