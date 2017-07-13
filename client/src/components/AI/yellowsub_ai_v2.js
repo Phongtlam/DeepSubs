@@ -112,7 +112,7 @@ const calculatePositionValue = (pieceType, color, i, j, numRounds) => {
   return positionValue;
 };
 
-const sumBoardValue = (board) => {
+const sumBoardValue = (board, numRounds) => {
   let value = 0;
   for (let i = 0; i < 8; i++) {
     for (let j = 0; j < 8; j++) {
@@ -120,7 +120,7 @@ const sumBoardValue = (board) => {
         value += calculatePieceValue(board[i][j].type, board[i][j].color);
         if (['r', 'q'].indexOf(board[i][j].type) === -1) {
           // no special late game strategy for now
-          value += calculatePositionValue(board[i][j].type, board[i][j].color, i, j, 10);
+          value += calculatePositionValue(board[i][j].type, board[i][j].color, i, j, numRounds);
         }
       }
     }
@@ -128,7 +128,7 @@ const sumBoardValue = (board) => {
   return value;
 };
 
-const YellowSubsAction = (depth, game, isMaximizingPlayer, positionCount) => {
+const YellowSubsAction = (depth, game, isMaximizingPlayer, numRounds) => {
   const newGameMoves = game.moves();
   let bestMove = -9999;
   let bestMoveFound;
@@ -136,7 +136,7 @@ const YellowSubsAction = (depth, game, isMaximizingPlayer, positionCount) => {
   for (let i = 0; i < newGameMoves.length; i++) {
     const newGameMove = newGameMoves[i];
     game.move(newGameMove);
-    const value = minimax(depth - 1, game, -10000, 10000, !isMaximizingPlayer, positionCount);
+    const value = minimax(depth - 1, game, -10000, 10000, !isMaximizingPlayer, numRounds);
     game.undo();
     if (value >= bestMove) {
       bestMove = value;
@@ -146,10 +146,9 @@ const YellowSubsAction = (depth, game, isMaximizingPlayer, positionCount) => {
   return bestMoveFound;
 };
 
-const minimax = (depth, game, alpha, beta, isMaximizingPlayer, positionCount) => {
-  positionCount++;
+const minimax = (depth, game, alpha, beta, isMaximizingPlayer, numRounds) => {
   if (depth === 0) {
-    return -sumBoardValue(game.board());
+    return -sumBoardValue(game.board(), numRounds);
   }
 
   const newGameMoves = game.moves();

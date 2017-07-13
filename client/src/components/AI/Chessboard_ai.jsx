@@ -15,7 +15,6 @@ const styles = {
 };
 
 let Engine;
-let positionCount = 0;
 
 class ChessboardAi extends React.Component {
   constructor(props) {
@@ -23,7 +22,9 @@ class ChessboardAi extends React.Component {
     this.state = {
       isCheck: false,
       isCheckMate: false,
+      numRounds: 0,
     };
+    const numRounds = 0;
     this._onMovePiece = this._onMovePiece.bind(this);
     this._initBoard = this._initBoard.bind(this);
     this._checkStatus = this._checkStatus.bind(this);
@@ -68,6 +69,9 @@ class ChessboardAi extends React.Component {
     setTimeout(() => {
       this._deepSubsMove();
     }, 1000);
+    this.setState(prevState => ({
+      numRounds: prevState.numRounds += 1,
+    }));
     this._deepSubsMove();
   }
 
@@ -77,7 +81,7 @@ class ChessboardAi extends React.Component {
     //   updateStatus();
     //   return;
     // }
-      const bestMove = YellowSubsAction(3, Engine, true, positionCount);
+      const bestMove = YellowSubsAction(3, Engine, true, this.state.numRounds);
       Engine.move(bestMove);
       const newBoard = Engine.fen();
       if (Engine.in_check()) {
