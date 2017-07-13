@@ -72,7 +72,6 @@ class ChessboardAi extends React.Component {
     this.setState(prevState => ({
       numRounds: prevState.numRounds += 1,
     }));
-    this._deepSubsMove();
   }
 
   _deepSubsMove() {
