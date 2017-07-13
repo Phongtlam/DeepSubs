@@ -19,6 +19,7 @@ class ProfilePage extends React.Component {
     this._createGame = this._createGame.bind(this);
     this._joinGame = this._joinGame.bind(this);
     this._handleOnChange = this._handleOnChange.bind(this);
+    this._joinAi = this._joinAi.bind(this);
   }
 
   _handleOnChange(e) {
@@ -33,12 +34,22 @@ class ProfilePage extends React.Component {
   }
 
   _joinGame() {
+    const inputId = this.state.input;
     if (this.state.input !== '') {
       this.setState({ warning: false });
-      SocketIo.emit('new-user', this.props.profileData.username, this.state.input);
+      SocketIo.emit('new-user', this.props.profileData.username, inputId);
+      if ((inputId.charAt(inputId.length - 3) + inputId.charAt(inputId.length - 2) + inputId.charAt(inputId.length - 1)) === '*AI') {
+        this.props.playAiAsync();
+      }
     } else {
       this.setState({ warning: true });
     }
+  }
+
+  _joinAi() {
+    const roomId = `${shortid.generate()}*AI`;
+    this.props.playAiAsync();
+    SocketIo.emit('new-user', this.props.profileData.username, roomId);
   }
 
   render() {
@@ -63,7 +74,7 @@ class ProfilePage extends React.Component {
             </LinkContainer>
             <LinkContainer to="/game">
               <Button
-                onClick={this.props.playAiAsync}
+                onClick={this._joinAi}
                 bsStyle="primary"
               >Play VS. AI
               </Button>

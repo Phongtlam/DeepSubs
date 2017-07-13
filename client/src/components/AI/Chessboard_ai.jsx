@@ -25,6 +25,8 @@ class ChessboardAi extends React.Component {
     this._pickWhite = this._pickWhite.bind(this);
     this._pickBlack = this._pickBlack.bind(this);
     this._deepSubsMove = this._deepSubsMove.bind(this);
+    this._updateBoardListener = this._updateBoardListener.bind(this);
+    SocketIo.on('board-update', this._updateBoardListener);
   }
 
   componentDidMount() {
@@ -51,9 +53,10 @@ class ChessboardAi extends React.Component {
   }
 
   _onMovePiece(piece, from, to) {
+    this.props.endPickAsync();
     Engine.move({ from, to });
     const newBoard = Engine.fen();
-    this.props.updateBoardAsync(newBoard);
+    this.props.updateBoardAsync(newBoard, this.props.profileData.username);
     this._deepSubsMove();
   }
 
@@ -66,7 +69,7 @@ class ChessboardAi extends React.Component {
       const bestMove = YellowSubsAction(Engine);
       Engine.move(bestMove);
       const newBoard = Engine.fen();
-      this.props.updateBoardAsync(newBoard);
+      this.props.updateBoardAsync(newBoard, 'yellow-subs');
     }
   }
 
@@ -77,6 +80,14 @@ class ChessboardAi extends React.Component {
       Engine.reset();
     }
     this.props.startNewGameAsync();
+  }
+
+  _updateBoardListener(newBoard) {
+    // listen to changes
+    console.log('in update', newBoard)
+    if (newBoard) {
+      this.props.updateBoardAsync(newBoard);
+    }
   }
 
   render() {

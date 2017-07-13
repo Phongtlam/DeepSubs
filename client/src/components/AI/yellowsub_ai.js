@@ -138,7 +138,6 @@ const sortBySecondElement = (a, b) => {
 };
 
 const YellowSubsAction = (game, depth) => {
-  console.log('game is', game)
   let valueAfterOnePly = [];
   let possibleMovesBlack = game.moves();
 
