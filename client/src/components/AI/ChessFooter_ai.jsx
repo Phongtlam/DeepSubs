@@ -2,7 +2,7 @@ import React from 'react';
 import propTypes from 'prop-types';
 import '../../styles/chessfooter.scss';
 
-const ChessFooter = (props) => {
+const ChessFooterAi = (props) => {
   let condRender = (<div className="picking-container">
     <button className="btn start" onClick={props.initBoard}>Start New Game</button></div>);
   if (props.isPicking) {
@@ -26,9 +26,9 @@ const ChessFooter = (props) => {
 };
 
 
-export default ChessFooter;
+export default ChessFooterAi;
 
-ChessFooter.propTypes = {
+ChessFooterAi.propTypes = {
   boardState: propTypes.string,
   isPicking: propTypes.bool,
   isTurn: propTypes.bool,
@@ -37,7 +37,7 @@ ChessFooter.propTypes = {
   pickBlack: propTypes.func,
 };
 
-ChessFooter.defaultProps = {
+ChessFooterAi.defaultProps = {
   boardState: '',
   isTurn: true,
   isPicking: false,
