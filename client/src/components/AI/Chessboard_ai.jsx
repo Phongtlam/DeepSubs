@@ -58,13 +58,14 @@ class ChessboardAi extends React.Component {
         isCheck: false,
         isCheckMate: true,
       });
-    }
-    if (!status && this.props.boardState !== newBoard) {
-      this.props.isNotMyTurnAsync();
     } else {
-      this.props.isMyTurnAsync();
+      if (!status && this.props.boardState !== newBoard) {
+        this.props.isNotMyTurnAsync();
+      } else {
+        this.props.isMyTurnAsync();
+      }
+      this.props.updateBoardAsync(newBoard);
     }
-    this.props.updateBoardAsync(newBoard);
   }
 
   render() {
