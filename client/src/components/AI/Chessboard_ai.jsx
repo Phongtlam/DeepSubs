@@ -18,12 +18,15 @@ class ChessboardAi extends React.Component {
     this.state = {
       isCheck: false,
       isCheckMate: false,
-      numRounds: 0,
     };
     this._onMovePiece = this._onMovePiece.bind(this);
     this._initBoard = this._initBoard.bind(this);
     this._updateBoardListener = this._updateBoardListener.bind(this);
     SocketIo.on('board-update', this._updateBoardListener);
+  }
+
+  componentDidMount() {
+    this.props.isMyTurnAsync();
   }
 
   _onMovePiece(piece, from, to) {
@@ -34,7 +37,6 @@ class ChessboardAi extends React.Component {
       isCheck: false,
     });
     SocketIo.emit('AI', { from, to });
-    this.props.isNotMyTurnAsync();
   }
 
   _initBoard() {
@@ -50,13 +52,16 @@ class ChessboardAi extends React.Component {
     // listen to changes
     if (status === 'check') {
       this.setState({ isCheck: true });
+      this.props.isMyTurnAsync();
     } else if (status === 'check_mate') {
       this.setState({
         isCheck: false,
         isCheckMate: true,
       });
     }
-    if (status) {
+    if (!status && this.props.boardState !== newBoard) {
+      this.props.isNotMyTurnAsync();
+    } else {
       this.props.isMyTurnAsync();
     }
     this.props.updateBoardAsync(newBoard);

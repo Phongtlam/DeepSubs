@@ -49,7 +49,7 @@ module.exports = (server) => {
           to: boardState.to,
         });
         const newBoard = game.fen();
-        io.in(user.roomId).emit('board-update', newBoard);
+        io.in(user.roomId).emit('board-update', newBoard, false);
       }
 
       // deepSubs move
