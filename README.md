@@ -17,7 +17,8 @@ Link: https://deep-subs.herokuapp.com/
 - Unique room ID per session
 - Chessboard rendered using React-Chessdiagram module
 - Move validation using Chess.js module
-- Basic AI implemented using minmax algorithm
+- Basic AI implemented using minimax algorithm
+- AI calculations are being done server side and client inputs are being handled through React/Redux for better user experience
 - Utilize React/Redux for component's reusability (States are almost entirely in Redux store)
 - Build with Bootstrap and custom CSS for responsive front-end interface
 - front-end routing using React Router Dom V.4
