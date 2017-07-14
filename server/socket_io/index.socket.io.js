@@ -1,5 +1,5 @@
 const socketIo = require('socket.io');
-const YellowSubsAction = require('../../client/src/components/AI/yellowsub_ai_v2');
+const YellowSubsAction = require('../AI/yellowsub_ai_v2');
 const Chess = require('../../client/src/components/AI/chess').Chess;
 
 const getUniqeId = () => new Date().getTime();
