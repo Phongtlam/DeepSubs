@@ -3,6 +3,12 @@ import propTypes from 'prop-types';
 import '../../styles/chessfooter.scss';
 
 const ChessFooterAi = (props) => {
+  let status = <div />;
+  if (props.isCheck) {
+    status = <div className="turn-no">Checked</div>;
+  } else if (props.isCheckMate) {
+    status = <div className="turn-no">You lose</div>;
+  }
   let condRender = (<div className="picking-container">
     <button className="btn start" onClick={props.initBoard}>Start New Game</button></div>);
   if (props.isPicking) {
@@ -13,32 +19,20 @@ const ChessFooterAi = (props) => {
       </div>
     );
   } else if (props.boardState !== '' && props.boardState !== 'rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1') {
-    if (props.isCheck) {
-      condRender =
-      (<div className="picking-container">
-        <button className="btn btn-primary" onClick={props.initBoard}>Restart Game</button>
-        <div className="turn-no">Checked!</div>
-      </div>);
-    } else if (props.isCheckMate) {
-      condRender =
-      (<div className="picking-container">
-        <button className="btn btn-primary" onClick={props.initBoard}>Restart Game</button>
-        <div className="turn-no">You lose!</div>
-      </div>);
-    } else {
-      condRender = (props.isTurn) ?
+    condRender = (!props.isTurn) ?
       (
         <div className="picking-container">
-          <button className="btn btn-primary" onClick={props.initBoard}>Restart Game</button>
-          <div className="turn-yes">Your turn</div>
+          <button className="btn btn-primary" onClick={props.initBoard}>Start New Game</button>
+          <div className="turn-no">Not your turn</div>
+          {status}
         </div>
       ) : (
         <div className="picking-container">
-          <button className="btn btn-primary" onClick={props.initBoard}>Restart Game</button>
-          <div className="turn-no">Not your turn</div>
+          <button className="btn btn-primary" onClick={props.initBoard}>Start New Game</button>
+          <div className="turn-yes">Your turn</div>
+          {status}
         </div>
       );
-    }
   }
   return (
     <div>
