@@ -42,9 +42,6 @@ class ChessboardAi extends React.Component {
     if (this.props.boardState !== newBoard) {
       SocketIo.emit('AI', newBoard);
       this.props.updateBoardAsync(newBoard);
-      this.setState({
-        isCheck: false,
-      });
       this.props.isNotMyTurnAsync();
     }
   }
@@ -68,6 +65,10 @@ class ChessboardAi extends React.Component {
       this.setState({
         isCheck: false,
         isCheckMate: true,
+      });
+    } else if (status === 'normal') {
+      this.setState({
+        isCheck: false,
       });
     } else if (!status && this.props.boardState !== newBoard) {
       this.props.isNotMyTurnAsync();
