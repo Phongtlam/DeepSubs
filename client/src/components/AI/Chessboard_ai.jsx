@@ -83,7 +83,7 @@ class ChessboardAi extends React.Component {
       const newBoard = Engine.fen();
       if (Engine.in_check()) {
         this.setState({ isCheck: true });
-      } else if (Engine.in_checkmate()) {
+      } else if (Engine.in_checkmate() || Engine.move() === []) {
         this.setState({
           isCheck: false,
           isCheckMate: true,
