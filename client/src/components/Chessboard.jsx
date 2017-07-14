@@ -30,9 +30,9 @@ class Chessboard extends React.Component {
     // this._addHighlights = this._addHighlights.bind(this);
     // this._onSelectSquare = this._onSelectSquare.bind(this);
     SocketIo.on('board-update', this._updateBoardListener);
-    SocketIo.on('disconnect', this._onReconnect, () => {
-      SocketIo.open();
-    });
+    // SocketIo.on('disconnect', this._onReconnect, () => {
+    //   SocketIo.open();
+    // });
   }
 
   componentWillMount() {
