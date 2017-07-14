@@ -26,10 +26,18 @@ const ChessFooterAi = (props) => {
         <div className="turn-no">You lose!</div>
       </div>);
     } else {
-      condRender =
-        (<div className="picking-container">
+      condRender = (props.isTurn && (!props.isCheck && !props.isCheckMate)) ?
+      (
+        <div className="picking-container">
           <button className="btn btn-primary" onClick={props.initBoard}>Restart Game</button>
-        </div>);
+          <div className="turn-yes">Your turn</div>
+        </div>
+      ) : (
+        <div className="picking-container">
+          <button className="btn btn-primary" onClick={props.initBoard}>Restart Game</button>
+          <div className="turn-no">Not Your Turn</div>
+        </div>
+      );
     }
   }
   return (
