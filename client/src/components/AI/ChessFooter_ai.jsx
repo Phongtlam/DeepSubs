@@ -26,7 +26,7 @@ const ChessFooterAi = (props) => {
         <div className="turn-no">You lose!</div>
       </div>);
     } else {
-      condRender = (props.isTurn && (!props.isCheck && !props.isCheckMate)) ?
+      condRender = (props.isTurn && (!props.isCheck || !props.isCheckMate)) ?
       (
         <div className="picking-container">
           <button className="btn btn-primary" onClick={props.initBoard}>Restart Game</button>

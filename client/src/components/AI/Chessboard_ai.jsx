@@ -24,7 +24,6 @@ class ChessboardAi extends React.Component {
       isCheckMate: false,
       numRounds: 0,
     };
-    const numRounds = 0;
     this._onMovePiece = this._onMovePiece.bind(this);
     this._initBoard = this._initBoard.bind(this);
     this._checkStatus = this._checkStatus.bind(this);
@@ -74,10 +73,6 @@ class ChessboardAi extends React.Component {
 
   _deepSubsMove() {
     if (Engine.turn() === 'b') {
-    // if (Engine.in_checkmate()) {
-    //   updateStatus();
-    //   return;
-    // }
       const bestMove = YellowSubsAction(3, Engine, true, this.state.numRounds);
       Engine.move(bestMove);
       const newBoard = Engine.fen();
