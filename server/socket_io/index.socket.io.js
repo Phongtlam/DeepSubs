@@ -26,28 +26,28 @@ module.exports = (server) => {
     // });
 
     socket.on('new-user', (username, roomId) => {
-      socket.join(roomId);
       const socketRooms = Object.keys(io.sockets.adapter.sids[socket.id]);
       const currentRoom = socketRooms[socketRooms.length - 1];
-      console.log('user', socket.id, ' has joined on ', currentRoom);
+      if (socketRooms.length > 1) {
+        socket.leave(currentRoom);
+      }
+      socket.join(roomId);
       deepSubs.msgId = getUniqeId();
       deepSubs.message = `${username} has joined the room!`;
-      socket.broadcast.to(currentRoom).emit('receive-msg', deepSubs);
-      deepSubs.message = `Hello ${username}! This is your room ID: ${currentRoom}`;
+      socket.broadcast.to(roomId).emit('receive-msg', deepSubs);
+      deepSubs.message = `Hello ${username}! This is your room ID: ${roomId}`;
       io.to(socket.id).emit('receive-msg', deepSubs);
     });
 
     socket.on('AI', (boardState, isStart) => {
       const socketRooms = Object.keys(io.sockets.adapter.sids[socket.id]);
       const currentRoom = socketRooms[socketRooms.length - 1];
-      console.log('AI game id and room', socket.id, currentRoom)
       if (isStart) {
         game.reset();
         numRounds = 0;
       }
       if (boardState) {
         game.load(boardState);
-        console.log('broad cast AI game to ', currentRoom)
         socket.broadcast.to(currentRoom).emit('board-update', boardState, false);
       }
 
