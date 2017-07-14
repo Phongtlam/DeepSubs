@@ -35,7 +35,6 @@ const ChessFooterAi = (props) => {
       ) : (
         <div className="picking-container">
           <button className="btn btn-primary" onClick={props.initBoard}>Restart Game</button>
-          <div className="turn-no">Not Your Turn</div>
         </div>
       );
     }
