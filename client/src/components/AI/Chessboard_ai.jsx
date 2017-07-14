@@ -70,10 +70,9 @@ class ChessboardAi extends React.Component {
       this.setState({
         isCheck: false,
       });
+      this.props.isMyTurnAsync();
     } else if (!status && this.props.boardState !== newBoard) {
       this.props.isNotMyTurnAsync();
-    } else {
-      this.props.isMyTurnAsync();
     }
     Engine.load(newBoard);
     this.props.updateBoardAsync(newBoard);
