@@ -29,6 +29,7 @@ class ChessboardAi extends React.Component {
   }
 
   componentDidMount() {
+    Engine = new Chess();
     this.props.isMyTurnAsync();
   }
 
@@ -49,11 +50,7 @@ class ChessboardAi extends React.Component {
   }
 
   _initBoard() {
-    if (!Engine) {
-      Engine = new Chess();
-    } else {
-      Engine.reset();
-    }
+    Engine.reset();
     this.setState({
       isCheck: false,
       isCheckMate: false,
@@ -72,12 +69,10 @@ class ChessboardAi extends React.Component {
         isCheck: false,
         isCheckMate: true,
       });
+    } else if (!status && this.props.boardState !== newBoard) {
+      this.props.isNotMyTurnAsync();
     } else {
-      if (!status && this.props.boardState !== newBoard) {
-        this.props.isNotMyTurnAsync();
-      } else {
-        this.props.isMyTurnAsync();
-      }
+      this.props.isMyTurnAsync();
     }
     Engine.load(newBoard);
     this.props.updateBoardAsync(newBoard);
