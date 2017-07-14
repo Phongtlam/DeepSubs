@@ -1,4 +1,6 @@
 const socketIo = require('socket.io');
+const YellowSubsAction = require('../../client/src/components/AI/yellowsub_ai_v2');
+const Chess = require('../../client/src/components/AI/chess').Chess;
 
 const getUniqeId = () => new Date().getTime();
 
@@ -13,6 +15,10 @@ const deepSubs = {
   msgId: null,
   time: '',
 };
+
+const game = new Chess();
+
+let numRounds = 0;
 
 module.exports = (server) => {
   const io = socketIo(server);
@@ -30,6 +36,38 @@ module.exports = (server) => {
       socket.broadcast.to(user.roomId).emit('receive-msg', deepSubs);
       deepSubs.message = `Hello ${username}! This is your room ID: ${user.roomId}`;
       io.to(socket.id).emit('receive-msg', deepSubs);
+    });
+
+    socket.on('AI', (boardState, isStart) => {
+      if (isStart) {
+        game.reset();
+        numRounds = 0;
+      }
+      if (boardState) {
+        game.move({
+          from: boardState.from,
+          to: boardState.to,
+        });
+        const newBoard = game.fen();
+        io.in(user.roomId).emit('board-update', newBoard);
+      }
+
+      // deepSubs move
+      if (game.turn() === 'b') {
+        const bestMove = YellowSubsAction(3, game, true, numRounds);
+        game.move(bestMove);
+        const aiBoard = game.fen();
+        if (aiBoard) {
+          numRounds += 1;
+        }
+        let status = 'normal';
+        if (game.in_check()) {
+          status = 'check';
+        } else if (game.in_checkmate() || game.move() === []) {
+          status = 'check_mate';
+        }
+        io.in(user.roomId).emit('board-update', aiBoard, status);
+      }
     });
 
     socket.on('board-update', (newBoard, side) => {

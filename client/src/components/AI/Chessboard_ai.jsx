@@ -14,7 +14,7 @@ const styles = {
   },
 };
 
-let Engine;
+// let Engine;
 
 class ChessboardAi extends React.Component {
   constructor(props) {
@@ -26,92 +26,46 @@ class ChessboardAi extends React.Component {
     };
     this._onMovePiece = this._onMovePiece.bind(this);
     this._initBoard = this._initBoard.bind(this);
-    this._checkStatus = this._checkStatus.bind(this);
-    this._pickWhite = this._pickWhite.bind(this);
-    this._pickBlack = this._pickBlack.bind(this);
-    this._deepSubsMove = this._deepSubsMove.bind(this);
+    // this._connectAi = this._connectAi.bind(this);
+    // this._deepSubsMove = this._deepSubsMove.bind(this);
     this._updateBoardListener = this._updateBoardListener.bind(this);
     SocketIo.on('board-update', this._updateBoardListener);
   }
 
-  componentDidMount() {
-    this._checkStatus();
-  }
-
-  componentWillUnmount() {
-    Engine.clear();
-  }
-
-  _checkStatus() {
-    if (Engine && this.props.boardState.length > 0) {
-      this.props.isMyTurnAsync();
-    }
-    Engine = new Chess(this.props.boardState);
-  }
-
-  _pickWhite() {
-    this.props.pickWhiteAsync();
-  }
-
-  _pickBlack() {
-    this.props.pickBlackAsync();
-  }
-
   _onMovePiece(piece, from, to) {
+    if (this.props.boardState === 'rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1') {
+      this.props.endPickAsync();
+    }
     this.setState({
       isCheck: false,
     });
-    this.props.endPickAsync();
-    Engine.move({ from, to });
-    const newBoard = Engine.fen();
-    this.props.updateBoardAsync(newBoard, this.props.profileData.username);
-    setTimeout(() => {
-      this._deepSubsMove();
-    }, 250);
+    SocketIo.emit('AI', { from, to });
     this.props.isNotMyTurnAsync();
   }
 
-  _deepSubsMove() {
-    if (Engine.turn() === 'b') {
-      const bestMove = YellowSubsAction(3, Engine, true, this.state.numRounds);
-      Engine.move(bestMove);
-      const newBoard = Engine.fen();
-      if (Engine.in_check()) {
-        this.setState({ isCheck: true });
-      } else if (Engine.in_checkmate() || Engine.move() === []) {
-        this.setState({
-          isCheck: false,
-          isCheckMate: true,
-        });
-      } else if (!Engine.in_check()) {
-        this.setState({ isCheck: false });
-      }
-      this.props.updateBoardAsync(newBoard, 'yellow-subs');
-    }
-    this.setState(prevState => ({
-      numRounds: prevState.numRounds += 1,
-    }));
-    this.props.isMyTurnAsync();
-  }
-
   _initBoard() {
-    if (!Engine) {
-      Engine = new Chess();
-    } else {
-      Engine.reset();
-    }
     this.setState({
       isCheck: false,
       isCheckMate: false,
     });
+    SocketIo.emit('AI', null, true);
     this.props.startNewGameAsync();
   }
 
-  _updateBoardListener(newBoard) {
+  _updateBoardListener(newBoard, status) {
     // listen to changes
-    if (newBoard) {
-      this.props.updateBoardAsync(newBoard);
+    if (status === 'check') {
+      this.setState({ isCheck: true });
+    } else if (status === 'check_mate') {
+      this.setState({
+        isCheck: false,
+        isCheckMate: true,
+      });
     }
+    if (status) {
+      this.props.isMyTurnAsync();
+    }
+    this.props.updateBoardAsync(newBoard);
   }
 
   render() {
@@ -129,8 +83,6 @@ class ChessboardAi extends React.Component {
         </div>
         <ChessFooterAi
           {...this.props}
-          pickWhite={this._pickWhite}
-          pickBlack={this._pickBlack}
           initBoard={this._initBoard}
           isCheck={this.state.isCheck}
           isCheckMate={this.state.isCheckMate}

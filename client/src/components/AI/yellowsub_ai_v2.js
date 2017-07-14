@@ -179,4 +179,5 @@ const minimax = (depth, game, alpha, beta, isMaximizingPlayer, numRounds) => {
   return bestMove;
 };
 
-export { YellowSubsAction };
+// export { YellowSubsAction };
+module.exports = YellowSubsAction;

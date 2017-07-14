@@ -8,8 +8,8 @@ const ChessFooterAi = (props) => {
   if (props.isPicking) {
     condRender = (
       <div className="picking-container">
-        <button className="pick-white" onClick={props.pickWhite}>Play as White</button>
-        <button className="pick-black" onClick={props.pickBlack}>Play as Black</button>
+        <button className="pick-white" onClick={props.pickWhiteAsync}>Play as White</button>
+        <button className="pick-black" onClick={props.pickBlackAsync}>Play as Black</button>
       </div>
     );
   } else if (props.boardState !== '' && props.boardState !== 'rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1') {
@@ -26,7 +26,7 @@ const ChessFooterAi = (props) => {
         <div className="turn-no">You lose!</div>
       </div>);
     } else {
-      condRender = (props.isTurn && (!props.isCheck || !props.isCheckMate)) ?
+      condRender = (props.isTurn) ?
       (
         <div className="picking-container">
           <button className="btn btn-primary" onClick={props.initBoard}>Restart Game</button>
@@ -35,6 +35,7 @@ const ChessFooterAi = (props) => {
       ) : (
         <div className="picking-container">
           <button className="btn btn-primary" onClick={props.initBoard}>Restart Game</button>
+          <div className="turn-no">Not your turn</div>
         </div>
       );
     }
@@ -54,8 +55,8 @@ ChessFooterAi.propTypes = {
   isPicking: propTypes.bool,
   isTurn: propTypes.bool,
   initBoard: propTypes.func,
-  pickWhite: propTypes.func,
-  pickBlack: propTypes.func,
+  pickWhiteAsync: propTypes.func,
+  pickBlackAsync: propTypes.func,
   isCheck: propTypes.bool,
   isCheckMate: propTypes.bool,
 };
@@ -67,6 +68,6 @@ ChessFooterAi.defaultProps = {
   isTurn: true,
   isPicking: false,
   initBoard: propTypes.func,
-  pickWhite: propTypes.func,
-  pickBlack: propTypes.func,
+  pickWhiteAsync: propTypes.func,
+  pickBlackAsync: propTypes.func,
 };
