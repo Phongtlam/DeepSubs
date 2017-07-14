@@ -3,6 +3,7 @@ import Board from 'react-chessdiagram';
 import propTypes from 'prop-types';
 import SocketIo from '../../socket_io_client/index';
 import ChessFooterAi from './ChessFooter_ai';
+import Chess from '../AI/chess';
 
 const styles = {
   board: {
@@ -11,6 +12,8 @@ const styles = {
     dark: '#808080',
   },
 };
+
+let Engine;
 
 class ChessboardAi extends React.Component {
   constructor(props) {
@@ -33,13 +36,24 @@ class ChessboardAi extends React.Component {
     if (this.props.boardState === 'rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1') {
       this.props.endPickAsync();
     }
-    this.setState({
-      isCheck: false,
-    });
-    SocketIo.emit('AI', { from, to });
+    Engine.move({ from, to });
+    const newBoard = Engine.fen();
+    if (this.props.boardState !== newBoard) {
+      SocketIo.emit('AI', newBoard);
+      this.props.updateBoardAsync(newBoard);
+      this.setState({
+        isCheck: false,
+      });
+      this.props.isNotMyTurnAsync();
+    }
   }
 
   _initBoard() {
+    if (!Engine) {
+      Engine = new Chess();
+    } else {
+      Engine.reset();
+    }
     this.setState({
       isCheck: false,
       isCheckMate: false,
@@ -64,8 +78,9 @@ class ChessboardAi extends React.Component {
       } else {
         this.props.isMyTurnAsync();
       }
-      this.props.updateBoardAsync(newBoard);
     }
+    Engine.load(newBoard);
+    this.props.updateBoardAsync(newBoard);
   }
 
   render() {

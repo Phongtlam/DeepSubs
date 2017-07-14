@@ -44,12 +44,8 @@ module.exports = (server) => {
         numRounds = 0;
       }
       if (boardState) {
-        game.move({
-          from: boardState.from,
-          to: boardState.to,
-        });
-        const newBoard = game.fen();
-        io.in(user.roomId).emit('board-update', newBoard, false);
+        game.load(boardState);
+        socket.broadcast.to(user.roomId).emit('board-update', boardState, false);
       }
 
       // deepSubs move
