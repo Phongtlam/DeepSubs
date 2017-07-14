@@ -53,7 +53,7 @@ module.exports = (server) => {
 
       // deepSubs move
       if (game.turn() === 'b') {
-        const bestMove = YellowSubsAction(3, game, true, numRounds);
+        const bestMove = YellowSubsAction(2, game, true, numRounds);
         game.move(bestMove);
         const aiBoard = game.fen();
         if (aiBoard) {
