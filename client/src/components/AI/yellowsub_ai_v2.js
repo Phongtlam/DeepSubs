@@ -34,7 +34,7 @@ const calculatePositionValue = (pieceType, color, i, j, numRounds) => {
   switch (pieceType) {
     case 'p':
       chessTable = [[  0,  0,  0,  0,  0,  0,  0,  0],
-                    [ 50, 50, 50, 50, 50 ,50 ,50, 50],
+                    [ 50, 50, 50, 50, 50, 50, 50, 50],
                     [ 10, 10, 20, 30, 30, 20, 10, 10],
                     [  5,  5, 10, 27, 27, 10,  5,  5],
                     [  0,  0,  0, 25, 25,  0,  0,  0],

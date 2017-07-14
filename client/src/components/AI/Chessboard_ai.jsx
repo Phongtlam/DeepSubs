@@ -69,9 +69,6 @@ class ChessboardAi extends React.Component {
     setTimeout(() => {
       this._deepSubsMove();
     }, 250);
-    this.setState(prevState => ({
-      numRounds: prevState.numRounds += 1,
-    }));
   }
 
   _deepSubsMove() {
@@ -95,6 +92,9 @@ class ChessboardAi extends React.Component {
       }
       this.props.updateBoardAsync(newBoard, 'yellow-subs');
     }
+    this.setState(prevState => ({
+      numRounds: prevState.numRounds += 1,
+    }));
   }
 
   _initBoard() {
