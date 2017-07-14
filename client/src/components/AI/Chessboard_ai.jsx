@@ -1,9 +1,7 @@
 import React from 'react';
 import Board from 'react-chessdiagram';
 import propTypes from 'prop-types';
-import Chess from './chess';
 import SocketIo from '../../socket_io_client/index';
-import { YellowSubsAction } from './yellowsub_ai_v2';
 import ChessFooterAi from './ChessFooter_ai';
 
 const styles = {
@@ -13,8 +11,6 @@ const styles = {
     dark: '#808080',
   },
 };
-
-// let Engine;
 
 class ChessboardAi extends React.Component {
   constructor(props) {
@@ -26,8 +22,6 @@ class ChessboardAi extends React.Component {
     };
     this._onMovePiece = this._onMovePiece.bind(this);
     this._initBoard = this._initBoard.bind(this);
-    // this._connectAi = this._connectAi.bind(this);
-    // this._deepSubsMove = this._deepSubsMove.bind(this);
     this._updateBoardListener = this._updateBoardListener.bind(this);
     SocketIo.on('board-update', this._updateBoardListener);
   }
@@ -96,29 +90,19 @@ export default ChessboardAi;
 
 ChessboardAi.propTypes = {
   boardState: propTypes.string,
-  isTurn: propTypes.bool,
   side: propTypes.bool,
   isMyTurnAsync: propTypes.func,
   isNotMyTurnAsync: propTypes.func,
-  pickWhiteAsync: propTypes.func,
-  pickBlackAsync: propTypes.func,
   updateBoardAsync: propTypes.func,
   startNewGameAsync: propTypes.func,
   endPickAsync: propTypes.func,
-  isPicking: propTypes.bool,
-  profileData: propTypes.object,
 };
 ChessboardAi.defaultProps = {
   boardState: '',
-  isTurn: true,
   side: false,
-  isPicking: false,
   isMyTurnAsync: propTypes.func,
   isNotMyTurnAsync: propTypes.func,
   endPickAsync: propTypes.func,
-  pickWhiteAsync: propTypes.func,
-  pickBlackAsync: propTypes.func,
   updateBoardAsync: propTypes.func,
   startNewGameAsync: propTypes.func,
-  profileData: {},
 };
