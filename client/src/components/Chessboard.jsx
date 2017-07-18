@@ -88,7 +88,7 @@ class Chessboard extends React.Component {
     }
     const username = this.props.profileData.username;
     // Engine.move({ piece, from, to });
-    Engine.move({ from, to });
+    Engine.move({ from, to, promotion: 'q' });
     const newBoard = Engine.fen();
     let isCheck = 'normal';
     if (Engine.in_check() === true) {
