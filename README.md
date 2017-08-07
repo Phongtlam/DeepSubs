@@ -1,12 +1,12 @@
 [![Build Status](https://travis-ci.org/Phongtlam/DeepSubs.svg?branch=master)](https://travis-ci.org/Phongtlam/DeepSubs)
 
-## React-Chess with Phong
+## React-Chess
 
 Link: https://deep-subs.herokuapp.com/
 
 ![screenshot](./gamescreen.png)
 
-#Table of Contents
+## Table of Contents
 
 1. [Overview](#overview)
 2. [Requirements](#requirements)
