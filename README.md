@@ -8,9 +8,20 @@ Link: https://deep-subs.herokuapp.com/
 
 # Steps to start:
 1. npm install to install dependencies.
-2. npm start: will run web-pack-dev server
-3. npm run server-start: will launch the server-start
-4. Happy coding!
+2. npm start: will run web-pack-dev server (on localhost:3000)
+3. Happy coding!
+
+You will need to create an .env file with these fields
+DATABASE_LOCAL <br>
+DATABASE_URL <br>
+FB_ID <br>
+FB_SECRET <br>
+FB_CALLBACK <br>
+GOG_ID <br>
+GOG_SECRET <br>
+GOG_CALLBACK <br>
+REDIS_URL <br>
+
 
 # Overview:
 - Real time chess with friends!
