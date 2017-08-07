@@ -10,8 +10,8 @@ Link: https://deep-subs.herokuapp.com/
 
 1. [Requirements](#requirements)
 2. [Development](#development)
-    1. [Steps to start](#Steps to start)
-    1. [Things to do](#Things to do)
+    1. [Steps to start](#Steps-to-start)
+    1. [Things to do](#Things-to-do)
 
 ## Requirements
 
