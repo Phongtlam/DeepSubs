@@ -11,7 +11,7 @@ Link: https://deep-subs.herokuapp.com/
 2. npm start: will run web-pack-dev server (on localhost:3000)
 3. Happy coding!
 
-You will need to create an .env file with these fields
+You will need to create a .env file with these fields <br>
 DATABASE_LOCAL <br>
 DATABASE_URL <br>
 FB_ID <br>
@@ -22,6 +22,13 @@ GOG_SECRET <br>
 GOG_CALLBACK <br>
 REDIS_URL <br>
 
+# Database:
+You will need to have a local or cloud hosted PostgreSQL database. <br>
+In terminal from root directory run: <br>
+- knex migrate:latest --env NODE_ENV
+- knex migrate:rollback --env NODE_ENV
+
+Modify the database with other schemas as you see fit. Right now there is only a basic users schema. 
 
 # Overview:
 - Real time chess with friends!
@@ -38,7 +45,7 @@ REDIS_URL <br>
 - PostgreSQL in conjunction with Knex.JS as the main DB storage mechanism
 - App is deployed on Heroku!
 
-## Things to do:
+# Things to do:
 - Improve UI interface
 - Chess AI engine(done!)
 - Improve chess AI further
