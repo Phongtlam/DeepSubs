@@ -6,6 +6,20 @@ Link: https://deep-subs.herokuapp.com/
 
 ![screenshot](./gamescreen.png)
 
+#Table of Contents
+
+1. [Requirements](#requirements)
+2. [Development](#development)
+    1. [Steps to start](#Steps to start)
+    1. [Things to do](#Things to do)
+
+## Requirements
+
+- Node 8.1.4
+- Postgresql 9.6.x
+
+## Development
+
 # Steps to start:
 1. npm install to install dependencies.
 2. npm start: will run web-pack-dev server (on localhost:3000)
@@ -28,7 +42,7 @@ In terminal from root directory run: <br>
 - knex migrate:latest --env NODE_ENV
 - knex migrate:rollback --env NODE_ENV
 
-Modify the database with other schemas as you see fit. Right now there is only a basic users schema. 
+Modify the database with other schemas as you see fit. Right now there is only a basic users schema.
 
 # Overview:
 - Real time chess with friends!
