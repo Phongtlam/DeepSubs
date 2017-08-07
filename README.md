@@ -6,7 +6,7 @@ Link: https://deep-subs.herokuapp.com/
 
 ![screenshot](./gamescreen.png)
 
-## Table of Contents
+# Table of Contents
 
 1. [Overview](#overview)
 2. [Requirements](#requirements)
@@ -36,7 +36,7 @@ Link: https://deep-subs.herokuapp.com/
 
 ## Development
 
-# Steps to start:
+## Steps to start:
 1. npm install to install dependencies.
 2. npm start: will run web-pack-dev server (on localhost:3000)
 3. Happy coding!
@@ -52,7 +52,7 @@ GOG_SECRET <br>
 GOG_CALLBACK <br>
 REDIS_URL <br>
 
-# Database:
+## Database:
 You will need to have a local or cloud hosted PostgreSQL database. <br>
 In terminal from root directory run: <br>
 - knex migrate:latest --env NODE_ENV
@@ -60,7 +60,7 @@ In terminal from root directory run: <br>
 
 Modify the database with other schemas as you see fit. Right now there is only a basic users schema.
 
-# Things to do:
+## Things to do:
 - Improve UI interface
 - Chess AI engine(done!)
 - Improve chess AI further
