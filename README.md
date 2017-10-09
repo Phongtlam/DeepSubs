@@ -38,8 +38,10 @@ Link: https://deep-subs.herokuapp.com/
 
 ## Steps to start:
 1. npm install to install dependencies.
-2. npm start: will run web-pack-dev server (on localhost:3000)
-3. Happy coding!
+2. npm start: will start the server (on localhost:3000)
+3. npm run dev: will run web-pack-dev server
+4. Open your browser and goto localhost:3000, the app should be there.
+5. Happy coding!
 
 You will need to create a .env file with these fields <br>
 DATABASE_LOCAL <br>
