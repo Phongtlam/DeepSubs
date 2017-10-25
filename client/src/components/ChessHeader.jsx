@@ -1,6 +1,5 @@
 import React from 'react';
 import propTypes from 'prop-types';
-import { Panel, Label } from 'react-bootstrap';
 
 const ChessHeader = props => (
   <div>

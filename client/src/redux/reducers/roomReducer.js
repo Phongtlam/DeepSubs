@@ -13,7 +13,10 @@ const room = (state = INITIAL_STATE, { type, gameId }) => {
         gameId,
       };
     case PICK_WHITE:
-      return INITIAL_STATE.side;
+      return {
+        ...state,
+        side: false,
+      }
     case PICK_BLACK:
       return {
         ...state,

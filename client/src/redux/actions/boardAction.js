@@ -7,6 +7,8 @@ import {
   END_PICK,
   PLAY_HUMAN,
   PLAY_AI,
+  IS_AI_BLACK,
+  IS_AI_WHITE,
 } from './type';
 
 export const newGame = () => ({
@@ -40,4 +42,12 @@ export const playHuman = () => ({
 
 export const playAi = () => ({
   type: PLAY_AI,
+});
+
+export const isAiBlack = () => ({
+  type: IS_AI_BLACK,
+});
+
+export const isAiWhite = () => ({
+  type: IS_AI_WHITE,
 });

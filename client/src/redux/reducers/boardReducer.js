@@ -7,6 +7,8 @@ import {
   END_PICK,
   PLAY_HUMAN,
   PLAY_AI,
+  IS_AI_BLACK,
+  IS_AI_WHITE,
 } from '../actions/type';
 
 const INITIAL_STATE = {
@@ -15,6 +17,7 @@ const INITIAL_STATE = {
   isPicking: false,
   isAi: false,
   isHuman: true,
+  isAiBlack: false,
 };
 
 const board = (state = INITIAL_STATE, { type, boardState }) => {
@@ -61,6 +64,16 @@ const board = (state = INITIAL_STATE, { type, boardState }) => {
         ...state,
         isAi: true,
         isHuman: false,
+      };
+    case IS_AI_BLACK:
+      return {
+        ...state,
+        isAiBlack: true,
+      };
+    case IS_AI_WHITE:
+      return {
+        ...state,
+        isAiBlack: false,
       };
     default:
       return state;

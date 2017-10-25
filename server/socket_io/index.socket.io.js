@@ -34,7 +34,7 @@ module.exports = (server) => {
       io.to(socket.id).emit('receive-msg', deepSubs);
     });
 
-    socket.on('AI', (boardState, isStart) => {
+    socket.on('AI', (boardState, isStart, isBlack) => {
       const socketRooms = Object.keys(io.sockets.adapter.sids[socket.id]);
       const currentRoom = socketRooms[socketRooms.length - 1];
       if (isStart) {
@@ -47,8 +47,9 @@ module.exports = (server) => {
       }
 
       // deepSubs move
-      if (game.turn() === 'w') {
-        const bestMove = YellowSubsAction(2, game, true, numRounds, 'w');
+      const color = (isBlack === false) ? 'w' : 'b';
+      if (game.turn() === color) {
+        const bestMove = YellowSubsAction(3, game, true, numRounds, color);
         game.move(bestMove);
         const aiBoard = game.fen();
         if (aiBoard) {

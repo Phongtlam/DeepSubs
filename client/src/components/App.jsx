@@ -20,6 +20,8 @@ import {
   appendMsgAsync,
   startPickAsync,
   endPickAsync,
+  pickWhiteAIAsync,
+  pickBlackAIAsync,
 } from '../redux/actions/index';
 
 const App = (props) => {
@@ -48,7 +50,7 @@ const App = (props) => {
 };
 
 const mapStateToProps = ({ board, room, profile, chatterbox }) => {
-  const { boardState, isTurn, isPicking, isHuman, isAi } = board;
+  const { boardState, isTurn, isPicking, isHuman, isAi, isAiBlack, isAiWhite } = board;
   const { gameId, side } = room;
   const { profileData } = profile;
   const { input, messages } = chatterbox;
@@ -63,6 +65,8 @@ const mapStateToProps = ({ board, room, profile, chatterbox }) => {
     messages,
     isHuman,
     isAi,
+    isAiBlack,
+    isAiWhite,
   };
 };
 
@@ -80,6 +84,8 @@ export default connect(mapStateToProps,
     appendMsgAsync,
     startPickAsync,
     endPickAsync,
+    pickWhiteAIAsync,
+    pickBlackAIAsync,
   })(App);
 
 App.propTypes = {

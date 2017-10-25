@@ -1,5 +1,5 @@
 import axios from 'axios';
-import { newGame, updateBoard, isMyTurn, isNotMyTurn, startPick, endPick, playHuman, playAi } from './boardAction';
+import { newGame, updateBoard, isMyTurn, isNotMyTurn, startPick, endPick, playHuman, playAi, isAiBlack, isAiWhite } from './boardAction';
 import { getGameId, pickWhite, pickBlack } from './roomAction';
 import { getProfile } from './profileAction';
 import { getInput, appendMsg } from './chatterboxAction';
@@ -45,6 +45,18 @@ export const pickWhiteAsync = () => (dispatch) => {
 };
 
 export const pickBlackAsync = () => (dispatch) => {
+  dispatch(pickBlack());
+};
+
+export const pickWhiteAIAsync = () => (dispatch) => {
+  SocketIo.emit('AI', null, null, true);
+  dispatch(isAiBlack());
+  dispatch(pickWhite());
+};
+
+export const pickBlackAIAsync = () => (dispatch) => {
+  SocketIo.emit('AI', null, null, false);
+  dispatch(isAiWhite());
   dispatch(pickBlack());
 };
 

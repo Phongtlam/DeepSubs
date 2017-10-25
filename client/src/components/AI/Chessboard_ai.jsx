@@ -40,7 +40,7 @@ class ChessboardAi extends React.Component {
     Engine.move({ from, to, promotion: 'q' });
     const newBoard = Engine.fen();
     if (this.props.boardState !== newBoard) {
-      SocketIo.emit('AI', newBoard);
+      SocketIo.emit('AI', newBoard, true, this.props.isAiBlack);
       this.props.updateBoardAsync(newBoard);
       this.props.isNotMyTurnAsync();
     }
@@ -107,6 +107,7 @@ export default ChessboardAi;
 ChessboardAi.propTypes = {
   boardState: propTypes.string,
   side: propTypes.bool,
+  isAiBlack: propTypes.bool,
   isMyTurnAsync: propTypes.func,
   isNotMyTurnAsync: propTypes.func,
   updateBoardAsync: propTypes.func,
@@ -116,6 +117,7 @@ ChessboardAi.propTypes = {
 ChessboardAi.defaultProps = {
   boardState: '',
   side: false,
+  isAiBlack: false,
   isMyTurnAsync: propTypes.func,
   isNotMyTurnAsync: propTypes.func,
   endPickAsync: propTypes.func,

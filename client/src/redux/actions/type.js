@@ -13,3 +13,5 @@ export const START_PICK = 'start_pick';
 export const END_PICK = 'end_pick';
 export const PLAY_HUMAN = 'play_human';
 export const PLAY_AI = 'play_ai';
+export const IS_AI_BLACK = 'is_ai_black';
+export const IS_AI_WHITE = 'is_ai_white';
