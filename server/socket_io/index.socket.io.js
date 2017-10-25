@@ -20,11 +20,6 @@ let numRounds = 0;
 module.exports = (server) => {
   const io = socketIo(server);
   io.on('connect', (socket) => {
-    // socket.on('join-room', (roomId) => {
-    //   user.roomId = roomId;
-    //   socket.join(user.roomId);
-    // });
-
     socket.on('new-user', (username, roomId) => {
       const socketRooms = Object.keys(io.sockets.adapter.sids[socket.id]);
       const currentRoom = socketRooms[socketRooms.length - 1];
@@ -52,8 +47,8 @@ module.exports = (server) => {
       }
 
       // deepSubs move
-      if (game.turn() === 'b') {
-        const bestMove = YellowSubsAction(2, game, true, numRounds);
+      if (game.turn() === 'w') {
+        const bestMove = YellowSubsAction(2, game, true, numRounds, 'w');
         game.move(bestMove);
         const aiBoard = game.fen();
         if (aiBoard) {

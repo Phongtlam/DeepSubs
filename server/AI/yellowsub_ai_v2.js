@@ -22,10 +22,7 @@ const calculatePieceValue = (pieceType, color) => {
     default:
       return;
   }
-  if (color === 'b') {
-    score = -score;
-  }
-  return score;
+  return (color === 'b') ? -score : score;
 };
 
 
@@ -144,7 +141,7 @@ const sumBoardValue = (board, numRounds) => {
 
 const minimax = (depth, game, alpha, beta, isMaximizingPlayer, numRounds) => {
   if (depth === 0) {
-    return -sumBoardValue(game.board(), numRounds);
+    return sumBoardValue(game.board(), numRounds);
   }
 
   const newGameMoves = game.moves();
@@ -175,7 +172,7 @@ const minimax = (depth, game, alpha, beta, isMaximizingPlayer, numRounds) => {
   return bestMove;
 };
 
-const YellowSubsAction = (depth, game, isMaximizingPlayer, numRounds) => {
+const YellowSubsAction = (depth, game, isMaximizingPlayer, numRounds, color) => {
   const newGameMoves = game.moves();
   let bestMove = -9999;
   let bestMoveFound;
@@ -183,7 +180,8 @@ const YellowSubsAction = (depth, game, isMaximizingPlayer, numRounds) => {
   for (let i = 0; i < newGameMoves.length; i++) {
     const newGameMove = newGameMoves[i];
     game.move(newGameMove);
-    const value = minimax(depth - 1, game, -10000, 10000, !isMaximizingPlayer, numRounds);
+    let value = minimax(depth - 1, game, -10000, 10000, !isMaximizingPlayer, numRounds);
+    if (color === 'b') value = -value;
     game.undo();
     if (value >= bestMove) {
       bestMove = value;
