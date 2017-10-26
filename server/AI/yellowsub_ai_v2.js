@@ -139,11 +139,10 @@ const sumBoardValue = (board, numRounds) => {
   return value;
 };
 
-const minimax = (depth, game, alpha, beta, isMaximizingPlayer, numRounds, color) => {
+const minimax = (depth, game, alpha, beta, isMaximizingPlayer, color) => {
   if (depth === 0) {
-    const boardValue = sumBoardValue(game.board(), numRounds);
-    // if AI is black, need to invert the value
-    return (color === 'b') ? -boardValue : boardValue;
+    const newVal = sumBoardValue(game.board())
+    return (color === 'b') ? -newVal : newVal;
   }
 
   const newGameMoves = game.moves();
@@ -152,7 +151,7 @@ const minimax = (depth, game, alpha, beta, isMaximizingPlayer, numRounds, color)
     let bestMove = -9999;
     for (let i = 0; i < newGameMoves.length; i++) {
       game.move(newGameMoves[i]);
-      bestMove = Math.max(bestMove, minimax(depth - 1, game, alpha, beta, !isMaximizingPlayer));
+      bestMove = Math.max(bestMove, minimax(depth - 1, game, alpha, beta, !isMaximizingPlayer, color));
       game.undo();
       alpha = Math.max(alpha, bestMove);
       if (beta <= alpha) {
@@ -164,7 +163,7 @@ const minimax = (depth, game, alpha, beta, isMaximizingPlayer, numRounds, color)
   let bestMove = 9999;
   for (let i = 0; i < newGameMoves.length; i++) {
     game.move(newGameMoves[i]);
-    bestMove = Math.min(bestMove, minimax(depth - 1, game, alpha, beta, !isMaximizingPlayer));
+    bestMove = Math.min(bestMove, minimax(depth - 1, game, alpha, beta, !isMaximizingPlayer, color));
     game.undo();
     beta = Math.min(beta, bestMove);
     if (beta <= alpha) {
@@ -183,7 +182,7 @@ const YellowSubsAction = (depth, game, isMaximizingPlayer, numRounds, color) => 
   for (let i = 0; i < newGameMoves.length; i++) {
     const newGameMove = newGameMoves[i];
     game.move(newGameMove);
-    const value = minimax(depth - 1, game, -10000, 10000, !isMaximizingPlayer, numRounds, color);
+    const value = minimax(depth - 1, game, -10000, 10000, !isMaximizingPlayer, color);
     game.undo();
     if (value >= bestMove) {
       bestMove = value;
