@@ -26,7 +26,7 @@ const calculatePieceValue = (pieceType, color) => {
 };
 
 
-const calculatePositionValue = (pieceType, color, i, j, numRounds) => {
+const calculatePositionValue = (pieceType, color, i, j) => {
   let chessTable;
   switch (pieceType) {
     case 'p':
@@ -104,18 +104,18 @@ const calculatePositionValue = (pieceType, color, i, j, numRounds) => {
       return;
   }
   // late game strategy for king
-  if (pieceType === 'k' && numRounds > 20) {
-    chessTable = [
-      [ -5.0, -4.0, -3.0, -2.0, -2.0, -3.0, -4.0, -5.0],
-      [ -3.0, -2.0, -1.0,  0.0,  0.0, -1.0, -2.0, -3.0],
-      [ -3.0, -1.0,  2.0,  3.0,  3.0,  2.0, -1.0, -3.0],
-      [ -3.0, -1.0,  3.0,  4.0,  4.0,  3.0, -1.0, -3.0],
-      [ -3.0, -1.0,  3.0,  4.0,  4.0,  3.0, -1.0, -3.0],
-      [ -3.0, -1.0,  2.0,  3.0,  3.0,  2.0, -1.0, -3.0],
-      [ -3.0, -3.0,  0.0,  0.0,  0.0,  0.0, -3.0, -3.0],
-      [ -5.0, -3.0, -3.0, -3.0, -3.0, -3.0, -3.0, -5.0]
-    ];
-  }
+  // if (pieceType === 'k' && numRounds > 20) {
+  //   chessTable = [
+  //     [ -5.0, -4.0, -3.0, -2.0, -2.0, -3.0, -4.0, -5.0],
+  //     [ -3.0, -2.0, -1.0,  0.0,  0.0, -1.0, -2.0, -3.0],
+  //     [ -3.0, -1.0,  2.0,  3.0,  3.0,  2.0, -1.0, -3.0],
+  //     [ -3.0, -1.0,  3.0,  4.0,  4.0,  3.0, -1.0, -3.0],
+  //     [ -3.0, -1.0,  3.0,  4.0,  4.0,  3.0, -1.0, -3.0],
+  //     [ -3.0, -1.0,  2.0,  3.0,  3.0,  2.0, -1.0, -3.0],
+  //     [ -3.0, -3.0,  0.0,  0.0,  0.0,  0.0, -3.0, -3.0],
+  //     [ -5.0, -3.0, -3.0, -3.0, -3.0, -3.0, -3.0, -5.0]
+  //   ];
+  // }
   let positionValue = chessTable[i][j];
   if (color === 'b') {
     positionValue = -1 * chessTable[7 - i][7 - j];
@@ -123,15 +123,15 @@ const calculatePositionValue = (pieceType, color, i, j, numRounds) => {
   return positionValue;
 };
 
-const sumBoardValue = (board, numRounds) => {
+const sumBoardValue = (board) => {
   let value = 0;
   for (let i = 0; i < 8; i++) {
     for (let j = 0; j < 8; j++) {
       if (board[i][j]) {
         value += calculatePieceValue(board[i][j].type, board[i][j].color);
         if (['r', 'q'].indexOf(board[i][j].type) === -1) {
-          // no special late game strategy for now besides king
-          value += calculatePositionValue(board[i][j].type, board[i][j].color, i, j, numRounds);
+          // no special late game strategy for now
+          value += calculatePositionValue(board[i][j].type, board[i][j].color, i, j);
         }
       }
     }
@@ -159,18 +159,19 @@ const minimax = (depth, game, alpha, beta, isMaximizingPlayer, color) => {
       }
     }
     return bestMove;
-  }
-  let bestMove = 9999;
-  for (let i = 0; i < newGameMoves.length; i++) {
-    game.move(newGameMoves[i]);
-    bestMove = Math.min(bestMove, minimax(depth - 1, game, alpha, beta, !isMaximizingPlayer, color));
-    game.undo();
-    beta = Math.min(beta, bestMove);
-    if (beta <= alpha) {
-      return bestMove;
+  } else {
+    let bestMove = 9999;
+    for (let i = 0; i < newGameMoves.length; i++) {
+      game.move(newGameMoves[i]);
+      bestMove = Math.min(bestMove, minimax(depth - 1, game, alpha, beta, !isMaximizingPlayer, color));
+      game.undo();
+      beta = Math.min(beta, bestMove);
+      if (beta <= alpha) {
+        return bestMove;
+      }
     }
+    return bestMove;
   }
-  return bestMove;
 };
 
 const YellowSubsAction = (depth, game, isMaximizingPlayer, numRounds, color) => {
@@ -183,6 +184,7 @@ const YellowSubsAction = (depth, game, isMaximizingPlayer, numRounds, color) => 
     const newGameMove = newGameMoves[i];
     game.move(newGameMove);
     const value = minimax(depth - 1, game, -10000, 10000, !isMaximizingPlayer, color);
+    // need to undo the board between each step
     game.undo();
     if (value >= bestMove) {
       bestMove = value;
