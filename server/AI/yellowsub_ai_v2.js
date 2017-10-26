@@ -139,9 +139,11 @@ const sumBoardValue = (board, numRounds) => {
   return value;
 };
 
-const minimax = (depth, game, alpha, beta, isMaximizingPlayer, numRounds) => {
+const minimax = (depth, game, alpha, beta, isMaximizingPlayer, numRounds, color) => {
   if (depth === 0) {
-    return sumBoardValue(game.board(), numRounds);
+    const boardValue = sumBoardValue(game.board(), numRounds);
+    // if AI is black, need to invert the value
+    return (color === 'b') ? -boardValue : boardValue;
   }
 
   const newGameMoves = game.moves();
@@ -181,9 +183,7 @@ const YellowSubsAction = (depth, game, isMaximizingPlayer, numRounds, color) => 
   for (let i = 0; i < newGameMoves.length; i++) {
     const newGameMove = newGameMoves[i];
     game.move(newGameMove);
-    let value = minimax(depth - 1, game, -10000, 10000, !isMaximizingPlayer, numRounds);
-    // value will be negative for black AI
-    if (color === 'b') value = -value;
+    const value = minimax(depth - 1, game, -10000, 10000, !isMaximizingPlayer, numRounds, color);
     game.undo();
     if (value >= bestMove) {
       bestMove = value;
