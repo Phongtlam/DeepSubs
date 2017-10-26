@@ -34,9 +34,7 @@ class ChessboardAi extends React.Component {
   }
 
   _onMovePiece(piece, from, to) {
-    if (this.props.boardState === 'rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1') {
-      this.props.endPickAsync();
-    }
+    this.props.endPickAsync();
     Engine.move({ from, to, promotion: 'q' });
     const newBoard = Engine.fen();
     if (this.props.boardState !== newBoard) {

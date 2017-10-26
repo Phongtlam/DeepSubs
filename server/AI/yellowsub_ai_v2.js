@@ -174,6 +174,7 @@ const minimax = (depth, game, alpha, beta, isMaximizingPlayer, numRounds) => {
 
 const YellowSubsAction = (depth, game, isMaximizingPlayer, numRounds, color) => {
   const newGameMoves = game.moves();
+  // give a large negative value to start the calculation
   let bestMove = -9999;
   let bestMoveFound;
 
@@ -181,6 +182,7 @@ const YellowSubsAction = (depth, game, isMaximizingPlayer, numRounds, color) => 
     const newGameMove = newGameMoves[i];
     game.move(newGameMove);
     let value = minimax(depth - 1, game, -10000, 10000, !isMaximizingPlayer, numRounds);
+    // value will be negative for black AI
     if (color === 'b') value = -value;
     game.undo();
     if (value >= bestMove) {
